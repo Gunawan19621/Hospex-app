@@ -50,7 +50,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
         <link href="{{ url('assets11/vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
-	<link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" />
+	{{-- <link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" /> --}}
 		<!--end::Page Vendors Styles -->
 		<link rel="shortcut icon" href="{{ url('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
 	</head>
@@ -487,14 +487,14 @@ License: You must have a valid license purchased only from themeforest(the above
 									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Support</span> <span class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
-										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Support</span> <span
+										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Masters</span> <span
 														 class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span></span></li>
 										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Reports</span></a></li>
-										<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">Cases</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+										<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">Company Master</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 												<ul class="m-menu__subnav">
-													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Pending</span></a></li>
-													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Urgent</span></a></li>
+												<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/categories') }}" class="m-menu__link "><span class="m-menu__link-text">Category</span></a></li>
+													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/companies') }}" class="m-menu__link "><span class="m-menu__link-text">Company</span></a></li>
 													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Done</span></a></li>
 													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Archive</span></a></li>
 												</ul>
@@ -3097,6 +3097,7 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		<!--begin::Page Scripts -->
 		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 	</body>

@@ -45,6 +45,14 @@ Route::resource('eventrundown','EventRundownController');
 Route::get('/eventrundown/create/{schedule}','EventRundownController@create');
 
 
+// Categories
+// Route::get('/categories/getcategories', 'CategoriesController@getCategories');
+Route::resource('categories', 'CategoriesController');
+
+// Companies
+Route::resource('companies', 'CompaniesController');
+
+
 
 Route::get('/ambil',function(){
     $event = Event::all();
