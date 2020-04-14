@@ -50,11 +50,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
         <link href="{{ url('assets11/vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
-<<<<<<< HEAD
 	{{-- <link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" /> --}}
-=======
-	<link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" />
->>>>>>> 869362e0c5413617fcc0717819fe25f6ae3fa07b
+
 		<!--end::Page Vendors Styles -->
 		<link rel="shortcut icon" href="{{ url('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
 	</head>
