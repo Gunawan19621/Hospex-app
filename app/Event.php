@@ -12,4 +12,13 @@ class Event extends Model
     {
         return $this->hasMany(EventSchedule::class);
     }
+    public function sponsors()
+    { 
+        return $this->hasMany(EventSponsor::class);
+    
+    }
+    public function exhibitors()
+    {
+        return $this->hasMany(EventExhibitor::class);
+    }
 }

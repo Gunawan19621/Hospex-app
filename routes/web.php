@@ -52,6 +52,23 @@ Route::resource('categories', 'CategoriesController');
 // Companies
 Route::resource('companies', 'CompaniesController');
 
+// Sponsors
+Route::resource('sponsors', 'EventSponsorController');
+
+// Areas
+Route::resource('areas', 'AreasController');
+
+// Exhibitors
+Route::resource('exhibitors', 'EventExhibitorsController');
+
+// Stand
+Route::resource('stands', 'StandsController');
+
+// Visitors
+Route::resource('visitors', 'VisitorsController');
+
+// Matches
+Route::resource('matches', 'MatchRequestsController');
 
 
 Route::get('/ambil',function(){

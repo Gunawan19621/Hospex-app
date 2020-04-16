@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
+use App\Area;
+use App\Event;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class AreasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,26 +15,28 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $title = 'Categories';
+        $title = 'Areas';
         if (request()->ajax()) 
         {
-            return datatables()->of(Category::all())
+            return datatables()->of(Area::all())
                     ->addIndexColumn()
-                    ->addColumns('action', function($data){
+                    ->addColumn('event_location', function($data){  return  $data->event->event_location; })
+                    ->addColumn('note', function($data){  return  $data->event->event_title.'-'.$data->event->year; })
+                    ->addColumn('action', function($data){
                             $button = '<span class="dropdown">
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                                 <div class="dropdown-menu dropdown-menu-right">       
-                                    <a class="dropdown-item" href="'.url('categories/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                                    <a class="dropdown-item" href="'.url('areas/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
                                     <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
                                 </div>
                             </span>';
                             // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
                             return $button;
                         })
-                    ->rawColumns(['action'])
+                    ->rawColumns(['action','note','event_location'])
                     ->make(true);
-            }
-        return view('category.index', compact('title'));
+        }
+        return view('area.index', compact('title'));
     }
 
     /**
@@ -43,7 +46,9 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        $title = 'Add Areas';
+        $events = Event::all();
+        return view('area.create', compact('title','events'));
     }
 
     /**
@@ -54,18 +59,21 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([ 'category_name'     => 'required',]);
-        Category::create($request->all());
-        return redirect('/categories')->with('status','Category Saved');
+        $request->validate([
+            'area_name'     => 'required',
+            'event_id'      => 'required|numeric'
+        ]);
+        Area::create($request->all());
+        return redirect('areas')->with('status','Area Saved');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Area $area)
     {
         //
     }
@@ -73,44 +81,43 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Area $area)
     {
-        return view('category.edit', compact('category'));
+        $title = 'Edit Area';
+        $events = Event::all();
+        return view('area.edit', compact('title','area','events'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
+     * @param  \App\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Area $area)
     {
-        $request->validate([ 'category_name'     => 'required',]);
-        Category::where('id', $category->id)
-                ->update([
-                    'category_name'       => $request->category_name,
-                ]);
-        return redirect('/categories')->with('status', 'Category Updated');
+        $request->validate( [ 'event_id' => 'required|numeric', 'area_name' => 'required' ] );
+        Area::where('id', $area->id)
+            ->update([
+            'area_name'     => $request->area_name,
+            'event_id'      => $request->event_id,
+        ]);
+       
+        return redirect('/areas')->with('status', 'Area Updated');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Category  $category
+     * @param  \App\Area  $area
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Area $area)
     {
         //
-    }
-    public function getCategories()
-    {
-        $categories['data'] = Category::all();
-        return $categories;
     }
 }

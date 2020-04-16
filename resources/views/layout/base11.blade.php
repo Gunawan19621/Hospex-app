@@ -484,8 +484,12 @@ License: You must have a valid license purchased only from themeforest(the above
 								</div>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('events') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Events</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('matches') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Match Requests</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a></li>
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-graphic-1"></i><span
-									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Support</span> <span class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Masters</span> <span
@@ -501,13 +505,13 @@ License: You must have a valid license purchased only from themeforest(the above
 												</ul>
 											</div>
 										</li>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Clients</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Audit</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/areas') }}" class="m-menu__link "><span class="m-menu__link-text">Areas</span></a></li>
+										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/stands') }}" class="m-menu__link "><span class="m-menu__link-text">Stands</span></a></li>
 									</ul>
 								</div>
 							</li>
-							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">Administration</span></a></li>
-							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">Management</span></a></li>
+							{{-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-light"></i><span class="m-menu__link-text">Administration</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><i class="m-menu__link-icon flaticon-share"></i><span class="m-menu__link-text">Management</span></a></li> --}}
 							{{-- <li class="m-menu__section ">
 								<h4 class="m-menu__section-text">Reports</h4>
 								<i class="m-menu__section-icon flaticon-more-v2"></i>
