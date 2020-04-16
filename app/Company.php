@@ -12,4 +12,16 @@ class Company extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+    public function sponsors()
+    {
+        return $this->hasMany(EventSponsor::class);
+    }
+    public function exhibitors()
+    {
+        return $this->hasMany(EventExhibitor::class);
+    }
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
 }
