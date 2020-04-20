@@ -10,7 +10,7 @@ class MatchRequest extends Model
     
     public function exhibitor()
     {
-        return $this->belongsTo(EventExhibitor::class);
+        return $this->belongsTo(EventExhibitor::class,'event_exhibitor_id','id');
     }
     public function visitor()
     {

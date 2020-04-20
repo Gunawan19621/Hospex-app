@@ -15,6 +15,21 @@ class MatchRequestsController extends Controller
     public function index()
     {
         $title = 'Match Requests';
+        // $matches = Match::all();
+        // $data = [];
+        // foreach ($matches as $key => $match) {
+        //     $stands = $match->exhibitor->stands;
+        //     $item = '';
+        //     foreach ($stands as $key => $stand) {
+        //         $item .= $stand->stand_name;
+        //         $item = $key === count($stands)-1 ? $item.'.' : $item.', ';
+        //     }
+        //     $data[]  = [
+        //          'company_name' => $match->exhibitor->company->company_name,
+        //          'stands'       => $item,
+        //         ];
+        // }
+        // return $data;
         if(request()->ajax()){
             return datatables()->of(Match::all())
                     ->addIndexColumn()
@@ -35,7 +50,7 @@ class MatchRequestsController extends Controller
                         // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
                         return $button;
                     })
-                ->rawColumns(['visitor_name','action'])
+                ->rawColumns(['visitor_name','exhibitor_name','action'])
                 ->make(true);
         }
         return view('match.index',compact('title'));

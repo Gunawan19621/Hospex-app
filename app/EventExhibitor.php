@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use PHPUnit\Framework\MockObject\Builder\Match;
+// use PHPUnit\Framework\MockObject\Builder\Match;
 
 class EventExhibitor extends Model
 {
     protected $fillable = ['event_id', 'company_id'];
+
     public function event()
     {
         return $this->belongsTo(Event::class);
@@ -22,6 +23,6 @@ class EventExhibitor extends Model
     }
     public function matches()
     {
-        return $this->hasMany(MatchRequest::class);
+        return $this->hasMany(MatchRequest::class,'event_exhibitor_id','id');
     }
 }

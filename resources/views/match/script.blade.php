@@ -25,7 +25,12 @@
                 {
                     data : "location", name : "location",
                 },
-               
+                {
+                    data : "notes", name : "notes",
+                },
+                {
+                    data : "status", name : "status",
+                },
                 {
                     data:"action",
                     name: "action",
