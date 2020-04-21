@@ -57,16 +57,26 @@ class ExhibitorsController extends Controller
     {
         $exhibitor = exhibitor::findorfail($id);
         $data = [
-            'company_name'      => $exhibitor->company->company_name,
-            'company_address'      => $exhibitor->company->company_address,
-            'company_web'      => $exhibitor->company->company_web,
-            'company_email'      => $exhibitor->company->company_email,
-            'event_title'       => $exhibitor->event->event_title
+            'company_name'          => $exhibitor->company->company_name,
+            'company_address'       => $exhibitor->company->company_address,
+            'company_web'           => $exhibitor->company->company_web,
+            'company_email'         => $exhibitor->company->company_email,
+            'company_info'          => $exhibitor->company->company_info,
+            'event_title'           => $exhibitor->event->event_title
         ];
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Found',
-            'data'      => $data
-        ],200);
+        if (count($data) > 0) {
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Found',
+                'data'      => $data
+            ],200);
+        } else {
+            return response()->json([
+                'success'   => False,
+                'message'   => 'Data Not Found',
+                'data'      => ''
+            ],503);
+        }
+        
     }
 }
