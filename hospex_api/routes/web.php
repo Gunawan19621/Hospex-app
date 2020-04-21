@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Str;
+use App\Helpers\GetEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ $router->get('/exhibitors/{exhibitor}', 'ExhibitorsController@show');
 // business matching
 $router->post('/match-request', 'BusinessMatchingController@store');
 $router->get('/match', 'BusinessMatchingController@index');
+
+$router->get('/helper', function () {
+    return GetEvent::GetEvent();
+});

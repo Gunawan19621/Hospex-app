@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Collection;
 use App\EventExhibitor as exhibitor;
+use App\Helpers\GetEvent as eventId;
 
 class ExhibitorsController extends Controller
 {
@@ -18,7 +19,9 @@ class ExhibitorsController extends Controller
 
     public function index()
     {
-        $exhibitors = exhibitor::all();
+        $eventId = eventId::GetEvent();
+        $exhibitors = exhibitor::where('event_id', $eventId)->get();
+        
         $data= [];
 
         foreach ($exhibitors as $key => $exhibitor) {
