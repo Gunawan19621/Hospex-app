@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Collection;
 use App\EventExhibitor as exhibitor;
+use App\Helpers\GetEvent as eventId;
 
 class ExhibitorsController extends Controller
 {
@@ -18,7 +19,9 @@ class ExhibitorsController extends Controller
 
     public function index()
     {
-        $exhibitors = exhibitor::all();
+        $eventId = eventId::GetEvent();
+        $exhibitors = exhibitor::where('event_id', $eventId)->get();
+        
         $data= [];
 
         foreach ($exhibitors as $key => $exhibitor) {
@@ -57,16 +60,26 @@ class ExhibitorsController extends Controller
     {
         $exhibitor = exhibitor::findorfail($id);
         $data = [
-            'company_name'      => $exhibitor->company->company_name,
-            'company_address'      => $exhibitor->company->company_address,
-            'company_web'      => $exhibitor->company->company_web,
-            'company_email'      => $exhibitor->company->company_email,
-            'event_title'       => $exhibitor->event->event_title
+            'company_name'          => $exhibitor->company->company_name,
+            'company_address'       => $exhibitor->company->company_address,
+            'company_web'           => $exhibitor->company->company_web,
+            'company_email'         => $exhibitor->company->company_email,
+            'company_info'          => $exhibitor->company->company_info,
+            'event_title'           => $exhibitor->event->event_title
         ];
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Found',
-            'data'      => $data
-        ],200);
+        if (count($data) > 0) {
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Found',
+                'data'      => $data
+            ],200);
+        } else {
+            return response()->json([
+                'success'   => False,
+                'message'   => 'Data Not Found',
+                'data'      => ''
+            ],503);
+        }
+        
     }
 }
