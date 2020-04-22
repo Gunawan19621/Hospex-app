@@ -3,6 +3,7 @@
 @section('title', 'Hospex Admin')
 
 @section('container')
+<div class="flash" data-flash="{{ session('status') }}"></div>
 
 <div class="container">
 	<div class="row">

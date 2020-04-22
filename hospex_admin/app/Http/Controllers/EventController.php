@@ -52,8 +52,9 @@ class EventController extends Controller
         //     'event_location'    => $request->event_location
         // ]);
 
-        Event::create($request->all());
-        return redirect('/events')->with('status','Event Saved');
+        $create = Event::create($request->all());
+        $response = $create ? '1-Event Saved' : '0-Event Failed to Save';
+        return redirect('/events')->with('status',$response);
     }
 
     /**
@@ -96,7 +97,7 @@ class EventController extends Controller
             'site_plan'         => 'required',
             'event_location'    => 'required'
         ]);
-        Event::where('id', $event->id)
+        $update =Event::where('id', $event->id)
                 ->update([
                     'event_title'       => $request->event_title,
                     'year'              => $request->year,
@@ -104,6 +105,7 @@ class EventController extends Controller
                     'site_plan'         => $request->site_plan,
                     'event_location'    => $request->event_location
                 ]);
+        
         return redirect('/events')->with('status', 'Event Updated');
     }
 

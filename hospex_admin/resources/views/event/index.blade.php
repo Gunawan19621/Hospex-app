@@ -3,6 +3,7 @@
 @section('title', 'Events')
 
 @section('container')
+<div class="flash" data-flash="{{ session('status') }}"></div>
 <div class="m-content">
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12">

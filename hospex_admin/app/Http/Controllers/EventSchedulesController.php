@@ -46,9 +46,9 @@ class EventSchedulesController extends Controller
             'date'  => $request->date
         ]);
 
-        $event->schedules()->save($schedule);
-
-        return redirect('/events/'.$event->id)->with('status', 'Event Schedule Saved');
+        $create = $event->schedules()->save($schedule);
+        $response = $create ? 201 : 001;
+        return redirect('/events/'.$event->id)->with('status', $response);
     }
 
     /**

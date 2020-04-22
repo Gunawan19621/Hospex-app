@@ -2,6 +2,7 @@
 {{-- @section('title', 'Schedules') --}}
     
 @section('container')
+<div class="flash" data-flash="{{ session('status') }}"></div>
 <!--Begin::Section-->
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
