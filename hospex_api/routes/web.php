@@ -32,6 +32,11 @@ $router->get('/exhibitors/{exhibitor}', 'ExhibitorsController@show');
 $router->post('/match-request', 'BusinessMatchingController@store');
 $router->get('/match', 'BusinessMatchingController@index');
 
+
+// schedule
+$router->get('/schedules', 'SchedulesController@index');
+$router->get('/schedules/{id}', 'SchedulesController@show');
+
 $router->get('/helper', function () {
     return GetEvent::GetEvent();
 });
