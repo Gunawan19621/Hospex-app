@@ -6,6 +6,8 @@ use App\EventExhibitor;
 use App\Event;
 use App\Company;
 use Illuminate\Http\Request;
+// use Illuminate\Validation\Rule;
+use Validator;
 
 class EventExhibitorsController extends Controller
 {
@@ -68,10 +70,36 @@ class EventExhibitorsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['event_id' => 'required|numeric', 'company_id' => 'required|numeric']);
-        $create = EventExhibitor::create($request->all());
-        $response = $create ? '1-Exhibitor Saved' : '0-Exhibitor Failed to Save';
-        return redirect('/exhibitors')->with('status',$response);
+       
+        $validator = Validator::make($request->all(),
+                [
+                    'bb' => ['required','numeric' ], 
+                    'event_id' => ['required','numeric' ], 
+                    "company_id.*" => ['required','numeric', 'distinct', 'unique:event_exhibitors,company_id,NULL,id,event_id,' . $request->event_id]
+                ],
+                [
+                    'company_id.*.unique' => ':input-has been already taken',
+                ]
+            );
+  
+        
+        if ($validator->fails()) {
+            // Handle failed logic
+            $response = '0-Exhibitor Failed to Save';
+             return redirect()->back()->withInput($request->all())->withErrors($validator->errors())->with('status',$response);
+        }else{
+            
+            $data = [];
+            foreach ($request->company_id as $key => $value) {
+                $data[]=[
+                    'event_id' => $request->event_id,
+                    'company_id' => $value,
+                ];
+            }
+            $create = EventExhibitor::insert($data);
+            $response = $create ? '1-Exhibitor Saved' : '0-Exhibitor Failed to Save';
+            return redirect('/exhibitors')->with('status',$response);
+        }
     }
 
     /**
@@ -108,7 +136,12 @@ class EventExhibitorsController extends Controller
      */
     public function update(Request $request, EventExhibitor $exhibitor)
     {
-        $request->validate(['event_id' => 'required|numeric', 'company_id' => 'required|numeric']);
+        $request->validate(['event_id' => 'required|numeric', 'company_id' => [
+            'required','numeric',
+            Rule::exists('event_exhibitors')->where(function ($query) use($request) {
+                $query->where('company_id', $request->company_id);
+            })
+            ]]);
         $update = EventExhibitor::where('id', $exhibitor->id)
                         ->update([
                             'event_id'      => $request->event_id,

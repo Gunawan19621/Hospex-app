@@ -138,10 +138,11 @@ class CompaniesController extends Controller
     public function update(Request $request, Company $company)
     {
         $request->validate([
-            'company_name'       => 'required',
-            'company_email'              => 'required|E-mail',
-            'company_web'              => 'required',
-            'company_address'         => 'required',
+            'company_name'      => 'required',
+            'company_email'     => 'required|E-mail',
+            'company_web'       => 'required',
+            'company_address'   => 'required',
+            'categories'        => 'distinct'
         ]);
         try{
             
