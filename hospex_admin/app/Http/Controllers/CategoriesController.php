@@ -55,8 +55,9 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $request->validate([ 'category_name'     => 'required',]);
-        Category::create($request->all());
-        return redirect('/categories')->with('status','Category Saved');
+        $create=Category::create($request->all());
+        $response = $create ? '1-Category Saved' : '0-Category Failed to Save';
+        return redirect('/categories')->with('status', $response);
     }
 
     /**
@@ -91,11 +92,12 @@ class CategoriesController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([ 'category_name'     => 'required',]);
-        Category::where('id', $category->id)
+        $update = Category::where('id', $category->id)
                 ->update([
                     'category_name'       => $request->category_name,
                 ]);
-        return redirect('/categories')->with('status', 'Category Updated');
+        $response = $update ? '1-Category Updated' : '0-Category Failed to Update';
+        return redirect('/categories')->with('status', $response);
     }
 
     /**

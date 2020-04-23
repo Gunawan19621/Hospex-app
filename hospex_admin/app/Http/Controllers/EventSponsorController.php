@@ -73,8 +73,9 @@ class EventSponsorController extends Controller
                 'sponsor_name'  => $request->sponsor_name
             ];
         }
-        EventSponsor::insert($data);
-        return redirect('/sponsors')->with('status', 'Sponsor Saved!');
+        $create = EventSponsor::insert($data);
+        $response = $create ? '1-Sponsor Saved!' : '0-Sponsor Failed to Save!';
+        return redirect('/sponsors')->with('status', $response);
     }
 
     /**
@@ -120,9 +121,10 @@ class EventSponsorController extends Controller
                 'sponsor_name'  => $request->sponsor_name
             ];
         }
-        EventSponsor::update($data);
+        $update = EventSponsor::update($data);
        
-        return redirect('/events')->with('status', 'Event Updated');
+        $response = $update ? '1-Sponsor Updated!' : '0-Sponsor Failed to Update!';
+        return redirect('/sponsors')->with('status', $response);
     }
 
     /**

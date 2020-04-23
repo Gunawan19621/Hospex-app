@@ -69,8 +69,9 @@ class EventExhibitorsController extends Controller
     public function store(Request $request)
     {
         $request->validate(['event_id' => 'required|numeric', 'company_id' => 'required|numeric']);
-        EventExhibitor::create($request->all());
-        return redirect('/exhibitors/')->with('status','Exhibitor Saved');
+        $create = EventExhibitor::create($request->all());
+        $response = $create ? '1-Exhibitor Saved' : '0-Exhibitor Failed to Save';
+        return redirect('/exhibitors')->with('status',$response);
     }
 
     /**
@@ -108,12 +109,13 @@ class EventExhibitorsController extends Controller
     public function update(Request $request, EventExhibitor $exhibitor)
     {
         $request->validate(['event_id' => 'required|numeric', 'company_id' => 'required|numeric']);
-        EventExhibitor::where('id', $exhibitor->id)
+        $update = EventExhibitor::where('id', $exhibitor->id)
                         ->update([
                             'event_id'      => $request->event_id,
                             'company_id'       => $request->company_id
                         ]);
-        return redirect('/exhibitors')->with('status','Exhibitor Updated');
+        $response = $update ? '1-Exhibitor Updated' : '0-Exhibitor Failed to Update';
+        return redirect('/exhibitors')->with('status',$response);
     }
 
     /**

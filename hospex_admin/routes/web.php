@@ -18,7 +18,9 @@ use App\EventRundown;
 // Route::get('/', function () {
 //     return view('index');
 // });
+Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/about', function () {
 //     // $nama = 'Lulu Muhamad';
 //     return view('about', ['nama' => 'Lulu Muhamad']);
@@ -80,3 +82,6 @@ Route::get('/ambil',function(){
 Route::get('/', function(){
     return view('layout.content');
 });
+
+
+

@@ -106,7 +106,8 @@ class EventController extends Controller
                     'event_location'    => $request->event_location
                 ]);
         
-        return redirect('/events')->with('status', 'Event Updated');
+        $response = $update ? '1-Event Updated' : '0-Event Failed to Update';
+        return redirect('/events')->with('status',$response);
     }
 
     /**
@@ -117,8 +118,9 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        Event::destroy($event->id);
-        return redirect('/events')->with('status', 'Event Deleted!');
+        $delete = Event::destroy($event->id);
+        $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
+        return redirect('/events')->with('status',$response);
     }
     public function getevents()
     {

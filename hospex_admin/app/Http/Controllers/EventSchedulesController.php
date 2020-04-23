@@ -47,7 +47,7 @@ class EventSchedulesController extends Controller
         ]);
 
         $create = $event->schedules()->save($schedule);
-        $response = $create ? 201 : 001;
+        $response = $create ?  '1-Event Schedule Saved' : '0-Event Schedule Failed to Save';
         return redirect('/events/'.$event->id)->with('status', $response);
     }
 

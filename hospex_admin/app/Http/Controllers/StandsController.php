@@ -75,12 +75,13 @@ class StandsController extends Controller
             'exhibitor_id'      => 'required|numeric',
             'area_id'           => 'required|numeric'
         ]);
-        Stand::create([
+        $create=Stand::create([
             'stand_name'        => $request->stand_name,
             'event_exhibitor_id'=> $request->exhibitor_id,
             'area_id'           => $request->area_id
         ]);
-        return redirect('/stands')->with('status','Stand Saved');
+        $response = $create ? '1-Stand Saved!' : '0-Sponsor Failed to Save!';
+        return redirect('/stands')->with('status',$response);
     }
 
     /**
@@ -122,13 +123,14 @@ class StandsController extends Controller
             'exhibitor_id'      => 'required|numeric',
             'area_id'           => 'required|numeric'
         ]);
-        Stand::where('id',$stand->id)
+        $update=Stand::where('id',$stand->id)
             ->update([
                 'stand_name'        => $request->stand_name,
                 'event_exhibitor_id'=> $request->exhibitor_id,
                 'area_id'           => $request->area_id
             ]);
-        return redirect('/stands')->with('status','Stand Updated');
+        $response = $update ? '1-Stand Updated!' : '0-Stand Failed to Update!';
+        return redirect('/stands')->with('status',$response);
     }
 
     /**

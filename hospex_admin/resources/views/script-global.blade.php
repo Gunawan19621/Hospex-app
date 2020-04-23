@@ -24,16 +24,20 @@ let flash = $('.flash').data('flash'),
     }
 
     $(document).ready(function(){
-        if (typeof(flash) == 'number') {
-            if (code.hasOwnProperty(flash)) {
-                Swal.fire(
-                    {
-                        'type'  : code[flash]['type'],
-                        'title' : code[flash]['type'],
-                        'text'  : code[flash]['message']
-                    }
-                )
-                
+        if (!jQuery.isEmptyObject(flash)) {
+            flash = flash.split('-');
+            if (flash[0] == '1') {
+                Swal.fire({
+                        'type'  : 'success',
+                        'title' : 'Success',
+                        'text'  : flash[1]
+                    })
+            }else{
+                Swal.fire({
+                        'type'  : 'error',
+                        'title' : 'Failed',
+                        'text'  : flash[1]
+                    })
             }
             
         }
