@@ -43,16 +43,16 @@ class EventRundownController extends Controller
             'event_schedule_id' => 'required|alpha_num'
             ]);
         
-        $event = EventSchedule::find($request->event_schedule_id);
-        $schedule = new EventRundown([
+        $schedule = EventSchedule::find($request->event_schedule_id);
+        $rundown = new EventRundown([
             'task'      => $request->task,
             'time'      => $request->time,
             'duration'  => $request->taskduration
         ]);
 
-        $event->rundowns()->save($schedule);
-
-        return redirect('/events/'.$event->id)->with('status', 'Event Schedule Saved');
+        $create = $schedule->rundowns()->save($rundown);
+        $response = $create ? '1-Rundown Saved' : '0-Rundown Failed to Save';
+        return redirect('/eventschedules/'.$schedule->id)->with('status', $response);
     }
 
     /**

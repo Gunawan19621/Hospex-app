@@ -3,7 +3,7 @@
 @section('title', 'Employee')
 
 @section('container')
-
+<div class="flash" data-flash="{{ session('status') }}"></div>
 <div class="container">
 	<div class="row">
 		<div class="col-10">

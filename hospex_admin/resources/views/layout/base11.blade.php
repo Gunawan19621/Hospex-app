@@ -74,7 +74,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="<?php url();?>assets11/demo/demo11/media/img/logo/logo.png" />
+										<img alt="" src="{{ url('assets11/demo/demo11/media/img/logo/logo.png') }}" />
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -472,7 +472,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<h4 class="m-menu__section-text">Departments</h4>
 								<i class="m-menu__section-icon flaticon-more-v2"></i>
 							</li>
-							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Resources</span><i
+							{{-- <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Resources</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
@@ -482,7 +482,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><i class="m-menu__link-bullet m-menu__link-bullet--dot"><span></span></i><span class="m-menu__link-text">Contacts</span></a></li>
 									</ul>
 								</div>
-							</li>
+							</li> --}}
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('events') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Events</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a></li>
@@ -494,14 +494,14 @@ License: You must have a valid license purchased only from themeforest(the above
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Masters</span> <span
 														 class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span></span></li>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Reports</span></a></li>
+										{{-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Reports</span></a></li> --}}
 										<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">Company Master</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 												<ul class="m-menu__subnav">
-												<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/categories') }}" class="m-menu__link "><span class="m-menu__link-text">Category</span></a></li>
+													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/categories') }}" class="m-menu__link "><span class="m-menu__link-text">Category</span></a></li>
 													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/companies') }}" class="m-menu__link "><span class="m-menu__link-text">Company</span></a></li>
-													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Done</span></a></li>
-													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Archive</span></a></li>
+													{{-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Done</span></a></li>
+													<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Archive</span></a></li> --}}
 												</ul>
 											</div>
 										</li>
@@ -3103,8 +3103,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Page Scripts -->
 		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
+
+		@include('script-global')
 	</body>
 
 	<!-- end::Body -->

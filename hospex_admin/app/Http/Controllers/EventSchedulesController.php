@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EventSchedule;
 use App\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class EventSchedulesController extends Controller
 {
@@ -38,17 +39,18 @@ class EventSchedulesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['date'=>'required|date', 'event_id' => 'required|numeric']);
+        $request->validate(['date'=>'required|date|after_or_equal:now', 'event_id' => 'required|numeric']);
         // EventSchedule::create($request->all());
         
         $event = Event::find($request->event_id);
+        // $date = new Carbon($request->date);
         $schedule = new EventSchedule([
-            'date'  => $request->date
+            'date'  => Carbon::parse($request->date)->format('Y-m-d'),
         ]);
 
-        $event->schedules()->save($schedule);
-
-        return redirect('/events/'.$event->id)->with('status', 'Event Schedule Saved');
+        $create = $event->schedules()->save($schedule);
+        $response = $create ?  '1-Event Schedule Saved' : '0-Event Schedule Failed to Save';
+        return redirect('/events/'.$event->id)->with('status', $response);
     }
 
     /**

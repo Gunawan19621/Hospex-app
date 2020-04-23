@@ -63,8 +63,9 @@ class AreasController extends Controller
             'area_name'     => 'required',
             'event_id'      => 'required|numeric'
         ]);
-        Area::create($request->all());
-        return redirect('areas')->with('status','Area Saved');
+        $create=Area::create($request->all());
+        $response = $create ? '1-Area Saved' : '0-Area Failed to Save';
+        return redirect('areas')->with('status',$response);
     }
 
     /**
@@ -101,13 +102,14 @@ class AreasController extends Controller
     public function update(Request $request, Area $area)
     {
         $request->validate( [ 'event_id' => 'required|numeric', 'area_name' => 'required' ] );
-        Area::where('id', $area->id)
+        $update=Area::where('id', $area->id)
             ->update([
             'area_name'     => $request->area_name,
             'event_id'      => $request->event_id,
         ]);
        
-        return redirect('/areas')->with('status', 'Area Updated');
+        $response = $update ? '1-Area Updated' : '0-Area Failed to Update';
+        return redirect('/areas')->with('status',$response);
     }
 
     /**

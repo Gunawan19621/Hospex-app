@@ -52,8 +52,9 @@ class EventController extends Controller
         //     'event_location'    => $request->event_location
         // ]);
 
-        Event::create($request->all());
-        return redirect('/events')->with('status','Event Saved');
+        $create = Event::create($request->all());
+        $response = $create ? '1-Event Saved' : '0-Event Failed to Save';
+        return redirect('/events')->with('status',$response);
     }
 
     /**
@@ -65,7 +66,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event = Event::findorfail($event->id);
-        $schedules = $event->Schedules();
+        $schedules = $event->Schedules()
+                    ->orderBy('date');
         return view('event_schedule.schedules', compact('schedules','event'));
     }
 
@@ -91,12 +93,12 @@ class EventController extends Controller
     {
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|size:4',
+            'year'              => 'required|date_format:Y|after_or_equal:now',
             'city'              => 'required',
             'site_plan'         => 'required',
             'event_location'    => 'required'
         ]);
-        Event::where('id', $event->id)
+        $update =Event::where('id', $event->id)
                 ->update([
                     'event_title'       => $request->event_title,
                     'year'              => $request->year,
@@ -104,7 +106,9 @@ class EventController extends Controller
                     'site_plan'         => $request->site_plan,
                     'event_location'    => $request->event_location
                 ]);
-        return redirect('/events')->with('status', 'Event Updated');
+        
+        $response = $update ? '1-Event Updated' : '0-Event Failed to Update';
+        return redirect('/events')->with('status',$response);
     }
 
     /**
@@ -115,8 +119,9 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        Event::destroy($event->id);
-        return redirect('/events')->with('status', 'Event Deleted!');
+        $delete = Event::destroy($event->id);
+        $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
+        return redirect('/events')->with('status',$response);
     }
     public function getevents()
     {

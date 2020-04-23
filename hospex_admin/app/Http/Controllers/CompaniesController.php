@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CompaniesController extends Controller
 {
@@ -74,13 +75,25 @@ class CompaniesController extends Controller
             'company_web'              => 'required',
             'company_address'         => 'required',
         ]);
-        $company = Company::create([
-                'company_name'       => $request->company_name,
-                'company_email'      => $request->company_email,
-                'company_web'        => $request->company_web,
-                'company_address'    => $request->company_address,
-            ]);
-        $company->categories()->attach($request->categories);
+        try{
+            
+            DB::transaction(function() use ($request) {
+    
+                $company = Company::create([
+                    'company_name'       => $request->company_name,
+                    'company_email'      => $request->company_email,
+                    'company_web'        => $request->company_web,
+                    'company_address'    => $request->company_address,
+                ]);
+                $company->categories()->attach($request->categories);
+            });
+            DB::commit();
+            $response = '1-Category Saved';
+        } catch (\Exception $e){
+            DB::rollBack();
+            $response = '0-Category Failed to Save';
+        }
+       
         return redirect('/companies')->with('status','Company Saved');
     }
 
@@ -125,23 +138,36 @@ class CompaniesController extends Controller
     public function update(Request $request, Company $company)
     {
         $request->validate([
-            'company_name'       => 'required',
-            'company_email'              => 'required|E-mail',
-            'company_web'              => 'required',
-            'company_address'         => 'required',
+            'company_name'      => 'required',
+            'company_email'     => 'required|E-mail',
+            'company_web'       => 'required',
+            'company_address'   => 'required',
+            'categories'        => 'distinct'
         ]);
-        $ups = [3,4];
-         Company::whereId($company->id)
-                ->update([
-                    'company_name'       => $request->company_name,
-                    'company_email'      => $request->company_email,
-                    'company_web'        => $request->company_web,
-                    'company_address'    => $request->company_address,
-                ]);
-        $company = Company::find($company->id);
-        $company->categories()->sync($request->categories);
-
-        return redirect('/companies')->with('status', 'Company Updated');
+        try{
+            
+            DB::transaction(function() use ($company, $request) {
+    
+                Company::whereId($company->id)
+                    ->update([
+                        'company_name'       => $request->company_name,
+                        'company_email'      => $request->company_email,
+                        'company_web'        => $request->company_web,
+                        'company_address'    => $request->company_address,
+                    ]);
+    
+                $company = Company::find($company->id);
+                $company->categories()->sync($request->categories);
+            });
+            DB::commit();
+            $response = '1-Category Updated';
+        } catch (\Exception $e){
+            DB::rollBack();
+            $response = '0-Category Failed to Update';
+        }
+         
+        
+        return redirect('/companies')->with('status', $response);
     }
 
     /**

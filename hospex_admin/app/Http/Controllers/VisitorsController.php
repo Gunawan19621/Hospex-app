@@ -65,8 +65,9 @@ class VisitorsController extends Controller
             'visitor_email'   => 'required|email:rfc|unique:event_visitors,visitor_email',
             'company_id'      => 'required|numeric',
         ]);
-        Visitor::create($request->all());
-        return redirect('/visitors')->with('status','Visitor Saved');
+        $create = Visitor::create($request->all());
+        $response = $create ? '1-Visitor Saved!' : '0-Visitor Failed to Save!';
+        return redirect('/visitors')->with('status',$response);
     }
 
     /**
@@ -107,13 +108,14 @@ class VisitorsController extends Controller
             'visitor_email'   => 'required|email:rfc|unique:event_visitors,visitor_email,'.$visitor->id.',id',
             'company_id'      => 'required|numeric',
         ]);
-        Visitor::where('id',$visitor->id)
+        $update = Visitor::where('id',$visitor->id)
             ->update([
                 'visitor_name'    => $request->visitor_name,
                 'visitor_email'   => $request->visitor_email,
                 'company_id'      => $request->company_id,
             ]);
-        return redirect('/visitors')->with('status','Visitor Updated');
+        $response = $update ? '1-Visitor Updated!' : '0-Visitor Failed to Update!';
+        return redirect('/visitors')->with('status',$response);
     }
 
     /**
