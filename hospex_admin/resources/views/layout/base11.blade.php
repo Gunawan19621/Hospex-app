@@ -3103,6 +3103,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Page Scripts -->
 		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 

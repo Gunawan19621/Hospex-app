@@ -66,7 +66,8 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $event = Event::findorfail($event->id);
-        $schedules = $event->Schedules();
+        $schedules = $event->Schedules()
+                    ->orderBy('date');
         return view('event_schedule.schedules', compact('schedules','event'));
     }
 
