@@ -33,8 +33,8 @@
                                 <th scope="col">Event Title</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">City</th>
-                                <th scope="col">Site Plan</th>
                                 <th scope="col">Event Location</th>
+                                <th scope="col">Action</th>
                                 {{-- <th scope="col">Event Location</th>
                                 <th scope="col">Event Location</th>
                                 <th scope="col">Event Location</th>

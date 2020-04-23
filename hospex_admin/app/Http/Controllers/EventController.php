@@ -92,7 +92,7 @@ class EventController extends Controller
     {
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|size:4',
+            'year'              => 'required|date_format:Y|after_or_equal:now',
             'city'              => 'required',
             'site_plan'         => 'required',
             'event_location'    => 'required'

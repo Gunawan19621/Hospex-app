@@ -24,6 +24,15 @@ let flash = $('.flash').data('flash'),
     }
 
     $(document).ready(function(){
+        $(".year").datepicker( {
+            format: "yyyy",
+            viewMode: "years", 
+            minViewMode: "years",
+            startDate: 'today' 
+        }).on('changeDate', function(e){
+            $(this).datepicker('hide');
+        });
+
         if (!jQuery.isEmptyObject(flash)) {
             flash = flash.split('-');
             if (flash[0] == '1') {
