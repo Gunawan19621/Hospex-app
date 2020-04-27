@@ -21,4 +21,8 @@ class Event extends Model
     {
         return $this->hasMany(EventExhibitor::class);
     }
+    public function areas()
+    {
+        return $this->hasMany(Area::class);
+    }
 }
