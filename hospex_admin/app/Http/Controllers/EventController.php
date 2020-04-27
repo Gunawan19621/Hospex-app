@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use Illuminate\Http\Request;
-
+use App\Category;
+use App\Company;
+use App\Stand;
+use Illuminate\Support\Str;
 class EventController extends Controller
 {
     /**
@@ -127,5 +130,60 @@ class EventController extends Controller
     {
         $events['data'] = Event::all();
         return $events;
+    }
+    public function area(Event $event)
+    {
+        return $event->areas;
+    }
+    public function exhibitor(Event $event)
+    {
+        $exhibitors= $event->exhibitors;
+        $data=[];
+        foreach ($exhibitors as $key => $exhibitor) {
+            
+            $x['id']      = $exhibitor->id;
+            $x['company_name']      = $exhibitor->company->company_name;
+            $x['company_address']   = $exhibitor->company->company_address;
+            $catgories = $exhibitor->company->categories;
+            $item = '';
+            foreach ($catgories as $key => $category) {
+                $item .= $category->category_name;
+                $item = $key === count($catgories)-1 ? $item.'.' : $item.', ';
+            }
+           
+            $x['categories']        = $item;
+            $data[]=$x;
+
+        }
+        $title = 'Exhibitor';
+        // dd($event->exhibitors()->with('company'));
+        $query=$event->exhibitors()
+        ->with('company');
+        if(request()->ajax()){
+            return datatables()->of($query)
+                    ->addIndexColumn()
+                    ->addColumn(
+                        'categories',function($query){ 
+                            return $query->company->categories()->get()->map(function($item) {
+                                return $item->category_name;
+                            })->implode(', ');
+                        }
+                    )
+                    ->addColumn('action', function($data){
+                        $button = '<span class="dropdown">
+                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                            <div class="dropdown-menu dropdown-menu-right">       
+                                <a class="dropdown-item" href="'.url('exhibitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                            </div>
+                        </span>';
+                        $button .= '<a href="{{ url(`events/$data->id`) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
+                        return $button;
+                    })
+                ->rawColumns(['action','company'])
+                ->make(true);
+        }
+        
+        return view('exhibitor.event',compact('title'));
     }
 }
