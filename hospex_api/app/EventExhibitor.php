@@ -25,4 +25,9 @@ class EventExhibitor extends Model
     {
         return $this->hasMany(MatchRequest::class,'event_exhibitor_id','id');
     }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'usertable');
+    }
+    
 }

@@ -6,7 +6,7 @@ use App\EventExhibitor;
 use App\Event;
 use App\Company;
 use Illuminate\Http\Request;
-// use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule;
 use Validator;
 
 class EventExhibitorsController extends Controller
@@ -73,7 +73,6 @@ class EventExhibitorsController extends Controller
        
         $validator = Validator::make($request->all(),
                 [
-                    'bb' => ['required','numeric' ], 
                     'event_id' => ['required','numeric' ], 
                     "company_id.*" => ['required','numeric', 'distinct', 'unique:event_exhibitors,company_id,NULL,id,event_id,' . $request->event_id]
                 ],

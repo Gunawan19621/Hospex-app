@@ -26,7 +26,7 @@ class AddStatusToMatchRequests extends Migration
     public function down()
     {
         Schema::table('match_requests', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
         });
     }
 }

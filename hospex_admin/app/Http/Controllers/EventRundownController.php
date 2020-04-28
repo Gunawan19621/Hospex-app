@@ -49,10 +49,9 @@ class EventRundownController extends Controller
             'time'      => $request->time,
             'duration'  => $request->taskduration
         ]);
-
         $create = $schedule->rundowns()->save($rundown);
         $response = $create ? '1-Rundown Saved' : '0-Rundown Failed to Save';
-        return redirect('/eventschedules/'.$schedule->id)->with('status', $response);
+        return redirect('/events/'.$schedule->id)->with('status', $response);
     }
 
     /**
