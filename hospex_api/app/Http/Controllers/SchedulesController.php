@@ -30,9 +30,19 @@ class SchedulesController extends Controller
         foreach ($schedules as $key => $schedule) {
             
                 $data[] = [
-                    'id'       => $schedule->id,
-                    'day'       => Carbon::parse($schedule->date)->format('l'),
-                    'date'      => Carbon::createFromDate($schedule->date)->format('d M, Y ')
+                    'id'            => $schedule->id,
+                    'hari'          => Carbon::parse($schedule->date)->format('l'),
+                    'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
+                    'acara'         => $schedule->rundowns()->get()->map(function($item){
+                        return [
+                            "tema"         => $item->task,
+                            "pengisi"      => $item->performers()->get()->map(function($performer){
+                                                return ['nama' => $performer->name];
+                                    }),
+                            "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
+                            "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
+                        ];
+                    }),
                 ];
 
         }

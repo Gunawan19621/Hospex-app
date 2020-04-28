@@ -23,6 +23,6 @@ class RenameCategoryCompaniesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::rename('category_company', 'category_companies');
     }
 }

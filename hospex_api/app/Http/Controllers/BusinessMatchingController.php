@@ -13,7 +13,7 @@ class BusinessMatchingController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('login');
     }
 
     public function index()
@@ -33,11 +33,11 @@ class BusinessMatchingController extends Controller
                 ];
         }
        
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Found',
-                'data'      => $data
-            ],200);
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Found',
+            'data'      => $data
+        ],200);
        
         
     }
@@ -59,13 +59,14 @@ class BusinessMatchingController extends Controller
     }
     public function store(Request $request)
     {
-        $date = date('Y-m-d', strtotime('27-10-2020'));
-        $exhibitor_id       = $request->input('event_exhibitor_id');
-        $visitor_id       = $request->input('visitor_id');
-        $notes       = $request->input('notes');
+        $date = date('Y-m-d', strtotime($request->input('date')));
+        $exhibitor_id       = $request->input('exhibitor_id');
+        $visitor_id         = $request->input('visitor_id');
+        $location           = $request->input('location');
+        $notes              = $request->input('notes');
         $match = MatchRequest::create([
             'date'                      => $date,
-            'location'                  => 'Benhill',
+            'location'                  => $location,
             'event_exhibitor_id'        => $exhibitor_id,
             'visitor_id'                => $visitor_id,
             'notes'                     => $notes,

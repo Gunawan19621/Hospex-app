@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Event;
 use App\EventSchedule;
 use App\EventRundown;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +39,8 @@ Route::get('/events/create','EventController@create');
 Route::get('/events/{event}','EventController@show');
 Route::delete('/events/{event}','EventController@destroy');
 Route::get('/events/{event}/edit','EventController@edit');
+Route::get('/events/{event}/exhibitor','EventController@exhibitor');
+Route::get('/events/{event}/area','EventController@area')->name('events.area');
 Route::patch('/events/{event}','EventController@update');
 // yg atas adalah route default maka bisa diganti dengan yg bawah
 // Route::resource('events','EventController');
@@ -83,5 +86,14 @@ Route::get('/', function(){
     return view('layout.content');
 });
 
+Route::get('/read', function(){
+    $user = User::findorfail(1);
+    return $user->usertable;
+});
 
 
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

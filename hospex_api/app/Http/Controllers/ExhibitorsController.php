@@ -20,24 +20,24 @@ class ExhibitorsController extends Controller
     public function index()
     {
         $eventId = eventId::GetEvent();
-        $exhibitors = exhibitor::where('event_id', $eventId)->get();
+        $exhibitors = exhibitor::where('event_id', 1)->get();
         
         $data= [];
 
         foreach ($exhibitors as $key => $exhibitor) {
             
-                $x['company_name']      = $exhibitor->company->company_name;
-                $x['company_address']   = $exhibitor->company->company_address;
-                $catgories = $exhibitor->company->categories;
-                $item = '';
-                foreach ($catgories as $key => $category) {
-                    $item .= $category->category_name;
-                    $item = $key === count($catgories)-1 ? $item.'.' : $item.', ';
-
-                }
-                
-                $x['categories']        = $item;
-                $data[]=$x;
+            $data[] = [
+                'id_exhibitor'  => $exhibitor->id, 
+                'nama'          => $exhibitor->company->company_name,
+                'alamat'        => $exhibitor->company->company_address,
+                'website'       => $exhibitor->company->company_web,
+                'email'         => $exhibitor->company->company_email,
+                'info'          => $exhibitor->company->company_info,
+                'event_title'   => $exhibitor->event->event_title,
+                'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                    return $item->category_name;
+                })->implode(', '),
+            ];
 
         }
 
@@ -60,13 +60,18 @@ class ExhibitorsController extends Controller
     {
         $exhibitor = exhibitor::findorfail($id);
         $data = [
-            'company_name'          => $exhibitor->company->company_name,
-            'company_address'       => $exhibitor->company->company_address,
-            'company_web'           => $exhibitor->company->company_web,
-            'company_email'         => $exhibitor->company->company_email,
-            'company_info'          => $exhibitor->company->company_info,
-            'event_title'           => $exhibitor->event->event_title
+            'id_exhibitor'  => $exhibitor->id, 
+            'nama'          => $exhibitor->company->company_name,
+            'alamat'        => $exhibitor->company->company_address,
+            'website'       => $exhibitor->company->company_web,
+            'email'         => $exhibitor->company->company_email,
+            'info'          => $exhibitor->company->company_info,
+            'event_title'   => $exhibitor->event->event_title,
+            'stand'         => $exhibitor->stands()->get()->map(function($item) {
+                return $item->stand_name;
+            })->implode(', '),
         ];
+      
         if (count($data) > 0) {
             return response()->json([
                 'success'   => true,

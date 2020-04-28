@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visitor extends Model
 {
     protected $table    = 'event_visitors';
-    protected $fillable= ['visitor_name','visitor_email','company_id'];
+    protected $fillable = ['visitor_name','visitor_email','company_id'];
 
     public function company()
     {
@@ -16,5 +16,9 @@ class Visitor extends Model
     public function matches()
     {
         return $this->hasMany(MatchRequest::class);
+    }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'usertable');
     }
 }

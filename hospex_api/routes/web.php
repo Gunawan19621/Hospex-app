@@ -1,6 +1,9 @@
 <?php
 use Illuminate\Support\Str;
 use App\Helpers\GetEvent;
+use App\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +40,27 @@ $router->get('/match', 'BusinessMatchingController@index');
 $router->get('/schedules', 'SchedulesController@index');
 $router->get('/schedules/{id}', 'SchedulesController@show');
 
-$router->get('/helper', function () {
+$router->get('/event', function () {
     return GetEvent::GetEvent();
+});
+
+
+$router->post('/register', 'AuthController@register');
+$router->post('/login', 'AuthController@login');
+$router->get('/read', function(){
+    $user = User::whereHasMorph(
+            'usertable',
+            ['App\EventExhibitor', 'App\Visitor'],
+            function (Builder $query, $type) {
+                if ($type === 'App\Visitor') {
+                    $query->where('visitor_email', 'like', 'mail@md.co.id');
+                }
+                if ($type === 'App\EventExhibitor') {
+                    $query->whereHas('company', function (Builder $subquery) {
+                        $subquery->where('company_email', 'like', 'mail@md.co.id');
+                    });
+                }       
+            }
+        )->where('password', '$2y$10$JHQU1g4D5a44soPb.TwNGu8OnZrrFxChxDmau/SUQOubcQcIvoJ3a')->get();
+    return $user;
 });

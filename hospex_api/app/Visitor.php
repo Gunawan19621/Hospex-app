@@ -17,4 +17,8 @@ class Visitor extends Model
     {
         return $this->hasMany(MatchRequest::class);
     }
+    public function user()
+    {
+        return $this->morphOne(User::class, 'usertable');
+    }
 }
