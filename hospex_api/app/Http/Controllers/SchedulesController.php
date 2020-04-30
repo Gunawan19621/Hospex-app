@@ -36,6 +36,7 @@ class SchedulesController extends Controller
                     'acara'         => $schedule->rundowns()->get()->map(function($item){
                         return [
                             "tema"         => $item->task,
+                            "lokasi"       => $item->location,
                             "pengisi"      => $item->performers()->get()->map(function($performer){
                                                 return ['nama' => $performer->name];
                                     }),

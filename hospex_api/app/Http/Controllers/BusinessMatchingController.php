@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MatchRequest;
+use Illuminate\Support\Arr;
 
 class BusinessMatchingController extends Controller
 {
@@ -13,7 +14,7 @@ class BusinessMatchingController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('login');
+        // $this->middleware('login');
     }
 
     public function index()
@@ -23,21 +24,34 @@ class BusinessMatchingController extends Controller
         foreach ($matches as $key => $match) {
             $stands = $match->exhibitor->stands;
             $item = '';
+            $dist = 0;
             foreach ($stands as $key => $stand) {
-                $item .= $stand->stand_name;
-                $item = $key === count($stands)-1 ? $item.'.' : $item.', ';
+                // $item .= $stand->stand_name;
+                // $item = $key === count($stands)-1 ? $item.'' : $item.', ';
+                if ($dist != $stand->area_id) {
+                    $item .= '('.$stand->stand_name;
+                }else{
+                    $item .= ')';
+                }
+                $dist = $stand->area_id;
             }
             $data[]  = [
                  'company_name' => $match->exhibitor->company->company_name,
-                 'stands'       => $item,
+                //  'stands'       => $match->exhibitor->stands()->get()->map(function($item) {
+                //                     return $item->area->area_name.' ( '.$item->stand_name.' )';
+                //                 })->implode(', '),
+                'stands'        => $item
                 ];
+                $d[]= $match->exhibitor->stands()->get()->map(function($item) {
+                    return [$item->area->area_name => $item->stand_name];
+                });
         }
        
         return response()->json([
             'success'   => true,
-            'message'   => 'Data Found',
+            'message'   => 'Data Successfull Created',
             'data'      => $data
-        ],200);
+        ],201);
        
         
     }
@@ -75,7 +89,7 @@ class BusinessMatchingController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Succesfull Created',
-            'data'      => $match
+            'data'      => collect($match)->except('created_at', 'updated_at')
         ],201);
     }
 }

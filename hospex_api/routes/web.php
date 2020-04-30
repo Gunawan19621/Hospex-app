@@ -2,6 +2,7 @@
 use Illuminate\Support\Str;
 use App\Helpers\GetEvent;
 use App\User;
+use App\Event;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Hash;
 
@@ -41,7 +42,21 @@ $router->get('/schedules', 'SchedulesController@index');
 $router->get('/schedules/{id}', 'SchedulesController@show');
 
 $router->get('/event', function () {
-    return GetEvent::GetEvent();
+    $id = GetEvent::GetEvent();
+    $data = Event::whereId($id)->select(['id','event_title','year','event_location','city','site_plan'])->get();
+    if (!$data->isEmpty()) {
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Found',
+            'data'      => $data
+        ],200);
+    } else {
+        return response()->json([
+            'success'   => False,
+            'message'   => 'Data Not Found',
+            'data'      => ''
+        ],404);
+    }
 });
 
 

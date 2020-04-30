@@ -15,11 +15,12 @@ class CreateStandsTable extends Migration
     {
         Schema::create('stands', function (Blueprint $table) {
             $table->id();
-            $table->string('stand_name')->unique();
+            $table->string('stand_name');
             $table->unsignedBigInteger('area_id');
             $table->foreign('area_id')->references('id')->on('areas')->onDelete('cascade');
             $table->unsignedBigInteger('event_exhibitor_id');
             $table->foreign('event_exhibitor_id')->references('id')->on('event_exhibitors')->onDelete('cascade');
+            $table->unique(['stand_name','area_id']);
             $table->timestamps();
         });
     }

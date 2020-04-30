@@ -110,12 +110,14 @@ class DumiesTableseeder extends Seeder
                 'task'              => 'Sambutan',
                 'duration'          => '20',
                 'time'              => Carbon::createFromTimeString('10:00:00','Asia/Jakarta'),
+                'location'          => 'Auditorium',
                 'event_schedule_id' => '1'
             ],
             [
                 'task'              => 'Seminar SIM-RS',
                 'duration'          => '177',
                 'time'              => Carbon::createFromTimeString('10:40:00','Asia/Jakarta'),
+                'location'          => 'Panggung Utama',
                 'event_schedule_id' => '1'
             ],
         ];
@@ -215,11 +217,6 @@ class DumiesTableseeder extends Seeder
             [
                 'stand_name'            => 'A1',
                 'area_id'               => '5',
-                'event_exhibitor_id'    => '1',
-            ],
-            [
-                'stand_name'            => 'A1',
-                'area_id'               => '5',
                 'event_exhibitor_id'    => '3',
             ],
             [
@@ -239,6 +236,7 @@ class DumiesTableseeder extends Seeder
             ],
            
         ];
+        DB::table('stands')->insert($stands);
         
     }
 }
