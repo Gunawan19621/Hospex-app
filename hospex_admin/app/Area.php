@@ -14,6 +14,6 @@ class Area extends Model
     }
     public function stands()
     {
-        return $this->hasMany(Stand::class);
+        return $this->hasMany(Stand::class,'area_id','id');
     }
 }

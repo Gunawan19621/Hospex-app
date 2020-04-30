@@ -18,6 +18,7 @@ class CreateEventsRundownTable extends Migration
             $table->time('time');
             $table->string('task');
             $table->integer('duration');
+            $table->string('location');
             $table->foreignId('event_schedule_id')->references('id')->on('event_schedules');
             $table->timestamps();
         });

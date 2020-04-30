@@ -16,7 +16,7 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Exhibitor List
+                            Stand List
                         </h3>
                         </div>
                     </div>
@@ -30,10 +30,9 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
-                                <th scope="col" width="20%">Exhibitor</th>
-                                <th scope="col" width="35%">Address</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Categories</th>
+                                <th scope="col" width="20%">Stand</th>
+                                <th scope="col" width="35%">Exhibitor</th>
+                                <th scope="col">Area</th>
                                 <th scope="col" width="7%">Action</th>
                             </tr>
                         </thead>
@@ -57,31 +56,30 @@
             ajax : {
                 url : "{{ url()->current() }}",
             },
+            // columnDefs: [
+            //     { "visible": false, "targets": [2] }
+            // ],
             columns:[
                 {
-                    data: 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false
+                    data: 'DT_RowIndex', orderable: false, searchable: false
                 },
                 {
-                    data : "company.company_name", name : "company_name",
+                    data : "stand_name", name : "stand_name",
                 },
                 {
-                    data : "company.company_address", name : "company_address",
+                    data : "company_name", name : "company_name",
                 },
                 {
-                    data : "company.company_email", name : "company_email",
+                    data : "area_name", name : "area_name",
                 },
                 {
-                    data : "categories", name : "categories",
-                },
-                
-                {
-                    data:"action",
-                    name: "action",
-                    orderable: false
+                    data:"action",  name: "action",  orderable: false
                 }
-            ]
+            ],
+        //     rowGroup: { 
+        //         dataSrc: 'area_name'
+        // },
+            rowsGroup: [3,2],
         })
        
     })
