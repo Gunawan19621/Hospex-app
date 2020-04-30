@@ -3097,6 +3097,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Page Vendors -->
         <script src="{{ url('assets11/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>
         <script src="{{ url('assets11/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
+        <script src="{{ url('assets11/dataTables.rowsGroup.js') }}" type="text/javascript"></script>
+        <script src="{{ url('assets11/dataTables.rowGroup.min.js') }}" type="text/javascript"></script>
         @yield('require')
 		<!--end::Page Vendors -->
 

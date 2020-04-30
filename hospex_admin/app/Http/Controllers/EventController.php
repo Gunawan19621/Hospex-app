@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\Company;
 use App\Stand;
+use App\Area;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Builder;
 class EventController extends Controller
 {
     /**
@@ -133,7 +135,34 @@ class EventController extends Controller
     }
     public function area(Event $event)
     {
-        return $event->areas;
+        $title = 'Stand Event';
+        if(request()->ajax()){
+            $data = collect($event->areas)->map(function($item, $key){
+                return collect($item->stands)->map(function($stand, $index) use($item){
+                    return [
+                        'stand_name'        => $stand->stand_name,
+                        'company_name'      => $stand->exhibitor->company->company_name,
+                        'area_name'         => $item->area_name
+                    ];
+                });
+            });
+            return datatables()->of($data->collapse())
+                    ->addIndexColumn()
+                    ->addColumn('action', function($data){
+                        $button = '<span class="dropdown">
+                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                            <div class="dropdown-menu dropdown-menu-right">       
+                                <a class="dropdown-item" href="'.url('exhibitors//edit').'"><i class="la la-edit"></i> Edit</a>        
+                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                            </div>
+                        </span>';
+                        $button .= '<a href="{{ url(`events/$data->id`) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
+                        return $button;
+                    })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('stand.stand_event', compact('title'));
     }
     public function exhibitor(Event $event)
     {

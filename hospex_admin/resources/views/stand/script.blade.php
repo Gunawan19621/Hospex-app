@@ -31,7 +31,10 @@
                     name: "action",
                     orderable: false
                 }
-            ]
+            ],
+             rowGroup: {
+            dataSrc: ['event_info']
+        },
         })
        
     })
