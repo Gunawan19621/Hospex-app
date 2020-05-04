@@ -67,10 +67,13 @@ class ExhibitorsController extends Controller
             'email'         => $exhibitor->company->company_email,
             'info'          => $exhibitor->company->company_info,
             'event_title'   => $exhibitor->event->event_title,
+            'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                                    return $item->category_name;
+                                })->implode(', '),
             'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
-                                    return  $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item) {
-                                            return ($item->area->id ===  $stand->area_id ? $stand->stand_name : false);
-                                            })->filter()->implode(', ').' )' ;
+                                    return  $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
+                                        return ($item->area->id ===  $stand->area_id ? $stand->stand_name : false);
+                                    })->filter()->implode(', ').' )' ;
                                 })->implode(', '),
         ];
       

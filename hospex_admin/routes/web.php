@@ -41,6 +41,7 @@ Route::delete('/events/{event}','EventController@destroy');
 Route::get('/events/{event}/edit','EventController@edit');
 Route::get('/events/{event}/exhibitor','EventController@exhibitor');
 Route::get('/events/{event}/area','EventController@area')->name('events.area');
+Route::get('/events/{event}/site-plan','EventController@siteplan')->name('events.area');
 Route::patch('/events/{event}','EventController@update');
 // yg atas adalah route default maka bisa diganti dengan yg bawah
 // Route::resource('events','EventController');

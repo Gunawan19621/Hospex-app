@@ -3074,7 +3074,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- end::Scroll Top -->
 
 		<!-- begin::Quick Nav -->
-		<ul class="m-nav-sticky" style="margin-top: 30px;">
+		{{-- <ul class="m-nav-sticky" style="margin-top: 30px;">
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Purchase" data-placement="left">
 				<a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank"><i class="la la-cart-arrow-down"></i></a>
 			</li>
@@ -3084,7 +3084,7 @@ License: You must have a valid license purchased only from themeforest(the above
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Support" data-placement="left">
 				<a href="https://keenthemes.com/forums/forum/support/metronic5/" target="_blank"><i class="la la-life-ring"></i></a>
 			</li>
-		</ul>
+		</ul> --}}
 
 		<!-- begin::Quick Nav -->
 

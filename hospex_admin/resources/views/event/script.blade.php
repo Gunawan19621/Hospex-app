@@ -134,7 +134,7 @@ $(document).ready(function(){
                             <a class="dropdown-item" href="{{ url('events/${t.id}/exhibitor') }}"><i class="la la-edit"></i> Exhibitor</a>        
                         </div>
                     </span>
-                    <a href="{{ url('events/${t.id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`
+                    <a href="{{ url('events/${t.id}/site-plan') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`
             },
         }
                 ]

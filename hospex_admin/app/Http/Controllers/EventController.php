@@ -10,6 +10,7 @@ use App\Stand;
 use App\Area;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 class EventController extends Controller
 {
     /**
@@ -70,10 +71,16 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $title = 'Exhibitors';
         $event = Event::findorfail($event->id);
         $schedules = $event->Schedules()
                     ->orderBy('date');
-        return view('event_schedule.schedules', compact('schedules','event'));
+        return view('event_schedule.schedules', compact('schedules','event','title'));
+    }
+    public function siteplan(Event $event)
+    {
+        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
+        return $slice;
     }
 
     /**
