@@ -10,16 +10,34 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!--begin::Global Theme Styles -->
+    <link href="{{ url('assets11/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
 
+    <!--RTL version:<link href="../../../assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+    <link href="{{ url('assets11/demo/demo11/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+    <!--RTL version:<link href="../../../assets/demo/default/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
+
+    <!--end::Global Theme Styles -->
+    <link rel="shortcut icon" href="{{ url('assets11/demo/demo11/media/img/logo/favicon.ico')}}" />
+    <!--begin::Web font -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+        google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+        active: function() {
+            sessionStorage.fonts = true;
+        }
+        });
+    </script>
+
+    <!--end::Web font -->
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
-<body>
+<body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -76,5 +94,15 @@
             @yield('content')
         </main>
     </div>
+<!--begin::Global Theme Bundle -->
+<script src="{{ url('assets11/vendors/base/vendors.bundle.js')}}" type="text/javascript"></script>
+<script src="{{ url('assets11/demo/demo11/base/scripts.bundle.js')}}" type="text/javascript"></script>
+
+<!--end::Global Theme Bundle -->
+
+<!--begin::Page Scripts -->
+<script src="{{ url('assets11/snippets/custom/pages/user/login.js')}}" type="text/javascript"></script>
+
+<!--end::Page Scripts -->
 </body>
 </html>

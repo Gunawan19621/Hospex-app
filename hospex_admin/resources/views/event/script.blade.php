@@ -132,6 +132,7 @@ $(document).ready(function(){
                             <a class="dropdown-item" href="{{ url('events/${t.id}') }}"><i class="la la-edit"></i> Schedule</a>        
                             <a class="dropdown-item" href="{{ url('events/${t.id}/area') }}"><i class="la la-edit"></i> Area</a>        
                             <a class="dropdown-item" href="{{ url('events/${t.id}/exhibitor') }}"><i class="la la-edit"></i> Exhibitor</a>        
+                            <a class="dropdown-item" href="{{ url('events/${t.id}/upload-site-plan') }}"><i class="la la-edit"></i> Upload SIteplan</a>        
                         </div>
                     </span>
                     <a href="{{ url('events/${t.id}/site-plan') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`

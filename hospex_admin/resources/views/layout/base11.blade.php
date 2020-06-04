@@ -20,6 +20,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<title>@yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<!--begin::Web font -->
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
@@ -393,7 +394,7 @@ License: You must have a valid license purchased only from themeforest(the above
 																<li class="m-nav__section m--hide">
 																	<span class="m-nav__section-text">Section</span>
 																</li>
-																<li class="m-nav__item">
+																{{-- <li class="m-nav__item">
 																	<a href="profile.html" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-profile-1"></i>
 																		<span class="m-nav__link-title">
@@ -429,11 +430,20 @@ License: You must have a valid license purchased only from themeforest(the above
 																		<i class="m-nav__link-icon flaticon-lifebuoy"></i>
 																		<span class="m-nav__link-text">Support</span>
 																	</a>
-																</li>
+																</li> --}}
 																<li class="m-nav__separator m-nav__separator--fit">
 																</li>
+																
 																<li class="m-nav__item">
-																	<a href="snippets/pages/user/login-1.html" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+																	<a class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" href="{{ route('logout') }}"
+																	   onclick="event.preventDefault();
+																					 document.getElementById('logout-form').submit();">
+																		{{ __('Logout') }}
+																	</a>
+								
+																	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+																		@csrf
+																	</form>
 																</li>
 															</ul>
 														</div>
@@ -3106,6 +3116,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 
