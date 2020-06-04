@@ -161,7 +161,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-topbar__nav-wrapper">
 									<ul class="m-topbar__nav m-nav m-nav--inline">
-										<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
+										{{-- <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
 										 m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
@@ -363,7 +363,7 @@ License: You must have a valid license purchased only from themeforest(the above
 													</div>
 												</div>
 											</div>
-										</li>
+										</li> --}}
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
@@ -499,11 +499,15 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('matches') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Match Requests</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a></li>
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-graphic-1"></i><span
-									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge">
+										 {{-- <span class="m-badge m-badge--accent">3</span> --}}
+									</span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Masters</span> <span
-														 class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span></span></li>
+														 class="m-menu__link-badge">
+														 {{-- <span class="m-badge m-badge--accent">3</span> --}}
+														</span> </span></span></span></li>
 										{{-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Reports</span></a></li> --}}
 										<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">Company Master</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -3119,8 +3123,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
-
-		@include('script-global')
+	@include('script-global')
 	</body>
 
 	<!-- end::Body -->

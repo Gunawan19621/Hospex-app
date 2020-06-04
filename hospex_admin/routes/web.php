@@ -83,6 +83,7 @@ Route::resource('visitors', 'VisitorsController');
 
 // Matches
 Route::resource('matches', 'MatchRequestsController');
+Route::get('/matches/{ match }/approve','MatchRequestsController@update');
 
 
 Route::get('/ambil',function(){
@@ -94,6 +95,14 @@ Route::get('/ambil',function(){
 Route::get('/', function(){
     return view('layout.content');
 })->middleware('auth');;
+Route::get('/notifications', function(){
+    return view('html');
+});
+Route::get('test', function () {
+    event(new App\Events\MatchReq('Lulu'));
+    return "Event has been sent!";
+});
+
 
 Route::get('/read', function(){
     $user = User::findorfail(1);
