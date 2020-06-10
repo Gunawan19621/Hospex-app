@@ -10,7 +10,7 @@
                 <h3 class="m-subheader__title ">Dashboard</h3>
             </div>
             <div>
-                <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                {{-- <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
                     <span class="m-subheader__daterange-label">
                         <span class="m-subheader__daterange-title"></span>
                         <span class="m-subheader__daterange-date m--font-brand"></span>
@@ -18,7 +18,7 @@
                     <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--square">
                         <i class="la la-angle-down"></i>
                     </a>
-                </span>
+                </span> --}}
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
     <!-- END: Subheader -->
     <div class="m-content">
 
-        <!--begin:: Widgets/Stats-->
+        {{-- <!--begin:: Widgets/Stats-->
         <div class="m-portlet  m-portlet--unair">
             <div class="m-portlet__body  m-portlet__body--no-padding">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
@@ -1998,7 +1998,7 @@
             </div>
         </div>
 
-        <!--End::Section-->
+        <!--End::Section--> --}}
     </div>
 </div>
 @endsection

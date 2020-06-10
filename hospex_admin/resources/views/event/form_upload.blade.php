@@ -32,24 +32,23 @@
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions m-form__actions">
-                <div class="row">
-                    <div class="col-lg-9 ml-lg-auto" id="preview">
+                    <div class="col-md-10"
+                    style="margin-bottom:0px;" align="center" id="preview">
                         
                     </div>
-                </div>
             </div>
         </div>
        
 
         <!--end::Form-->
     </div>
-    <div class="m-portlet__body" id="preview1" >
+    {{-- <div class="m-portlet__body" id="preview1" >
         <div class="col-md-10"
         style="margin-bottom:0px;" align="center">
         <embed src="{{ route('dropzone.fetch') ?: '' }}" 
          style="width:1380px; height:800px;" frameborder="0" />
         </div>
-    </div>
+    </div> --}}
 
     <!--end::Portlet-->
 @endsection
@@ -102,16 +101,37 @@
     };
     list_image();
     function list_image(){
-        
-        $.ajax({
-            url : "{{ route('dropzone.fetch') }}",
-            // dataType:'file',
-            success: function(data){
-                // $('#preview').html(data);
-                // alert('ok')
+        var pdf_url = " {{ route('dropzone.fetch') }} ";
+        // $.ajax({
+        //     url : "{{ route('dropzone.fetch') }}",
+        //     // cache: false,
+        //     contentType: 'application/json',
+        //     // processData: false,
+        //     success: function(response){
+        //         // alert('ok')
+        //         // var file = fileName;
+        //         $('#preview').html(file_gets_contents(response));
+        // // window.location = "someFilePath?file=" + file;
+        //         // console.log(file_gets_contents(data))
 
+        //     }
+        // })
+        $.ajax({
+            url: '',
+            type: 'GET',
+            processData: false,
+            xhrFields: { withCredentials: true },
+            success: function () {
+                var iframe = $('<embed id="iframe-pdf" class="iframe-pdf"  style="width:1380px; height:800px;" frameborder="0" ></embed>');
+
+                iframe.attr('src', pdf_url);
+                // iframe.load(function () {
+                //     btn_generate_pdf.text(old_text).removeClass('disabled').css('pointer-events', '');
+                //     div_iframe.show();
+                // });
+                $('#preview').html(iframe);
             }
-        })
+        });
         // PDFObject.embed("{{ route('dropzone.fetch') }}", "#preview");
     }
     $(document).on('click', '.remove_image', function deleteImage(){

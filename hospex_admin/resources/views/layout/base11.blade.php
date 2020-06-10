@@ -145,9 +145,9 @@ License: You must have a valid license purchased only from themeforest(the above
 									<!-- END -->
 
 									<!-- BEGIN: Topbar Toggler -->
-									<a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+									{{-- <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
 										<i class="flaticon-more"></i>
-									</a>
+									</a> --}}
 
 									<!-- BEGIN: Topbar Toggler -->
 								</div>
@@ -451,11 +451,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												</div>
 											</div>
 										</li>
-										<li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar">
+										{{-- <li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-nav__link-icon"><i class="flaticon-grid-menu"></i></span>
 											</a>
-										</li>
+										</li> --}}
 									</ul>
 								</div>
 							</div>
@@ -2625,7 +2625,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- end:: Page -->
 
 		<!-- begin::Quick Sidebar -->
-		<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
+		{{-- <div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
 			<div class="m-quick-sidebar__content m--hide">
 				<span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
 				<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
@@ -3076,7 +3076,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --}}
 
 		<!-- end::Quick Sidebar -->
 

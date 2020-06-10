@@ -96,8 +96,8 @@ class EventController extends Controller
         $fileName = $event->site_plan;
         // $destinationPath = public_path('images/');
 
-        if ( Storage::disk('logs')->exists($fileName)) {
-            $file = Storage::disk('logs')->get($fileName);
+        if ( Storage::disk('logs')->exists('event/'.$fileName)) {
+            $file = Storage::disk('logs')->get('event/'.$fileName);
            
             $response = Response::make($file,200);
             $response->header('Content-Type', 'application/pdf');
@@ -257,36 +257,47 @@ class EventController extends Controller
     public function fileStore(Request $request, Event $event)
     {
         if($request->hasFile('file')) {
-
+            
             // Upload path
-            $destinationPath = public_path('images/');
-     
+            // $destinationPath = public_path('images/');
+            
             // Create directory if not exists
-            if (!file_exists($destinationPath)) {
-               mkdir($destinationPath, 0755, true);
-            }
-     
+            // if (!$directories = Storage::directories($destinationPath)) {
+            //     // return $destinationPath;
+            //     Storage::makeDirectory($destinationPath, 0755, true, true);
+            // }
+            
             // Get file extension
             $extension = $request->file('file')->getClientOriginalExtension();
-     
+            
             // Valid extensions
             $validextensions = array("jpeg","jpg","png","pdf");
-     
+            
             // Check extension
             if(in_array(strtolower($extension), $validextensions)){
-     
-              // Rename file 
-              $fileName = Str::slug($event->event_title.' '.$event->year.' '.$event->location).'.' . $extension;
                 
-              // Delete File if exists
-                // if (file_exists($destinationPath.$fileName)) {
-                //     Storage::delete(public_path($destinationPath.$fileName));
-                // }
-                $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
-     
-              // Uploading file to given path
-              $request->file('file')->move($destinationPath, $fileName); 
-              return response()->json(['success' => $fileName]);
+                // Rename file 
+                $fileName = Str::slug($event->event_title.' '.$event->year.' '.$event->location).'.' . $extension;
+                
+                // Delete File if exists
+                // if (Storage::disk('logs')->exists($fileName)) {
+                //         // Storage::delete(public_path($destinationPath.$fileName));
+                //         Storage::disk('logs')->delete($fileName);
+
+
+                //     }
+                    $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
+                    
+                    // Uploading file to given path
+                   // $request->file('file')->move($destinationPath, $fileName); 
+                //    return $fileName;
+                  $up =  Storage::disk('logs')->putFileAs('event', $request->file('file'), $fileName);
+                  if ($up == false) {
+                      # code...
+                      return 'gagal';
+                    }else{
+                        return response()->json(['success' => $fileName]);
+                  }
      
             }
             
@@ -296,7 +307,7 @@ class EventController extends Controller
     {
 
         $fileName = 'hospex-jakarta-2020.pdf';
-        $destinationPath = public_path('images/'.$fileName);
+        // $destinationPath = public_path('images/'.$fileName);
       
 
         // $filename = 'test.pdf';
@@ -306,16 +317,16 @@ class EventController extends Controller
         //         'Content-Disposition' => 'inline; filename="'.$fileName.'"'
                 
         //     ]);
-        $exists = Storage::disk('logs')->exists($fileName);
+        $exists = Storage::disk('logs')->exists('event/'.$fileName);
         if ($exists) {
-            $images =  Storage::disk('logs')->get($fileName);
+            $images =  Storage::disk('logs')->get('event/'.$fileName);
             // $images = {{ Storage::path('screenshots/1.jpg') }};
             // $output = '<div class="row">';
             // // foreach($images as $image){
             //     $output .= '
             //         <div class="col-md-10"
             //         style="margin-bottom:0px;" align="center">
-            //         <embed src="{{'.  Storage::disk('logs')->get($fileName) . '}}"
+            //         <embed src="{{'.  $images . '}}"
             //          style="width:1380px; height:800px;" frameborder="0" />
             //         </div>
             //         ';
@@ -323,11 +334,17 @@ class EventController extends Controller
             // // }
             // $output .= '</div>';
             // echo $output;
+            // $headers = [
+            //     'Content-Type' => 'application/pdf',
+            //  ];
+  
+            //  return Response::download($images , 'filename');
+  
              return Response::make($images, 200, [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="'.$fileName.'"'
-                
-            ]);
+                'Content-Disposition' => 'inline; filename="titke"'
+
+                ]);
         }else{
             echo 'gaada';
         }
