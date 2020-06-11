@@ -32,7 +32,14 @@ let flash = $('.flash').data('flash'),
         }).on('changeDate', function(e){
             $(this).datepicker('hide');
         });
+        $('.inpuat-time').timepicker({
+            timeFormat: 'HH:ii',
+                interval: 60,
+                defaultTime: '10',
 
+        });
+    })
+    function alertMessage(flash){
         if (!jQuery.isEmptyObject(flash)) {
             flash = flash.split('-');
             if (flash[0] == '1') {
@@ -50,7 +57,8 @@ let flash = $('.flash').data('flash'),
             }
             
         }
-    })
+
+    }
 
 
 </script>
