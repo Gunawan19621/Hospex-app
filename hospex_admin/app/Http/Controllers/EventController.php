@@ -10,6 +10,14 @@ use App\Stand;
 use App\Area;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
+use App\ImageUpload;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
+
+
 class EventController extends Controller
 {
     /**
@@ -17,6 +25,10 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $events = Event::all();
@@ -70,10 +82,37 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+        $title = 'Exhibitors';
         $event = Event::findorfail($event->id);
         $schedules = $event->Schedules()
                     ->orderBy('date');
-        return view('event_schedule.schedules', compact('schedules','event'));
+        return view('event_schedule.schedules', compact('schedules','event','title'));
+    }
+    public function siteplan(Event $event)
+    {
+        $title = 'Site Plan';
+        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
+        
+        $fileName = $event->site_plan;
+        // $destinationPath = public_path('images/');
+
+        if ( Storage::disk('logs')->exists('event/'.$fileName)) {
+            $file = Storage::disk('logs')->get('event/'.$fileName);
+           
+            $response = Response::make($file,200);
+            $response->header('Content-Type', 'application/pdf');
+            return $response;
+ 
+        }
+        
+        //return view('event.form_upload', compact('slice','title','event','content'));
+
+    }
+    public function uploadSiteplan(Event $event)
+    {
+        $title = 'Site Plan';
+        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
+        return view('event.form_upload', compact('slice','title','event','content'));
     }
 
     /**
@@ -214,5 +253,108 @@ class EventController extends Controller
         }
         
         return view('exhibitor.event',compact('title'));
+    }
+    public function fileStore(Request $request, Event $event)
+    {
+        if($request->hasFile('file')) {
+            
+            // Upload path
+            // $destinationPath = public_path('images/');
+            
+            // Create directory if not exists
+            // if (!$directories = Storage::directories($destinationPath)) {
+            //     // return $destinationPath;
+            //     Storage::makeDirectory($destinationPath, 0755, true, true);
+            // }
+            
+            // Get file extension
+            $extension = $request->file('file')->getClientOriginalExtension();
+            
+            // Valid extensions
+            $validextensions = array("jpeg","jpg","png","pdf");
+            
+            // Check extension
+            if(in_array(strtolower($extension), $validextensions)){
+                
+                // Rename file 
+                $fileName = Str::slug($event->event_title.' '.$event->year.' '.$event->location).'.' . $extension;
+                
+                // Delete File if exists
+                // if (Storage::disk('logs')->exists($fileName)) {
+                //         // Storage::delete(public_path($destinationPath.$fileName));
+                //         Storage::disk('logs')->delete($fileName);
+
+
+                //     }
+                    $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
+                    
+                    // Uploading file to given path
+                   // $request->file('file')->move($destinationPath, $fileName); 
+                //    return $fileName;
+                  $up =  Storage::disk('logs')->putFileAs('event', $request->file('file'), $fileName);
+                  if ($up == false) {
+                      # code...
+                      return 'gagal';
+                    }else{
+                        return response()->json(['success' => $fileName]);
+                  }
+     
+            }
+            
+        }
+    }
+    function fetch()
+    {
+
+        $fileName = 'hospex-jakarta-2020.pdf';
+        // $destinationPath = public_path('images/'.$fileName);
+      
+
+        // $filename = 'test.pdf';
+        // $path = storage_path($fileName);
+        // return Response::make(file_get_contents($destinationPath.$fileName), 200, [
+        //         'Content-Type' => 'application/pdf',
+        //         'Content-Disposition' => 'inline; filename="'.$fileName.'"'
+                
+        //     ]);
+        $exists = Storage::disk('logs')->exists('event/'.$fileName);
+        if ($exists) {
+            $images =  Storage::disk('logs')->get('event/'.$fileName);
+            // $images = {{ Storage::path('screenshots/1.jpg') }};
+            // $output = '<div class="row">';
+            // // foreach($images as $image){
+            //     $output .= '
+            //         <div class="col-md-10"
+            //         style="margin-bottom:0px;" align="center">
+            //         <embed src="{{'.  $images . '}}"
+            //          style="width:1380px; height:800px;" frameborder="0" />
+            //         </div>
+            //         ';
+            //         // <button type="button" class="btn btn-link remove_image" id="'.$image->getFilename().'">Remove</button>
+            // // }
+            // $output .= '</div>';
+            // echo $output;
+            // $headers = [
+            //     'Content-Type' => 'application/pdf',
+            //  ];
+  
+            //  return Response::download($images , 'filename');
+  
+             return Response::make($images, 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="titke"'
+
+                ]);
+        }else{
+            echo 'gaada';
+        }
+        // return response()->file($images);
+    }
+    function dropzoneDelete(Request $request)
+    {
+        if($request->get('name'))
+        {
+            \File::delete(public_path('images/'. $request->get('name')));
+        }
     }
 }

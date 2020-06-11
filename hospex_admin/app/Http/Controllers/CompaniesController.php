@@ -14,6 +14,10 @@ class CompaniesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $title = 'Companies';
@@ -71,9 +75,9 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'company_name'       => 'required',
-            'company_email'              => 'required|E-mail',
-            'company_web'              => 'required',
-            'company_address'         => 'required',
+            'company_email'      => 'required|E-mail',
+            'company_web'        => 'required',
+            'company_address'    => 'required',
         ]);
         try{
             

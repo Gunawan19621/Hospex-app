@@ -10,7 +10,7 @@
                 <h3 class="m-subheader__title ">Dashboard</h3>
             </div>
             <div>
-                <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
+                {{-- <span class="m-subheader__daterange" id="m_dashboard_daterangepicker">
                     <span class="m-subheader__daterange-label">
                         <span class="m-subheader__daterange-title"></span>
                         <span class="m-subheader__daterange-date m--font-brand"></span>
@@ -18,7 +18,7 @@
                     <a href="#" class="btn btn-sm btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--square">
                         <i class="la la-angle-down"></i>
                     </a>
-                </span>
+                </span> --}}
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
     <!-- END: Subheader -->
     <div class="m-content">
 
-        <!--begin:: Widgets/Stats-->
+        {{-- <!--begin:: Widgets/Stats-->
         <div class="m-portlet  m-portlet--unair">
             <div class="m-portlet__body  m-portlet__body--no-padding">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
@@ -191,7 +191,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_4.jpg" alt="">
+                                            <img src="{{ url('assets11/app/media/img/users/100_4.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -211,7 +211,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_14.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_14.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -231,7 +231,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_11.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_11.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -251,7 +251,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_1.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_1.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -271,7 +271,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_5.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_5.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -299,7 +299,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_2.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_2.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -319,7 +319,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_13.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_13.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -339,7 +339,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_9.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_9.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -359,7 +359,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_2.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_2.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -381,7 +381,7 @@
                                     <!--begin::Widget 14 Item-->
                                     <div class="m-widget4__item">
                                         <div class="m-widget4__img m-widget4__img--pic">
-                                            <img src="assets/app/media/img/users/100_8.jpg" alt="">
+                                            <img src="{{ url('assets11//app/media/img/users/100_8.jpg')}}" alt="">
                                         </div>
                                         <div class="m-widget4__info">
                                             <span class="m-widget4__title">
@@ -615,7 +615,7 @@
                         <div class="m-widget4 m-widget4--chart-bottom" style="min-height: 480px">
                             <div class="m-widget4__item">
                                 <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="assets/app/media/img/client-logos/logo3.png" alt="">
+                                    <img src="{{ url('assets11//app/media/img/client-logos/logo3.png')}}" alt="">
                                 </div>
                                 <div class="m-widget4__info">
                                     <span class="m-widget4__title">
@@ -631,7 +631,7 @@
                             </div>
                             <div class="m-widget4__item">
                                 <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="assets/app/media/img/client-logos/logo1.png" alt="">
+                                    <img src="{{ url('assets11//app/media/img/client-logos/logo1.png')}}" alt="">
                                 </div>
                                 <div class="m-widget4__info">
                                     <span class="m-widget4__title">
@@ -647,7 +647,7 @@
                             </div>
                             <div class="m-widget4__item">
                                 <div class="m-widget4__img m-widget4__img--logo">
-                                    <img src="assets/app/media/img/client-logos/logo4.png" alt="">
+                                    <img src="{{ url('assets11//app/media/img/client-logos/logo4.png')}}" alt="">
                                 </div>
                                 <div class="m-widget4__info">
                                     <span class="m-widget4__title">
@@ -1062,10 +1062,10 @@
                                             AEOL Meeting With
                                         </div>
                                         <div class="m-list-pics m-list-pics--sm m--padding-left-20">
-                                            <a href="#"><img src="assets/app/media/img/users/100_4.jpg" title=""></a>
-                                            <a href="#"><img src="assets/app/media/img/users/100_13.jpg" title=""></a>
-                                            <a href="#"><img src="assets/app/media/img/users/100_11.jpg" title=""></a>
-                                            <a href="#"><img src="assets/app/media/img/users/100_14.jpg" title=""></a>
+                                            <a href="#"><img src="{{ url('assets11//app/media/img/users/100_4.jpg')}}" title=""></a>
+                                            <a href="#"><img src="{{ url('assets11//app/media/img/users/100_13.jpg')}}" title=""></a>
+                                            <a href="#"><img src="{{ url('assets11//app/media/img/users/100_11.jpg')}}" title=""></a>
+                                            <a href="#"><img src="{{ url('assets11//app/media/img/users/100_14.jpg')}}" title=""></a>
                                         </div>
                                     </div>
                                     <div class="m-timeline-2__item m--margin-top-30">
@@ -1998,7 +1998,7 @@
             </div>
         </div>
 
-        <!--End::Section-->
+        <!--End::Section--> --}}
     </div>
 </div>
 @endsection

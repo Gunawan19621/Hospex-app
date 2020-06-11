@@ -5,6 +5,7 @@ use App\Event;
 use App\EventSchedule;
 use App\EventRundown;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,7 +22,9 @@ use App\User;
 // });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home',function(){
+    return view('layout.content');
+})->name('home');
 // Route::get('/about', function () {
 //     // $nama = 'Lulu Muhamad';
 //     return view('about', ['nama' => 'Lulu Muhamad']);
@@ -41,6 +44,12 @@ Route::delete('/events/{event}','EventController@destroy');
 Route::get('/events/{event}/edit','EventController@edit');
 Route::get('/events/{event}/exhibitor','EventController@exhibitor');
 Route::get('/events/{event}/area','EventController@area')->name('events.area');
+Route::get('/events/{event}/site-plan','EventController@siteplan')->name('events.area');
+Route::get('/events/{event}/upload-site-plan','EventController@uploadSiteplan');
+Route::patch('/events/{event}/site-plan','EventController@fileStore');
+Route::get('/dropzone/fetch','EventController@fetch')->name('dropzone.fetch');
+Route::get('/dropzone/delete','EventController@dropzoneDelete')->name('dropzone.delete');
+
 Route::patch('/events/{event}','EventController@update');
 // yg atas adalah route default maka bisa diganti dengan yg bawah
 // Route::resource('events','EventController');
@@ -74,6 +83,7 @@ Route::resource('visitors', 'VisitorsController');
 
 // Matches
 Route::resource('matches', 'MatchRequestsController');
+Route::get('/matches/{ match }/approve','MatchRequestsController@update');
 
 
 Route::get('/ambil',function(){
@@ -84,7 +94,15 @@ Route::get('/ambil',function(){
 
 Route::get('/', function(){
     return view('layout.content');
+})->middleware('auth');;
+Route::get('/notifications', function(){
+    return view('html');
 });
+Route::get('test', function () {
+    event(new App\Events\MatchReq('Lulu'));
+    return "Event has been sent!";
+});
+
 
 Route::get('/read', function(){
     $user = User::findorfail(1);
@@ -94,6 +112,5 @@ Route::get('/read', function(){
 
 
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

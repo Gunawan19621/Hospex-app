@@ -12,6 +12,10 @@ class MatchRequestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $title = 'Match Requests';
@@ -33,24 +37,38 @@ class MatchRequestsController extends Controller
         if(request()->ajax()){
             return datatables()->of(Match::all())
                     ->addIndexColumn()
+                    ->editColumn('status', function(Match $match) {
+                        return ( $match->status == 0 ? 
+                            '<a href="'.url('matches/'.$match['id'].'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill">
+                                <span>
+                                    <i class="fa fa-calendar-check-o"></i><span>Approve</span>
+                                </span>
+                            </a>' 
+                            : 
+                            '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
+                                <span>
+                                    <i class="fa fa-calendar-check-o"></i><span>Approved</span>
+                                </span>
+                            </a>');
+                    })
                     ->addColumn('visitor_name', function($data){
                         return $data->visitor->visitor_name;
                     })
                     ->addColumn('exhibitor_name', function($data){
                         return $data->exhibitor->company->company_name;
                     })
-                    ->addColumn('action', function($data){
-                        $button = '<span class="dropdown">
-                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
-                            <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('visitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
-                            </div>
-                        </span>';
-                        // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
-                        return $button;
-                    })
-                ->rawColumns(['visitor_name','exhibitor_name','action'])
+                    // ->addColumn('action', function($data){
+                    //     $button = '<span class="dropdown">
+                    //     <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                    //         <div class="dropdown-menu dropdown-menu-right">       
+                    //             <a class="dropdown-item" href="'.url('visitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                    //             <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                    //         </div>
+                    //     </span>';
+                    //     // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
+                    //     return $button;
+                    // })
+                ->rawColumns(['visitor_name','exhibitor_name','status'])
                 ->make(true);
         }
         return view('match.index',compact('title'));

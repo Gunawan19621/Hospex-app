@@ -39,10 +39,10 @@ trait AuthenticatesUsers
         if (method_exists($this, 'hasTooManyLoginAttempts') &&
             $this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-
             return $this->sendLockoutResponse($request);
         }
 
+        // return $this->attemptLogin($request);
         if ($this->attemptLogin($request)) {
             return $this->sendLoginResponse($request);
         }
@@ -65,7 +65,7 @@ trait AuthenticatesUsers
      */
     protected function validateLogin(Request $request)
     {
-        $request->validate([
+        return $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);
@@ -106,7 +106,6 @@ trait AuthenticatesUsers
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
-
         if ($response = $this->authenticated($request, $this->guard()->user())) {
             return $response;
         }

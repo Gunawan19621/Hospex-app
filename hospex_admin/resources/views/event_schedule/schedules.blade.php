@@ -56,28 +56,45 @@
                                     </div>
                                     <div class="m-portlet__body">
                                         <div class="m-scrollable" data-scrollable="true">
-                                            
-                                            <!--Begin::Timeline 2 -->
-                                            @foreach ($schedule->rundowns()->get() as $task)
-                                            <div class="m-timeline-2">
-                                                <div class="m-timeline-2__items  m--padding-top-25 m--padding-bottom-30">
-                                                    
-                                                    <div class="m-timeline-2__item m--margin-top-30">
-                                                        <span class="m-timeline-2__item-time">{{ $task->time}}</span>
-                                                        <div class="m-timeline-2__item-cricle">
-                                                            <i class="fa fa-genderless m--font-danger"></i>
-                                                        </div>
-                                                        <div class="m-timeline-2__item-text m--padding-top-5">
-                                                            {{ $task->task}} 
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
+                                            <!--begin:Timeline 1-->
+										<div class="m-timeline-1 m-timeline-1--fixed">
+											<div class="m-timeline-1__items">
+                                                <div class="m-timeline-1__marker"></div>
                                                 
-                                            @endforeach
-                    
-                                            <!--End::Timeline 2 -->
+                                                @foreach ($schedule->rundowns()->get() as $key => $task)
+												<div class="m-timeline-1__item m-timeline-1__item--{{ ($key % 2 ? 'right' : 'left')  }} m-timeline-1__item--first">
+													<div class="m-timeline-1__item-circle">
+														<div class="m--bg-danger"></div>
+													</div>
+													<div class="m-timeline-1__item-arrow"></div>
+													<span class="m-timeline-1__item-time m--font-brand">{{ $task->time}}</span>
+													<div class="m-timeline-1__item-content">
+														<div class="m-timeline-1__item-title">
+															{{ $task->task }}
+														</div>
+														<div class="m-timeline-1__item-body">
+															<div class="m-list-pics">
+                                                                @foreach ($task->performers as $performer)
+    																<a href="../../#"><img src="{{ url('assets11/app/media/img/users/100_13.jpg') }}" title="">{{ $performer->name }}</a><br>
+                                                                @endforeach
+															</div>
+															<div class="m-timeline-1__item-body m--margin-top-15">
+																location : {{ $task->location }}
+															</div>
+														</div>
+													</div>
+                                                </div>
+                                                @endforeach
+												
+											</div>
+										</div>
+										{{-- <div class="row">
+											<div class="col m--align-center">
+												<button type="button" class="btn btn-sm m-btn--custom m-btn--pill  btn-danger">Load More</button>
+											</div>
+										</div> --}}
+
+										<!--End:Timeline 1-->
                                         </div>
                                     </div>
                                 </div>

@@ -31,11 +31,11 @@
                 {
                     data : "status", name : "status",
                 },
-                {
-                    data:"action",
-                    name: "action",
-                    orderable: false
-                }
+                // {
+                //     data:"action",
+                //     name: "action",
+                //     orderable: false
+                // }
             ]
         })
        

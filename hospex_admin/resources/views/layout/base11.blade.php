@@ -20,6 +20,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<title>@yield('title')</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 
 		<!--begin::Web font -->
 		<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
@@ -144,9 +145,9 @@ License: You must have a valid license purchased only from themeforest(the above
 									<!-- END -->
 
 									<!-- BEGIN: Topbar Toggler -->
-									<a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
+									{{-- <a id="m_aside_header_topbar_mobile_toggle" href="javascript:;" class="m-brand__icon m--visible-tablet-and-mobile-inline-block">
 										<i class="flaticon-more"></i>
-									</a>
+									</a> --}}
 
 									<!-- BEGIN: Topbar Toggler -->
 								</div>
@@ -160,7 +161,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div id="m_header_topbar" class="m-topbar  m-stack m-stack--ver m-stack--general">
 								<div class="m-stack__item m-topbar__nav-wrapper">
 									<ul class="m-topbar__nav m-nav m-nav--inline">
-										<li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
+										{{-- <li class="m-nav__item m-dropdown m-dropdown--large m-dropdown--arrow m-dropdown--align-center m-dropdown--mobile-full-width m-dropdown--skin-light	m-list-search m-list-search--skin-light" m-dropdown-toggle="click" id="m_quicksearch"
 										 m-quicksearch-mode="dropdown" m-dropdown-persistent="1">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-nav__link-icon"><span class="m-nav__link-icon-wrapper"><i class="flaticon-search-1"></i></span></span>
@@ -362,7 +363,7 @@ License: You must have a valid license purchased only from themeforest(the above
 													</div>
 												</div>
 											</div>
-										</li>
+										</li> --}}
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
@@ -393,7 +394,7 @@ License: You must have a valid license purchased only from themeforest(the above
 																<li class="m-nav__section m--hide">
 																	<span class="m-nav__section-text">Section</span>
 																</li>
-																<li class="m-nav__item">
+																{{-- <li class="m-nav__item">
 																	<a href="profile.html" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-profile-1"></i>
 																		<span class="m-nav__link-title">
@@ -429,11 +430,20 @@ License: You must have a valid license purchased only from themeforest(the above
 																		<i class="m-nav__link-icon flaticon-lifebuoy"></i>
 																		<span class="m-nav__link-text">Support</span>
 																	</a>
-																</li>
+																</li> --}}
 																<li class="m-nav__separator m-nav__separator--fit">
 																</li>
+																
 																<li class="m-nav__item">
-																	<a href="snippets/pages/user/login-1.html" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder">Logout</a>
+																	<a class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder" href="{{ route('logout') }}"
+																	   onclick="event.preventDefault();
+																					 document.getElementById('logout-form').submit();">
+																		{{ __('Logout') }}
+																	</a>
+								
+																	<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+																		@csrf
+																	</form>
 																</li>
 															</ul>
 														</div>
@@ -441,11 +451,11 @@ License: You must have a valid license purchased only from themeforest(the above
 												</div>
 											</div>
 										</li>
-										<li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar">
+										{{-- <li id="m_quick_sidebar_toggle" class="m-nav__item m-topbar__quick-sidebar">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-nav__link-icon"><i class="flaticon-grid-menu"></i></span>
 											</a>
-										</li>
+										</li> --}}
 									</ul>
 								</div>
 							</div>
@@ -489,11 +499,15 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('matches') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Match Requests</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a></li>
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-graphic-1"></i><span
-									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
+									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge">
+										 {{-- <span class="m-badge m-badge--accent">3</span> --}}
+									</span> </span></span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
 									<ul class="m-menu__subnav">
 										<li class="m-menu__item  m-menu__item--parent" aria-haspopup="true" m-menu-link-redirect="1"><span class="m-menu__link"><span class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Masters</span> <span
-														 class="m-menu__link-badge"><span class="m-badge m-badge--accent">3</span></span> </span></span></span></li>
+														 class="m-menu__link-badge">
+														 {{-- <span class="m-badge m-badge--accent">3</span> --}}
+														</span> </span></span></span></li>
 										{{-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="inner.html" class="m-menu__link "><span class="m-menu__link-text">Reports</span></a></li> --}}
 										<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><span class="m-menu__link-text">Company Master</span><i class="m-menu__ver-arrow la la-angle-right"></i></a>
 											<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -2611,7 +2625,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- end:: Page -->
 
 		<!-- begin::Quick Sidebar -->
-		<div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
+		{{-- <div id="m_quick_sidebar" class="m-quick-sidebar m-quick-sidebar--tabbed m-quick-sidebar--skin-light">
 			<div class="m-quick-sidebar__content m--hide">
 				<span id="m_quick_sidebar_close" class="m-quick-sidebar__close"><i class="la la-close"></i></span>
 				<ul id="m_quick_sidebar_tabs" class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand" role="tablist">
@@ -3062,7 +3076,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --}}
 
 		<!-- end::Quick Sidebar -->
 
@@ -3074,7 +3088,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- end::Scroll Top -->
 
 		<!-- begin::Quick Nav -->
-		<ul class="m-nav-sticky" style="margin-top: 30px;">
+		{{-- <ul class="m-nav-sticky" style="margin-top: 30px;">
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Purchase" data-placement="left">
 				<a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" target="_blank"><i class="la la-cart-arrow-down"></i></a>
 			</li>
@@ -3084,7 +3098,7 @@ License: You must have a valid license purchased only from themeforest(the above
 			<li class="m-nav-sticky__item" data-toggle="m-tooltip" title="Support" data-placement="left">
 				<a href="https://keenthemes.com/forums/forum/support/metronic5/" target="_blank"><i class="la la-life-ring"></i></a>
 			</li>
-		</ul>
+		</ul> --}}
 
 		<!-- begin::Quick Nav -->
 
@@ -3106,10 +3120,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
 		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-timepicker.js') }}" type="text/javascript"></script>
+		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
-
-		@include('script-global')
+	@include('script-global')
 	</body>
 
 	<!-- end::Body -->
