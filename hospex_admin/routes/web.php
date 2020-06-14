@@ -83,7 +83,7 @@ Route::resource('visitors', 'VisitorsController');
 
 // Matches
 Route::resource('matches', 'MatchRequestsController');
-Route::get('/matches/{ match }/approve','MatchRequestsController@update');
+Route::patch('matches/{match}/approve', 'MatchRequestsController@approve');
 
 
 Route::get('/ambil',function(){

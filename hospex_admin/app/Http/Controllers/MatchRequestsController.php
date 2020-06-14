@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\MatchRequest as Match;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Redirect;
 
 class MatchRequestsController extends Controller
 {
@@ -39,16 +41,10 @@ class MatchRequestsController extends Controller
                     ->addIndexColumn()
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0 ? 
-                            '<a href="'.url('matches/'.$match['id'].'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill">
-                                <span>
-                                    <i class="fa fa-calendar-check-o"></i><span>Approve</span>
-                                </span>
-                            </a>' 
+                            $this->viewForm($match->id)
                             : 
                             '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
-                                <span>
-                                    <i class="fa fa-calendar-check-o"></i><span>Approved</span>
-                                </span>
+                                <span> <i class="fa fa-calendar-check-o"></i><span>Approved</span></span>
                             </a>');
                     })
                     ->addColumn('visitor_name', function($data){
@@ -83,6 +79,11 @@ class MatchRequestsController extends Controller
     {
         //
     }
+    
+    public function viewForm($match)
+    {
+        return view('match.viewForm',compact('match'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -101,7 +102,7 @@ class MatchRequestsController extends Controller
      * @param  \App\MatchRequest  $matchRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(MatchRequest $matchRequest)
+    public function show(Match $matchRequest)
     {
         //
     }
@@ -124,9 +125,16 @@ class MatchRequestsController extends Controller
      * @param  \App\MatchRequest  $matchRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MatchRequest $matchRequest)
+    public function update(Request $request, Match $match)
     {
-        //
+        dd($match);
+        
+    }
+    public function approve(Match $match)
+    {
+        $update = Match::where('id', $match->id)->update(['status' => '1']);
+        return Redirect::back()->with('status', '1-Match Approved');
+        
     }
 
     /**
