@@ -20,8 +20,8 @@ class Company extends Model
     {
         return $this->hasMany(EventExhibitor::class);
     }
-    public function visitors()
-    {
-        return $this->hasMany(Visitor::class);
-    }
+    // public function visitors()
+    // {
+    //     return $this->hasMany(Visitor::class);
+    // }
 }

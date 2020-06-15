@@ -536,6 +536,7 @@ class ComposerStaticInitb36c7e02aa58e134c0d8bafe66e95187
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\MatchRequest' => __DIR__ . '/../..' . '/app/MatchRequest.php',
         'App\\Model\\Relations\\HasManySyncable' => __DIR__ . '/../..' . '/app/model/HasManySyncable.php',
+        'App\\Observers\\MatchObserver' => __DIR__ . '/../..' . '/app/Observers/MatchObserver.php',
         'App\\Performer' => __DIR__ . '/../..' . '/app/Performer.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',

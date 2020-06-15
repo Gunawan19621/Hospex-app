@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/visitors/create" class="btn btn-primary my-3">Add</a>
+                        {{-- <a href="/visitors/create" class="btn btn-primary my-3">Add</a> --}}
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -31,8 +31,8 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Visitor Name</th>
                                 <th scope="col">Visitor Email</th>
-                                <th scope="col">Company Name</th>
-                                <th scope="col">Action</th>
+                                {{-- <th scope="col">Company Name</th> --}}
+                                {{-- <th scope="col">Action</th> --}}
                             </tr>
                         </thead>
                     </table>
