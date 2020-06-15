@@ -109,8 +109,8 @@ Route::get('/read', function(){
     return $user->usertable;
 });
 
-
-
+// Send Email
+Route::get('/sendMail','SendEmailController@send');
 
 
 // Route::get('/home', 'HomeController@index')->name('home');
