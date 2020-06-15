@@ -24,6 +24,7 @@ let flash = $('.flash').data('flash'),
     }
 
     $(document).ready(function(){
+        alertMessage(flash)
         $(".year").datepicker( {
             format: "yyyy",
             viewMode: "years", 

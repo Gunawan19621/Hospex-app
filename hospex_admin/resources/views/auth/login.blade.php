@@ -151,9 +151,10 @@
                             <h3 class="m-login__title">Sign Up</h3>
                             <div class="m-login__desc">Enter your details to create your account:</div>
                         </div>
-                        <form class="m-login__form m-form" action="">
+                        <form id="form-sign-up" class="m-login__form m-form" method="POST" action="{{ route('register') }}">
+                            @csrf
                             <div class="form-group m-form__group">
-                                <input class="form-control m-input" type="text" placeholder="Fullname" name="fullname">
+                                <input class="form-control m-input" type="text" placeholder="Fullname" name="name">
                             </div>
                             <div class="form-group m-form__group">
                                 <input class="form-control m-input" type="text" placeholder="Email" name="email" autocomplete="off">
@@ -162,7 +163,7 @@
                                 <input class="form-control m-input" type="password" placeholder="Password" name="password" autocomplete="off">
                             </div>
                             <div class="form-group m-form__group">
-                                <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="rpassword" autocomplete="off">
+                                <input class="form-control m-input m-login__form-input--last" type="password" placeholder="Confirm Password" name="password_confirmation" autocomplete="off">
                             </div>
                             <div class="m-login__form-sub">
                                 <label class="m-checkbox m-checkbox--focus">
@@ -172,7 +173,7 @@
                                 <span class="m-form__help"></span>
                             </div>
                             <div class="m-login__form-action">
-                                <button id="m_login_signup_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Sign Up</button>
+                                <button id="m_login_signup_submi1t" type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Sign Up</button>
                                 <button id="m_login_signup_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom">Cancel</button>
                             </div>
                         </form>
