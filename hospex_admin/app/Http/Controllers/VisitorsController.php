@@ -24,21 +24,21 @@ class VisitorsController extends Controller
         if(request()->ajax()){
             return datatables()->of(Visitor::all())
                     ->addIndexColumn()
-                    ->addColumn('company_name', function($data){
-                        return $data->company->company_name;
-                    })
-                    ->addColumn('action', function($data){
-                        $button = '<span class="dropdown">
-                        <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
-                            <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('visitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
-                            </div>
-                        </span>';
+                    // ->addColumn('company_name', function($data){
+                    //     return $data->company->company_name;
+                    // })
+                    // ->addColumn('action', function($data){
+                    //     $button = '<span class="dropdown">
+                    //     <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                    //         <div class="dropdown-menu dropdown-menu-right">       
+                    //             <a class="dropdown-item" href="'.url('visitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                    //             <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                    //         </div>
+                    //     </span>';
                         // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
-                        return $button;
-                    })
-                ->rawColumns(['company_name','action'])
+                    //     return $button;
+                    // })
+                // ->rawColumns(['action'])
                 ->make(true);
         }
         return view('visitor.index',compact('title'));

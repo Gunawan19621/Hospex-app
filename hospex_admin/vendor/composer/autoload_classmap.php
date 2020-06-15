@@ -49,6 +49,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\MatchRequest' => $baseDir . '/app/MatchRequest.php',
     'App\\Model\\Relations\\HasManySyncable' => $baseDir . '/app/model/HasManySyncable.php',
+    'App\\Observers\\MatchObserver' => $baseDir . '/app/Observers/MatchObserver.php',
     'App\\Performer' => $baseDir . '/app/Performer.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

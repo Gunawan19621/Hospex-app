@@ -17,8 +17,10 @@ class CreateEventVisitorsTable extends Migration
             $table->id();
             $table->string('visitor_name');
             $table->string('visitor_email');
-            $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->string('password');
+            $table->string('api_token');
+            // $table->unsignedBigInteger('company_id');
+            // $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
             $table->unsignedBigInteger('event_id');
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();

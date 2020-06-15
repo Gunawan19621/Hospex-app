@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class LoginMiddleware
 {
@@ -37,7 +38,7 @@ class LoginMiddleware
     public function handle($request, Closure $next, $guard = null)
     {
         if ($request->input('api_token')) {
-            $check =  User::where('api_token', $request->input('api_token'))->first();
+            $check =  DB::table('user_views')->where('api_token', $request->input('api_token'))->first();
  
             if (!$check) {
                 return response('Token Invalid.', 401);

@@ -19,14 +19,14 @@
                 {
                     data : "visitor_email", name : "visitor_email",
                 },
-                {
-                    data : "company_name", name : "company_name",
-                },
-                {
-                    data:"action",
-                    name: "action",
-                    orderable: false
-                }
+                // {
+                //     data : "company_name", name : "company_name",
+                // },
+                // {
+                //     data:"action",
+                //     name: "action",
+                //     orderable: false
+                // }
             ]
         })
        
