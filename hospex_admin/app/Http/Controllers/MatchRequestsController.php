@@ -137,10 +137,16 @@ class MatchRequestsController extends Controller
         $update = Match::where('id', $match->id)->update(['status' => '1']);
         if ($update) {
             $visitor_mail   = $match->visitor->visitor_email;
-            $this->send($visitor_mail);
+            $send_visitor = $this->send($visitor_mail);
             $exhibitor_mail = $match->exhibitor->company->company_email;
-            $this->send($exhibitor_mail);
-            return Redirect::back()->with('status', '1-Match Approved');
+            $send_exhibitor = $this->send($exhibitor_mail);
+            if ($send_exhibitor == true || $send_visitor == true) {
+                $response = " \n Email Sent To ";
+                $response .= $send_visitor ? ' Visitor' : '';
+                $response .= $send_exhibitor ? ' Exhibitor' : '';
+            }
+            
+            return Redirect::back()->with('status', "1-Match Approved ".$response);
         }
         
     }

@@ -47,13 +47,13 @@ let flash = $('.flash').data('flash'),
                 Swal.fire({
                         'type'  : 'success',
                         'title' : 'Success',
-                        'text'  : flash[1]
+                        'text'  : `${flash[1]}`
                     })
             }else{
                 Swal.fire({
                         'type'  : 'error',
                         'title' : 'Failed',
-                        'text'  : flash[1]
+                        'text'  : `${flash[1]}`
                     })
             }
             
