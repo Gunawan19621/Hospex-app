@@ -96,13 +96,16 @@ class EventController extends Controller
         $fileName = $event->site_plan;
         // $destinationPath = public_path('images/');
 
-        if ( Storage::disk('logs')->exists('event/'.$fileName)) {
-            $file = Storage::disk('logs')->get('event/'.$fileName);
+        if ( Storage::exists('event/'.$fileName)) {
+            $file = Storage::get('event/'.$fileName);
            
             $response = Response::make($file,200);
             $response->header('Content-Type', 'application/pdf');
             return $response;
  
+        }else{
+            $response = '<p>Belum Ada Data Tersedia</p>';
+            return $response;
         }
         
         //return view('event.form_upload', compact('slice','title','event','content'));
@@ -110,6 +113,7 @@ class EventController extends Controller
     }
     public function uploadSiteplan(Event $event)
     {
+        return 'sunuini';
         $title = 'Site Plan';
         $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
         return view('event.form_upload', compact('slice','title','event','content'));
@@ -286,27 +290,32 @@ class EventController extends Controller
 
 
                 //     }
-                    $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
                     
                     // Uploading file to given path
                    // $request->file('file')->move($destinationPath, $fileName); 
                 //    return $fileName;
-                  $up =  Storage::disk('logs')->putFileAs('event', $request->file('file'), $fileName);
-                  if ($up == false) {
+               
+                //   $up =  Storage::disk('logs')->storeAs('eventss/', $request->file('file'), $fileName);
+              $up = $request->file('file')->storeAs('event/', $fileName);
+          
+
+                  
+                  if ($up == true) {
+                    
+                    $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
                       # code...
-                      return 'gagal';
-                    }else{
                         return response()->json(['success' => $fileName]);
+                    }else{
+                      return 'gagal';
                   }
      
             }
             
         }
     }
-    function fetch()
+    function fetch(Event $event)
     {
-
-        $fileName = 'hospex-jakarta-2020.pdf';
+        $fileName = $event->siteplan;
         // $destinationPath = public_path('images/'.$fileName);
       
 

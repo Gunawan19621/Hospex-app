@@ -78,6 +78,7 @@ class CompaniesController extends Controller
             'company_email'      => 'required|E-mail',
             'company_web'        => 'required',
             'company_address'    => 'required',
+            'company_info'       => 'required',
         ]);
         try{
             
@@ -88,6 +89,7 @@ class CompaniesController extends Controller
                     'company_email'      => $request->company_email,
                     'company_web'        => $request->company_web,
                     'company_address'    => $request->company_address,
+                    'company_info'       => $request->company_info,
                 ]);
                 $company->categories()->attach($request->categories);
             });

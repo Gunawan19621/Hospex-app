@@ -6,6 +6,8 @@ use App\MatchRequest as Match;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 
 class MatchRequestsController extends Controller
 {
@@ -133,7 +135,19 @@ class MatchRequestsController extends Controller
     public function approve(Match $match)
     {
         $update = Match::where('id', $match->id)->update(['status' => '1']);
-        return Redirect::back()->with('status', '1-Match Approved');
+        if ($update) {
+            $visitor_mail   = $match->visitor->visitor_email;
+            $send_visitor = $this->send($visitor_mail);
+            $exhibitor_mail = $match->exhibitor->company->company_email;
+            $send_exhibitor = $this->send($exhibitor_mail);
+            if ($send_exhibitor == true || $send_visitor == true) {
+                $response = " \n Email Sent To ";
+                $response .= $send_visitor ? ' Visitor' : '';
+                $response .= $send_exhibitor ? ' Exhibitor' : '';
+            }
+            
+            return Redirect::back()->with('status', "1-Match Approved ".$response);
+        }
         
     }
 
@@ -146,5 +160,20 @@ class MatchRequestsController extends Controller
     public function destroy(MatchRequest $matchRequest)
     {
         //
+    }
+    public function send($to)
+    {
+        $data = array(
+                'name'  => 'DataDoc',
+                'message'   => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt voluptatum placeat nesciunt quis laborum laboriosam non doloribus illo fuga. Quasi magni incidunt mollitia. Ipsam, fugiat? Unde earum qui tempore recusandae?'
+            );
+        
+        try{
+            Mail::to($to)->send(new SendMail($data));
+            return true;
+        }
+        catch (Exception $e){
+            return false;
+        }
     }
 }

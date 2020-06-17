@@ -78,7 +78,7 @@ class EventExhibitorsController extends Controller
         $validator = Validator::make($request->all(),
                 [
                     'event_id' => ['required','numeric' ], 
-                    "company_id.*" => ['required','numeric', 'distinct', 'unique:event_exhibitors,company_id,NULL,id,event_id,' . $request->event_id]
+                    'company_id.*' => ['required','numeric', 'distinct', 'unique:event_exhibitors,company_id,NULL,id,event_id,' . $request->event_id]
                 ],
                 [
                     'company_id.*.unique' => ':input-has been already taken',

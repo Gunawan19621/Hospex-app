@@ -47,7 +47,7 @@ Route::get('/events/{event}/area','EventController@area')->name('events.area');
 Route::get('/events/{event}/site-plan','EventController@siteplan')->name('events.area');
 Route::get('/events/{event}/upload-site-plan','EventController@uploadSiteplan');
 Route::patch('/events/{event}/site-plan','EventController@fileStore');
-Route::get('/dropzone/fetch','EventController@fetch')->name('dropzone.fetch');
+Route::get('/dropzone/{event}/fetch','EventController@fetch')->name('dropzone.fetch');
 Route::get('/dropzone/delete','EventController@dropzoneDelete')->name('dropzone.delete');
 
 Route::patch('/events/{event}','EventController@update');
@@ -109,8 +109,8 @@ Route::get('/read', function(){
     return $user->usertable;
 });
 
-
-
+// Send Email
+// Route::get('/sendMail','SendEmailController@send');
 
 
 // Route::get('/home', 'HomeController@index')->name('home');
