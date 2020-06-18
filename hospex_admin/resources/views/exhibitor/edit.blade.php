@@ -7,6 +7,7 @@
 <div class="m-content">
 	<div class="row">
 		  <div class="col-10">
+        <div class="alertform"></div>
         <div class="m-portlet m-portlet--tab">
           <div class="m-portlet__head">
               <div class="m-portlet__head-caption">
@@ -60,4 +61,27 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('require')
+<script>
+    $(document).ready(function () {
+    let companies =  {!! $companies !!},
+        events =  {!! $events !!};
+        if (companies.length >= 0) {
+            $('button[type=submit]').prop('disabled', true);
+            $('#m_select2_3').prop('disabled', true);
+            $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                      <strong>Warning!</strong> Companies Not Available Yet.  
+											            </div>`);
+        }
+        if (events.length >= 0) {
+            $('button[type=submit]').prop('disabled', true);
+            $('#eventID').prop('disabled', true);
+            $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                      <strong>Warning!</strong> Events Not Available Yet.
+											        </div>`);
+        }
+    })
+
+</script>
 @endsection

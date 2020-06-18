@@ -94,10 +94,10 @@ class CompaniesController extends Controller
                 $company->categories()->attach($request->categories);
             });
             DB::commit();
-            $response = '1-Category Saved';
+            $response = '1-Company Saved';
         } catch (\Exception $e){
             DB::rollBack();
-            $response = '0-Category Failed to Save';
+            $response = '0-Company Failed to Save';
         }
        
         return redirect('/companies')->with('status','Company Saved');
@@ -166,10 +166,10 @@ class CompaniesController extends Controller
                 $company->categories()->sync($request->categories);
             });
             DB::commit();
-            $response = '1-Category Updated';
+            $response = '1-Company Updated';
         } catch (\Exception $e){
             DB::rollBack();
-            $response = '0-Category Failed to Update';
+            $response = '0-Company Failed to Update';
         }
          
         

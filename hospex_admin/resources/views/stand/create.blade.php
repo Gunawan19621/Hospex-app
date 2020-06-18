@@ -7,6 +7,7 @@
 <div class="m-content">
 	<div class="row">
 		  <div class="col-10">
+            <div class="alertform"></div>
         <div class="m-portlet m-portlet--tab">
           <div class="m-portlet__head">
               <div class="m-portlet__head-caption">
@@ -65,3 +66,29 @@
 	</div>
 </div>
 @endsection
+
+ @section('require')
+     <script>
+         $(document).ready(function(){
+            let  areas      =  {!! $areas !!},
+            exhibitors =  {!! $exhibitors !!};
+            if (areas.length >= 0) {
+                    $('button[type=submit]').prop('disabled', true);
+                    $('#areaID').prop('disabled', true);
+                    $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                                <strong>Warning!</strong> Areas Not Available Yet.
+                                            </div>`);
+                }
+                if (exhibitors.length >= 0) {
+                    $('button[type=submit]').prop('disabled', true);
+                    $('#exhibitorID').prop('disabled', true);
+                    $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                                <strong>Warning!</strong> Exhibitors Not Available Yet.
+                                            </div>`);
+                }
+
+         })
+
+            
+     </script>
+ @endsection

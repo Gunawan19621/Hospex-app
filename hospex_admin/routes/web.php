@@ -76,7 +76,8 @@ Route::resource('areas', 'AreasController');
 Route::resource('exhibitors', 'EventExhibitorsController');
 
 // Stand
-Route::resource('stands', 'StandsController');
+Route::get('/stands/create/{event?}','StandsController@create');
+Route::resource('stands', 'StandsController')->except(['create']);
 
 // Visitors
 Route::resource('visitors', 'VisitorsController');

@@ -1,5 +1,6 @@
 
 <script>
+    
     $(document).ready(function(){
         var table =$('#m_table_1').DataTable({
             processing : true,
@@ -29,5 +30,6 @@
         })
        
     })
+
 
 </script>
