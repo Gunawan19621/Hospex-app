@@ -6,6 +6,7 @@ use App\Stand;
 use App\EventExhibitor;
 use App\Area;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class StandsController extends Controller
 {
@@ -58,11 +59,11 @@ class StandsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( $event = null)
     {
         $title = 'Add Stand';
-        $exhibitors = EventExhibitor::all();
-        $areas      = Area::all();
+        $exhibitors = $event == null ? EventExhibitor::all() : EventExhibitor::where('event_id', $event)->get();
+        $areas      = $event == null ? Area::all() : Area::where('event_id', $event)->get();
         return view('stand.create',compact('title','areas','exhibitors'));
     }
 

@@ -7,6 +7,9 @@ use App\Event;
 use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 use Validator;
 
 class EventExhibitorsController extends Controller
@@ -62,6 +65,7 @@ class EventExhibitorsController extends Controller
     {
         $title = 'Add Exhibitor';
         $companies = Company::all();
+        // dd($companies);
         $events     = Event::all();
         return view('exhibitor.create', compact('title','companies','events'));
     }
@@ -95,8 +99,10 @@ class EventExhibitorsController extends Controller
             $data = [];
             foreach ($request->company_id as $key => $value) {
                 $data[]=[
-                    'event_id' => $request->event_id,
-                    'company_id' => $value,
+                    'event_id'      => $request->event_id,
+                    'company_id'    => $value,
+                    'password'      => Hash::make('password'),
+                    'api_token'     => Str::random(40)
                 ];
             }
             $create = EventExhibitor::insert($data);

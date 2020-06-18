@@ -195,7 +195,7 @@ class EventController extends Controller
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('exhibitors//edit').'"><i class="la la-edit"></i> Edit</a>        
+                                <a class="dropdown-item" href="'.url('exhibitors/edit').'"><i class="la la-edit"></i> Edit</a>        
                                 <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
                             </div>
                         </span>';
@@ -205,7 +205,7 @@ class EventController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('stand.stand_event', compact('title'));
+        return view('stand.stand_event', compact('title','event'));
     }
     public function exhibitor(Event $event)
     {
