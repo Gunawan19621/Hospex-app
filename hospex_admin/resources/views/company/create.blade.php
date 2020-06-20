@@ -32,7 +32,7 @@
                     @error('company_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                      <label for="companyEmail">company_email</label>
+                      <label for="companyEmail">company Email</label>
                       <input type="text" autocomplete="off" class="form-control @error('company_email') is-invalid @enderror" name="company_email" id="companyEmail" placeholder="Company Email Input" value="{{ old('company_email') }}">
                       @error('company_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>

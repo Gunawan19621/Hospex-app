@@ -20,6 +20,9 @@
                   </h3>
                 </div>
               </div>
+              <div class="m-portlet__head-tools">
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
+              </div>
             </div>
 
           <!--begin::Form-->

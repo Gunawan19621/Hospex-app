@@ -1,5 +1,5 @@
 @extends('layout.base11')
-@section('title', 'Site Plan')
+@section('title', $title)
 @section('container')
     <!--begin::Portlet-->
     <div class="m-portlet">
@@ -26,14 +26,13 @@
                     <br>
                         <br>
                         <button type="button" class="btn btn-brand" id="submit">Upload</button>
-                        <button type="reset" class="btn btn-warning" >reseat</button>
+                        <button type="reset" class="btn btn-warning" >reset</button>
                 </div>
             </div>
         </div>
         <div class="m-portlet__foot m-portlet__foot--fit">
             <div class="m-form__actions m-form__actions">
-                    <div class="col-md-10"
-                    style="margin-bottom:0px;" align="center" id="preview">
+                    <div class="col-md-10" style="margin-bottom:0px;" align="center" id="preview">
                         
                     </div>
             </div>
@@ -101,9 +100,10 @@
     };
     list_image();
     function list_image(){
-        var pdf_url = " {{ route('dropzone.fetch') }} ";
+        var eventId = {!! $event->id !!};
+        var pdf_url = ` {{ url('dropzone/${eventId}/fetch') }} `;
         // $.ajax({
-        //     url : "{{ route('dropzone.fetch') }}",
+        //     url : "{{ url('dropzone.fetch') }}",
         //     // cache: false,
         //     contentType: 'application/json',
         //     // processData: false,
@@ -120,6 +120,7 @@
             url: '',
             type: 'GET',
             processData: false,
+            contentType: "application/xml; charset=utf-8",
             xhrFields: { withCredentials: true },
             success: function () {
                 var iframe = $('<embed id="iframe-pdf" class="iframe-pdf"  style="width:1380px; height:800px;" frameborder="0" ></embed>');
@@ -132,7 +133,7 @@
                 $('#preview').html(iframe);
             }
         });
-        // PDFObject.embed("{{ route('dropzone.fetch') }}", "#preview");
+        // PDFObject.embed("{{ url('dropzone.fetch') }}", "#preview");
     }
     $(document).on('click', '.remove_image', function deleteImage(){
         var name = $(this).attr('id');
