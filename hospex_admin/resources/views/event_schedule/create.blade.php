@@ -29,8 +29,8 @@
                 @csrf
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group">
-                        <label for="eventitel">Event Title</label>
-                        <input type="text" class="form-control @error('date') is-invalid @enderror " name="date" id="m_datepicker_1" placeholder="Event Schedule Date" value="{{ old('date') }}">
+                        <label for="evenschedule">Event Schedule</label>
+                        <input type="text" class="form-control @error('date') is-invalid @enderror " name="date" id="m_datepicker_1" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}">
                         <input type="hidden" readonly class="form-control" name="event_id" id="event_id" value="{{ $events->id }}">
                         @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                     </div>

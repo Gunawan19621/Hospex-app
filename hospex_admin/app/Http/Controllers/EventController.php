@@ -44,6 +44,10 @@ class EventController extends Controller
     {
         return view('event.create');
     }
+    public function formDelete()
+    {
+        return view('event.formdelete');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -88,35 +92,12 @@ class EventController extends Controller
                     ->orderBy('date');
         return view('event_schedule.schedules', compact('schedules','event','title'));
     }
-    public function siteplan(Event $event)
-    {
-        $title = 'Site Plan';
-        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
-        
-        $fileName = $event->site_plan;
-        // $destinationPath = public_path('images/');
-
-        if ( Storage::exists('event/'.$fileName)) {
-            $file = Storage::get('event/'.$fileName);
-           
-            $response = Response::make($file,200);
-            $response->header('Content-Type', 'application/pdf');
-            return $response;
- 
-        }else{
-            $response = '<p>Belum Ada Data Tersedia</p>';
-            return $response;
-        }
-        
-        //return view('event.form_upload', compact('slice','title','event','content'));
-
-    }
+    
     public function uploadSiteplan(Event $event)
     {
-        return 'sunuini';
         $title = 'Site Plan';
         $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
-        return view('event.form_upload', compact('slice','title','event','content'));
+        return view('event/form_upload', compact('title','event','slice'));
     }
 
     /**
@@ -167,9 +148,10 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        $delete = Event::destroy($event->id);
-        $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
-        return redirect('/events')->with('status',$response);
+        // $delete = Event::destroy($event->id);
+        // $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
+        return response()->json('1-Event Deleted', 200);
+        // return redirect('/events')->with('status',$response);
     }
     public function getevents()
     {
@@ -326,9 +308,9 @@ class EventController extends Controller
         //         'Content-Disposition' => 'inline; filename="'.$fileName.'"'
                 
         //     ]);
-        $exists = Storage::disk('logs')->exists('event/'.$fileName);
+        $exists = Storage::exists('event/'.$fileName);
         if ($exists) {
-            $images =  Storage::disk('logs')->get('event/'.$fileName);
+            $images =  Storage::get('event/'.$fileName);
             // $images = {{ Storage::path('screenshots/1.jpg') }};
             // $output = '<div class="row">';
             // // foreach($images as $image){
@@ -348,16 +330,38 @@ class EventController extends Controller
             //  ];
   
             //  return Response::download($images , 'filename');
-  
-             return Response::make($images, 200, [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="titke"'
 
-                ]);
+            $response = Response::make($images,200);
+            $response->header('Content-Type', 'application/pdf');
+            return $response;
         }else{
-            echo 'gaada';
+            $response = '<p>Belum Ada Data Tersedia</p>';
+            return $response;
         }
         // return response()->file($images);
+    }
+    public function siteplan(Event $event)
+    {
+        $title = 'Site Plan';
+        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
+        
+        $fileName = $event->site_plan;
+        // $destinationPath = public_path('images/');
+
+        if ( Storage::exists('event/'.$fileName)) {
+            $file = Storage::get('event/'.$fileName);
+           
+            $response = Response::make($file,200);
+            $response->header('Content-Type', 'application/pdf');
+            return $response;
+ 
+        }else{
+            $response = '<p>Belum Ada Data Tersedia</p>';
+            return $response;
+        }
+        
+        //return view('event.form_upload', compact('slice','title','event','content'));
+
     }
     function dropzoneDelete(Request $request)
     {

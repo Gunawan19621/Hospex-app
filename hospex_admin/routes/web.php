@@ -47,7 +47,7 @@ Route::get('/events/{event}/area','EventController@area')->name('events.area');
 Route::get('/events/{event}/site-plan','EventController@siteplan')->name('events.area');
 Route::get('/events/{event}/upload-site-plan','EventController@uploadSiteplan');
 Route::patch('/events/{event}/site-plan','EventController@fileStore');
-Route::get('/dropzone/{event}/fetch','EventController@fetch')->name('dropzone.fetch');
+Route::get('dropzone/{event}/fetch','EventController@siteplan');
 Route::get('/dropzone/delete','EventController@dropzoneDelete')->name('dropzone.delete');
 
 Route::patch('/events/{event}','EventController@update');
