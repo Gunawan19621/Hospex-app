@@ -70,6 +70,7 @@ Route::resource('companies', 'CompaniesController');
 Route::resource('sponsors', 'EventSponsorController');
 
 // Areas
+// Route::get('/areas/create/{event?}','StandsController@create');
 Route::resource('areas', 'AreasController');
 
 // Exhibitors

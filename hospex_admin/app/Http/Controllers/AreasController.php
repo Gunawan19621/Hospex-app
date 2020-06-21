@@ -50,10 +50,10 @@ class AreasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($event = null)
     {
         $title = 'Add Areas';
-        $events = Event::all();
+        $events = $event == null ? Event::all() :  Event::whereId($event)->get();
         return view('area.create', compact('title','events'));
     }
 
@@ -71,7 +71,7 @@ class AreasController extends Controller
         ]);
         $create=Area::create($request->all());
         $response = $create ? '1-Area Saved' : '0-Area Failed to Save';
-        return redirect('areas')->with('status',$response);
+        return redirect()->back()->with('status',$response);
     }
 
     /**

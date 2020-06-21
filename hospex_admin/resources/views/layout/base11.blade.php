@@ -75,11 +75,12 @@ License: You must have a valid license purchased only from themeforest(the above
 							<div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
-										<img alt="" src="{{ url('assets11/demo/demo11/media/img/logo/logo.png') }}" />
+										<img alt="" src="{{ asset('assets11/hospexmetro.png')}}">
+										{{-- <img alt="" src="{{ url('assets11/demo/demo11/media/img/logo/logo.png') }}" /> --}}
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
-									<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push" m-dropdown-toggle="click" aria-expanded="true">
+									{{-- <div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-left m-dropdown--align-push" m-dropdown-toggle="click" aria-expanded="true">
 										<a href="#" class="dropdown-toggle m-dropdown__toggle btn btn-outline-metal m-btn  m-btn--icon m-btn--pill">
 											<span>Dashboard</span>
 										</a>
@@ -135,7 +136,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> --}}
 
 									<!-- BEGIN: Responsive Aside Left Menu Toggler -->
 									<a href="javascript:;" id="m_aside_left_offcanvas_toggle" class="m-brand__icon m-brand__toggler m-brand__toggler--left m--visible-tablet-and-mobile-inline-block">

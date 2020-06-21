@@ -81,7 +81,7 @@
                         <div class="m-login__content">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="{{ url('assets11/app/media/img/logos/logo-2.png')}}">
+                                    <img src="{{ asset('assets11/hospexmetro.png')}}">
                                 </a>
                             </div>
                             <div class="m-login__title">

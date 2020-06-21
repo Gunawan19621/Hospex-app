@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MatchRequest;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 
 class BusinessMatchingController extends Controller
@@ -17,41 +18,79 @@ class BusinessMatchingController extends Controller
         // $this->middleware('login');
     }
 
-    public function index()
+    public function index($type, $id)
     {
-        $matches = MatchRequest::all();
-        $data = [];
-        foreach ($matches as $key => $match) {
-            $stands = $match->exhibitor->stands;
-            $item = '';
-            $dist = 0;
-            foreach ($stands as $key => $stand) {
-                // $item .= $stand->stand_name;
-                // $item = $key === count($stands)-1 ? $item.'' : $item.', ';
-                if ($dist != $stand->area_id) {
-                    $item .= '('.$stand->stand_name;
-                }else{
-                    $item .= ')';
-                }
-                $dist = $stand->area_id;
-            }
-            $data[]  = [
-                 'company_name' => $match->exhibitor->company->company_name,
-                //  'stands'       => $match->exhibitor->stands()->get()->map(function($item) {
-                //                     return $item->area->area_name.' ( '.$item->stand_name.' )';
-                //                 })->implode(', '),
-                'stands'        => $item
-                ];
-                $d[]= $match->exhibitor->stands()->get()->map(function($item) {
-                    return [$item->area->area_name => $item->stand_name];
-                });
-        }
+       $matches = $type === 'exhibitor' ? MatchRequest::where(['event_exhibitor_id' => $id])->get() : MatchRequest::where(['visitor_id' => $id])->get();
+       $tanggal = $matches->reverse()->unique('date')->reverse();
        
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Successfull Created',
-            'data'      => $data
-        ],201);
+
+
+    $data = [];
+       foreach ($tanggal as $key => $value) {
+           $data[] = [
+            'tanggal'           => Carbon::createFromDate($value->date)->format('d M, Y '),
+            'hari'              => Carbon::parse($value->date)->format('l'),
+            'business_match'    => $matches->map(function( $item ) use( $value ) {
+                    if ( $value->date == $item->date) {
+                        return [
+                                'id'            => $item->id,
+                                'logo_PT'       => 'logo1.jpg',
+                                'nama_PT'       => $item->exhibitor->company->company_name,
+                                'lokasi'        => $item->location,
+                                'catatan'       => $item->notes,
+                                'visitor_name'  => $item->visitor->visitor_name,
+                                'visitor_email' => $item->visitor->visitor_email,
+                            ];
+                    }else{
+                        return false;
+                    }
+                })->filter()
+           ];
+        //    $business_match = [];
+        //    foreach ($matches as $key => $match) {
+        //        if ($value->date === $match->date) {
+        //            # code...
+        //            $stands = $match->exhibitor->stands;
+        //            // $item = '';
+        //            // $dist = 0;
+        //            // foreach ($stands as $key => $stand) {
+        //            //     // $item .= $stand->stand_name;
+        //            //     // $item = $key === count($stands)-1 ? $item.'' : $item.', ';
+        //            //     if ($dist != $stand->area_id) {
+        //            //         $item .= '('.$stand->stand_name;
+        //            //     }else{
+        //            //         $item .= ')';
+        //            //     }
+        //            //     $dist = $stand->area_id;
+        //            // }
+        //            $business_match[]  = [
+                           
+        //                    'business_match'    => [
+        //                        'id'            => $match->id,
+        //                        'logo_PT'       => 'logo1.jpg',
+        //                        'nama_PT'       => $match->exhibitor->company->company_name,
+        //                        'lokasi'        => $match->location,
+        //                        'catatan'       => $match->notes,
+        //                    ],
+        //                    //  'stands'       => $match->exhibitor->stands()->get()->map(function($item) {
+        //                    //                     return $item->area->area_name.' ( '.$item->stand_name.' )';
+        //                    //                 })->implode(', '),
+                           
+        //                    // 'stands'        => $item
+        //                ];
+        //                // $d[]= $match->exhibitor->stands()->get()->map(function($item) {
+        //                //     return [$item->area->area_name => $item->stand_name];
+        //                // });
+        //             }
+        //             $data['business_match'] = $business_match;
+        //    }
+           
+        }
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Successfull Found',
+                    'data'      => $data
+                ],201);
        
         
     }
@@ -76,7 +115,7 @@ class BusinessMatchingController extends Controller
         $date = date('Y-m-d', strtotime($request->input('date')));
         $exhibitor_id       = $request->input('exhibitor_id');
         $visitor_id         = $request->input('visitor_id');
-        $location           = $request->input('location');
+        $location           = '';//$request->input('location');
         $notes              = $request->input('notes');
         $match = MatchRequest::create([
             'date'                      => $date,

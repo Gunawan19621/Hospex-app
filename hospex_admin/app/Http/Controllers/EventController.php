@@ -61,9 +61,9 @@ class EventController extends Controller
             'event_title'       => 'required',
             'year'              => 'required|size:4',
             'city'              => 'required',
-            'site_plan'         => 'required',
             'event_location'    => 'required'
         ]);
+        $request->request->add(['site_plan' => '']);
 
         // Event::create([
         //     'event_title'       => $request->event_title,
@@ -124,7 +124,6 @@ class EventController extends Controller
             'event_title'       => 'required',
             'year'              => 'required|date_format:Y|after_or_equal:now',
             'city'              => 'required',
-            'site_plan'         => 'required',
             'event_location'    => 'required'
         ]);
         $update =Event::where('id', $event->id)
@@ -132,7 +131,6 @@ class EventController extends Controller
                     'event_title'       => $request->event_title,
                     'year'              => $request->year,
                     'city'              => $request->city,
-                    'site_plan'         => $request->site_plan,
                     'event_location'    => $request->event_location
                 ]);
         

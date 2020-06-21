@@ -65,6 +65,46 @@
 		</div>
 	</div>
 </div>
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Add Area</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form1" class="m-form m-form--fit m-form--label-align-right"  method="post" action="/areas">
+                @csrf
+                    <div class="modal-body">
+                        <div class="form-group m-form__group">
+                            <label for="eventitel">Area Name</label>
+                            <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ old('area_name') }}">
+                            @error('area_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                        </div>
+                        <div class="form-group m-form__group eventSelect">
+                            <label for="eventitel">Event</label>
+                            <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
+                                <option value="" > Event </option>
+                                @foreach ($events as $event)
+                                    <option value=" {{ $event->id }} " > {{ $event->event_title.'('.$event->year.')' }} </option>
+                                @endforeach
+                            </select>
+                        
+                        </div>
+                </div>
+            </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary simpan">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!--end::Modal-->
+
 @endsection
 
  @section('require')
@@ -72,14 +112,16 @@
          $(document).ready(function(){
             let  areas      =  {!! $areas !!},
             exhibitors =  {!! $exhibitors !!};
-            if (areas.length >= 0) {
+            if (areas.length <= 0) {
+
+                var link = `{{ url('areas/create').'/'.$event }}`;
                     $('button[type=submit]').prop('disabled', true);
                     $('#areaID').prop('disabled', true);
                     $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                                <strong>Warning!</strong> Areas Not Available Yet.
+                                                <strong>Warning!</strong> Areas Not Available Yet, <a href="javascript:void(0);" data-toggle="modal" data-target="#m_modal_1">click here</a> to add area
                                             </div>`);
                 }
-                if (exhibitors.length >= 0) {
+                if (exhibitors.length <= 0) {
                     $('button[type=submit]').prop('disabled', true);
                     $('#exhibitorID').prop('disabled', true);
                     $('.alertform').append(`<div class="alert alert-warning" role="alert">
@@ -87,6 +129,15 @@
                                             </div>`);
                 }
 
+         })
+         $('.simpan').on('click',function(){
+             
+             let eventSelect = $('#eventID option:selected').val()
+             if (!jQuery.isEmptyObject(eventSelect)) {
+                 $('#form1').submit();
+             }else{
+                 $(this).closest('.modal').find('#form1 .eventSelect').append('<div class="invalid-feedback d-block"> Please set Event </div>');
+             }
          })
 
             
