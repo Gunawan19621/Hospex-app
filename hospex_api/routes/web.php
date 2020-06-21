@@ -34,7 +34,7 @@ $router->get('/exhibitors/{exhibitor}', 'ExhibitorsController@show');
 
 // business matching
 $router->post('/match-request', 'BusinessMatchingController@store');
-$router->get('/match', 'BusinessMatchingController@index');
+$router->get('/list-business-matching/{type}/{id}', 'BusinessMatchingController@index');
 
 
 // schedule

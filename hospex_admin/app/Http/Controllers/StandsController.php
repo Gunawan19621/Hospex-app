@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Stand;
 use App\EventExhibitor;
 use App\Area;
+use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -64,7 +65,8 @@ class StandsController extends Controller
         $title = 'Add Stand';
         $exhibitors = $event == null ? EventExhibitor::all() : EventExhibitor::where('event_id', $event)->get();
         $areas      = $event == null ? Area::all() : Area::where('event_id', $event)->get();
-        return view('stand.create',compact('title','areas','exhibitors'));
+        $events     = $event == null ? Event::all() : Event::whereId($event)->get();
+        return view('stand.create',compact('title','areas','exhibitors','events'));
     }
 
     /**

@@ -11,6 +11,7 @@ use App\EventExhibitor as Exhibitor;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use App\Helpers\GetEvent as eventId;
 
 class AuthController extends Controller
 {
@@ -40,14 +41,15 @@ class AuthController extends Controller
         //                 ->withInput();
         // }
 
-
+        $eventId = eventId::GetEvent();
 
         $register = Visitor::create([
             'visitor_name'      => $name,
             'visitor_email'      => $email,
             'password'          => $password,
             'company_id'        => '1',
-            'event_id'          => '1'
+            'event_id'          => $eventId,
+            'api_token'         => ''
         ]);
         
         if ($register) {
