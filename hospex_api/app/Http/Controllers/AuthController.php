@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
 use App\Visitor;
+use App\UserView;
+use App\Company;
 use App\EventExhibitor as Exhibitor;
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -70,22 +72,51 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        $eventId = eventId::GetEvent();
         $email      = $request->input('email');
         $password   = $request->input('password');
         $type       = $request->input('type');
-        // if ($type == 'visitor') {
-        //     $user = Visitor::where('visitor_email', $email)->first();
-        // }elseif($type == 'exhibitor'){
-        //     $user = Exhibitor::where('email', $email)->first();
-        // }else{
-
-        // }
-        $user = DB::table('user_views')->where(['type' => $type, 'email' => $email])->first();
+        $table      = $type == 'visitor' ? 'App\Visitor' : 'App\Exhibitor';
+        $emailcolumn= $table == 'App\Visitor' ? 'visitor_email' : 'email';
         $respon = [
             'success'   => false,
             'message'   => 'Login Fail',
             'data'      => ''
         ];
+
+        $user = $table::where($emailcolumn, $email)->first();
+       
+        if ($user) {
+            if (Hash::check($password, $user->password)) {
+                if ($user->event_id != $eventId) {
+                    return response()->json($respon, 400);
+                }
+                $apiToken = base64_encode(Str::random(40));
+                $user->update(['api_token' => $apiToken ]);
+                $data['id']         = $user->id;
+                $data['foto']       = "foto.jpg";
+                $data['nama']       = ($type == 'visitor' ? $user->visitor_name : $user->company->company_name);
+                $data['user_name']  = 'user_name';
+                $data['email']      = $user->$emailcolumn;
+                $data['type']       = $type;
+                return response()->json(['success'   => true,
+                    'message'   => 'Login Success',
+                    'data'      => [
+                        'user'          => $data,
+                        'api_token'     => $apiToken
+                    ]
+                ], 201);
+            }
+        }else{
+            return response()->json($respon, 400);
+        }
+
+
+
+
+
+        $user = DB::table('user_views')->where(['type' => $type, 'email' => $email])->first();
+        
         if ($user) {
             if (Hash::check($password,$user->password)){
                 $apiToken = base64_encode(Str::random(40));
@@ -166,4 +197,5 @@ class AuthController extends Controller
         // }
 
     }
+   
 }
