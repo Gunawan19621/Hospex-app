@@ -9,9 +9,9 @@ class MatchRequest extends Model
     protected $fillable = [
         'date',
         'location',
-        'notes',
         'event_exhibitor_id',
-        'visitor_id'
+        'visitor_id',
+        'time',
     ];
     
     public function exhibitor()

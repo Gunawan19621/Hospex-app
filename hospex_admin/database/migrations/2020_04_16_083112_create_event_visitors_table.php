@@ -17,6 +17,10 @@ class CreateEventVisitorsTable extends Migration
             $table->id();
             $table->string('visitor_name');
             $table->string('visitor_email');
+            $table->string('company');
+            $table->string('info');
+            $table->string('address');
+            $table->string('phone');
             $table->string('password');
             $table->string('api_token');
             // $table->unsignedBigInteger('company_id');

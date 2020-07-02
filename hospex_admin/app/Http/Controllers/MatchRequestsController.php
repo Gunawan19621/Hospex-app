@@ -43,7 +43,10 @@ class MatchRequestsController extends Controller
                     ->addIndexColumn()
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0 ? 
-                            $this->viewForm($match->id)
+                            // $this->viewForm($match->id)
+                            function($match){
+                                return view('match.viewForm',compact('match'));
+                            }
                             : 
                             '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
                                 <span> <i class="fa fa-calendar-check-o"></i><span>Approved</span></span>

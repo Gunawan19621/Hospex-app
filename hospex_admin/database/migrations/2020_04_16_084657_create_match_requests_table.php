@@ -16,8 +16,7 @@ class CreateMatchRequestsTable extends Migration
         Schema::create('match_requests', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('location');
-            $table->text('notes');
+            $table->time('time');
             $table->unsignedBigInteger('event_exhibitor_id');
             $table->unsignedBigInteger('visitor_id');
             $table->foreign('event_exhibitor_id')->references('id')->on('event_exhibitors')->onDelete('cascade');

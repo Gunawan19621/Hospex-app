@@ -30,6 +30,10 @@ class AuthController extends Controller
     {
         $name       = $request->input('name');
         $email      = $request->input('email');
+        $company    = $request->input('company');
+        $info       = $request->input('info');
+        $address    = $request->input('address');
+        $phone      = $request->input('phone');
         $password   = Hash::make($request->input('password'));
 
         // $validator = Validator::make($request->all(), [
@@ -51,6 +55,10 @@ class AuthController extends Controller
             'password'          => $password,
             'company_id'        => '1',
             'event_id'          => $eventId,
+            'company'           => $company,
+            'info'              => $info,
+            'address'           => $address,
+            'phone'             => $phone,
             'api_token'         => ''
         ]);
         
@@ -107,6 +115,8 @@ class AuthController extends Controller
                     ]
                 ], 201);
             }
+
+            return response()->json($respon, 400);
         }else{
             return response()->json($respon, 400);
         }

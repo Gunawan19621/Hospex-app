@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\MatchRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\MockObject\Builder\Match;
 
 class BusinessMatchingController extends Controller
 {
@@ -18,9 +19,15 @@ class BusinessMatchingController extends Controller
         // $this->middleware('login');
     }
 
-    public function index($type, $id)
+    public function index($type, $id, $status)
     {
-        $matches = $type === 'exhibitor' ? MatchRequest::where(['event_exhibitor_id' => $id])->get() : MatchRequest::where(['visitor_id' => $id])->get();
+        $whereid = $type == 'visitor' ? ['visitor_id'=>$id] : [ 'event_exhibitor_id'=> $id ];
+        $where = $status == 'confirm' ? Arr::collapse([ $whereid, ['status' => '1', 'status_visitor' => '1' ] ]):  $whereid; 
+        // return response()->json($where,200);
+        $matches = $status == 'confirm' ? MatchRequest::where($where)->get() : MatchRequest::where($where)->where(function($query) {
+            $query->where('status', '<>','1')
+                  ->orwhere('status_visitor', '<>', '1');
+        })->get();
         $tanggal = $matches->reverse()->unique('date')->reverse();
         
  
@@ -173,20 +180,76 @@ class BusinessMatchingController extends Controller
         $date = date('Y-m-d', strtotime($request->input('date')));
         $exhibitor_id       = $request->input('exhibitor_id');
         $visitor_id         = $request->input('visitor_id');
-        $location           = '';//$request->input('location');
-        $notes              = $request->input('notes');
-        $match = MatchRequest::create([
-            'date'                      => $date,
-            'location'                  => $location,
-            'event_exhibitor_id'        => $exhibitor_id,
-            'visitor_id'                => $visitor_id,
-            'notes'                     => $notes,
-        ]);
-
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Succesfull Created',
-            'data'      => collect($match)->except('created_at', 'updated_at')
-        ],201);
+        $location           = $request->input('location');
+        $time               = Carbon::parse($request->input('time'))->format('h:i:s');
+       
+        try {
+            $match = MatchRequest::create([
+                'date'                      => $date,
+                'location'                  => $location,
+                'time'                      => $time,
+                'event_exhibitor_id'        => $exhibitor_id,
+                'visitor_id'                => $visitor_id,
+                'status_visitor'            => '1'
+            ]);
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Succesfull Created',
+                'data'      => collect($match)->except(['created_at','updated_at'])
+            ],201);
+        } catch (Exception $e) {
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Failed to Create',
+                'data'      => $e->getMessage()
+            ],503);
+        }
+    }
+    public function update(Request $request, $match, $type)
+    {
+        $column = $type == 'visitor' ? 'status_visitor' : 'status';
+        $othercolumn = $type == 'visitor' ? 'status' : 'status_visitor';
+        try{
+            $update = MatchRequest::where(['id'=> $match])
+            ->update([
+                    'date'       => date('Y-m-d', strtotime($request->input('date'))),
+                    'time'       => Carbon::parse(date('H:i:s',strtotime($request->input('time')))),
+                    $column      => '1',
+                    $othercolumn => '0' 
+                ]);
+            
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Success to Save',
+                    'data'      => $update
+                ],201);
+        } catch (\Exception $e){
+            $response = $e->getMessage();
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Failed to Save',
+                'data'      => $e->getMessage()
+            ],503);
+        }
+    }
+    public function approve($match, $type)
+    {
+        $column = $type == 'visitor' ? 'status_visitor' : 'status';
+        try{
+            $update = MatchRequest::where(['id'=> $match])->update([ $column      => '1' ]);
+            
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Success to Save',
+                'data'      => $update
+            ],201);
+        } catch (\Exception $e){
+            $response = $e->getMessage();
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Failed to Save',
+                'data'      => $e->getMessage()
+            ],503);
+        }
     }
 }
