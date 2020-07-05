@@ -81,17 +81,18 @@
                         <div class="m-login__content">
                             <div class="m-login__logo">
                                 <a href="#">
-                                    <img src="{{ asset('assets11/hospexmetro.png')}}">
+                                    <img src="{{ asset('assets11/hospexlogo.png')}}" style="height:200px;width200px;">
+                                    {{-- <img src="{{ asset('assets11/hospexmetro.png')}}"> --}}
                                 </a>
                             </div>
                             <div class="m-login__title">
-                                <h3>JOIN OUR GREAT METRO COMMUNITY GET FREE ACCOUNT</h3>
+                                <h3>HOSPITAL EXPO 2020</h3>
                             </div>
                             <div class="m-login__desc">
-                                Amazing Stuff is Lorem Here.Grownng Team
+                                The 33rd Indonesia Internatioanl Hospital, Medical, pharmaceutical, clinical laboratories, equipment and medicine exhibiton
                             </div>
                             <div class="m-login__form-action">
-                                <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill">Get An Account</button>
+                                {{-- <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill">Get An Account</button> --}}
                             </div>
                         </div>
                     </div>
@@ -133,16 +134,17 @@
                                     </label>
                                 </div>
                                 <div class="col m--align-right">
-                                    <a href="javascript:;" id="m_login_forget_password" class="m-link">Forget Password ?</a>
+                                    
+                                    {{-- <a href=""  class="m-link">Forget Password ?</a> --}}
                                 </div>
                             </div>
                             <div class="m-login__form-action mb-0">
                                 <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">{{ __('Login') }}</button>
                                 @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                            @endif
+                                        <a class="btn btn-link m-link" id="m_login_forget_password" href="javascript:void(0);">
+                                            {{ __('Forgot Password?') }}
+                                        </a>
+                                    @endif
                             </div>
                         </form>
                     </div>
@@ -183,9 +185,15 @@
                             <h3 class="m-login__title">Forgotten Password ?</h3>
                             <div class="m-login__desc">Enter your email to reset your password:</div>
                         </div>
-                        <form class="m-login__form m-form" action="">
+                        <form class="m-login__form m-form" method="POST" action="{{ route('password.email') }}">
+                            @csrf
                             <div class="form-group m-form__group">
-                                <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email" autocomplete="off">
+                                <input class="form-control m-input" type="text" placeholder="Email" name="email" id="m_email"  class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="m-login__form-action">
                                 <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>

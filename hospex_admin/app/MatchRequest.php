@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchRequest extends Model
 {
-    protected $fillabel = ['date','location','notes','event_exhibitor_id','visitor_id'];
+    protected $fillabel = ['date','time','event_exhibitor_id','visitor_id'];
     
     public function exhibitor()
     {

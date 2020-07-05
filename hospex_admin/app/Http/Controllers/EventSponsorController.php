@@ -117,15 +117,13 @@ class EventSponsorController extends Controller
     public function update(Request $request, EventSponsor $sponsor)
     {
         $request->validate( [ 'event_id' => 'required|numeric', 'sponsor_name' => 'required' ] );
-        $data= [];
-        foreach ($request->company_id as $key => $value) {
-            $data[] = [
-                'company_id'    => $value, 
-                'event_id'      => $request->event_id, 
-                'sponsor_name'  => $request->sponsor_name
-            ];
-        }
-        $update = EventSponsor::update($data);
+        $data= [
+            'company_id'    => $request->company_id, 
+            'event_id'      => $request->event_id, 
+            'sponsor_name'  => $request->sponsor_name
+        ];
+        
+        $update = EventSponsor::whereId($sponsor->id)->update($data);
        
         $response = $update ? '1-Sponsor Updated!' : '0-Sponsor Failed to Update!';
         return redirect('/sponsors')->with('status', $response);

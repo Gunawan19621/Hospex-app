@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Visitor extends Model
 {
     protected $table    = 'event_visitors';
-    protected $fillable = ['visitor_name','visitor_email','company_id'];
+    protected $fillable= ['visitor_name','visitor_email','company_id','password','event_id','company','info','address','phone','api_token'];
 
     // public function company()
     // {

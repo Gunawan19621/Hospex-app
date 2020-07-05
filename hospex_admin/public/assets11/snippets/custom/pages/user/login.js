@@ -80,7 +80,6 @@ var SnippetLogin = function() {
                 var t = $(this),
                     r = $(this).closest("form"),
                     sub = r.attr("action");
-                    alert(sub)
                 r.validate({
                     rules: {
                         email: {
@@ -88,8 +87,9 @@ var SnippetLogin = function() {
                             email: !0
                         }
                     }
-                }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), ajax({
-                    url: sub,
+                }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({
+                    url:sub,
+                    method:'POST',
                     success: function(l, s, n, o) {
                         setTimeout(function() {
                             t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm(), a();

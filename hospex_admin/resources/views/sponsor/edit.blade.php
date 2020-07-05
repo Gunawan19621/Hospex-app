@@ -23,7 +23,8 @@
                 <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/sponsors">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/sponsors/{{$sponsor->id}}">
+            @method('patch')
           @csrf
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
@@ -43,7 +44,7 @@
                 </div>
                   <div class="form-group m-form__group">
                       <label for="eventitel">Companies</label>
-                      <select class="form-control " name="company_id[]" placeholder="Select Sponsor Companies">
+                      <select class="form-control " name="company_id" placeholder="Select Sponsor Companies">
                         @foreach ($companies as $company)
                         <option value=" {{ $company->id }} " @if ($company->id == $sponsor->company_id) selected @endif > {{ $company->company_name }} </option>
                         @endforeach

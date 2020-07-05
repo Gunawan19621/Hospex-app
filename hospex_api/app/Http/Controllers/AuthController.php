@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\User;
 use App\Visitor;
+use App\UserView;
+use App\Company;
 use App\EventExhibitor as Exhibitor;
 use Validator;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +30,10 @@ class AuthController extends Controller
     {
         $name       = $request->input('name');
         $email      = $request->input('email');
+        $company    = $request->input('company');
+        $info       = $request->input('info');
+        $address    = $request->input('address');
+        $phone      = $request->input('phone');
         $password   = Hash::make($request->input('password'));
 
         // $validator = Validator::make($request->all(), [
@@ -49,6 +55,10 @@ class AuthController extends Controller
             'password'          => $password,
             'company_id'        => '1',
             'event_id'          => $eventId,
+            'company'           => $company,
+            'info'              => $info,
+            'address'           => $address,
+            'phone'             => $phone,
             'api_token'         => ''
         ]);
         
@@ -70,22 +80,53 @@ class AuthController extends Controller
     }
     public function login(Request $request)
     {
+        $eventId = eventId::GetEvent();
         $email      = $request->input('email');
         $password   = $request->input('password');
         $type       = $request->input('type');
-        // if ($type == 'visitor') {
-        //     $user = Visitor::where('visitor_email', $email)->first();
-        // }elseif($type == 'exhibitor'){
-        //     $user = Exhibitor::where('email', $email)->first();
-        // }else{
-
-        // }
-        $user = DB::table('user_views')->where(['type' => $type, 'email' => $email])->first();
+        $table      = $type == 'visitor' ? 'App\Visitor' : 'App\EventExhibitor';
+        // $emailcolumn= $table == 'App\Visitor' ? 'visitor_email' : '$company()->company_email';
         $respon = [
             'success'   => false,
             'message'   => 'Login Fail',
             'data'      => ''
         ];
+
+        $user =  $table == 'App\Visitor' ? $table::where('visitor_email', $email)->first() : $table::whereHas('company', function (Builder $subquery) use($email){
+                        $subquery->where('company_email', $email);
+                    })->first();
+        if ($user) {
+            if (Hash::check($password, $user->password)) {
+                if ($user->event_id != $eventId) {
+                    return response()->json($respon, 400);
+                }
+                $apiToken = base64_encode(Str::random(40));
+                $user->update(['api_token' => $apiToken ]);
+                $data['id']         = $user->id;
+                $data['foto']       = "foto.jpg";
+                $data['nama']       = ($type == 'visitor' ? $user->visitor_name : $user->company->company_name);
+                $data['user_name']  = 'user_name';
+                $data['email']      = ($type == 'visitor' ? $user->visitor_email : $user->company->company_email);
+                $data['type']       = $type;
+                return response()->json(['success'   => true,
+                    'message'   => 'Login Success',
+                    'data'      => [
+                        'user'          => $data,
+                        'api_token'     => $apiToken
+                    ]
+                ], 200);
+            }
+            return response()->json($respon, 400);
+        }else{
+            return response()->json($respon, 400);
+        }
+
+
+
+
+
+        $user = DB::table('user_views')->where(['type' => $type, 'email' => $email])->first();
+        
         if ($user) {
             if (Hash::check($password,$user->password)){
                 $apiToken = base64_encode(Str::random(40));
@@ -166,4 +207,5 @@ class AuthController extends Controller
         // }
 
     }
+   
 }

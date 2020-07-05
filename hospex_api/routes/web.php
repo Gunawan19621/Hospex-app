@@ -34,7 +34,12 @@ $router->get('/exhibitors/{exhibitor}', 'ExhibitorsController@show');
 
 // business matching
 $router->post('/match-request', 'BusinessMatchingController@store');
-$router->get('/list-business-matching/{type}/{id}', 'BusinessMatchingController@index');
+$router->put('/match-request/{ match }/{ type }', 'BusinessMatchingController@update');
+$router->post('/match-approve/{ match }/{ type }', 'BusinessMatchingController@approve');
+$router->get('/list-business-matching/{type}/{id}/{status}', 'BusinessMatchingController@index');
+
+$router->get('/matchExhibitor', 'BusinessMatchingController@list_matching');
+$router->get('/matchVisitor', 'BusinessMatchingController@list_matching');
 
 
 // schedule
@@ -62,20 +67,20 @@ $router->get('/event', function () {
 
 $router->post('/register', 'AuthController@register');
 $router->post('/login', 'AuthController@login');
-$router->get('/read', function(){
-    $user = User::whereHasMorph(
-            'usertable',
-            ['App\EventExhibitor', 'App\Visitor'],
-            function (Builder $query, $type) {
-                if ($type === 'App\Visitor') {
-                    $query->where('visitor_email', 'like', 'mail@md.co.id');
-                }
-                if ($type === 'App\EventExhibitor') {
-                    $query->whereHas('company', function (Builder $subquery) {
-                        $subquery->where('company_email', 'like', 'mail@md.co.id');
-                    });
-                }       
-            }
-        )->where('password', '$2y$10$JHQU1g4D5a44soPb.TwNGu8OnZrrFxChxDmau/SUQOubcQcIvoJ3a')->get();
-    return $user;
-});
+// $router->get('/read', function(){
+//     $user = User::whereHasMorph(
+//             'usertable',
+//             ['App\EventExhibitor', 'App\Visitor'],
+//             function (Builder $query, $type) {
+//                 if ($type === 'App\Visitor') {
+//                     $query->where('visitor_email', 'like', 'mail@md.co.id');
+//                 }
+//                 if ($type === 'App\EventExhibitor') {
+//                     $query->whereHas('company', function (Builder $subquery) {
+//                         $subquery->where('company_email', 'like', 'mail@md.co.id');
+//                     });
+//                 }       
+//             }
+//         )->where('password', '$2y$10$JHQU1g4D5a44soPb.TwNGu8OnZrrFxChxDmau/SUQOubcQcIvoJ3a')->get();
+//     return $user;
+// });

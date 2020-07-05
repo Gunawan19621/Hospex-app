@@ -73,7 +73,7 @@
     //        formData.append("_token", CSRF_TOKEN);
     //     }); 
     // })
-
+    Dropzone.prototype.defaultOptions.dictDefaultMessage = "Drop File here to Upload! max 3MB (Pdf only)";
     Dropzone.options.myDropzone = {
         autoProcessQueue: false,
         maxFilesize: 3,  // 3 mb
@@ -120,8 +120,9 @@
             url: '',
             type: 'GET',
             processData: false,
-            contentType: "application/xml; charset=utf-8",
+            contentType: "application/json; charset=utf-8",
             xhrFields: { withCredentials: true },
+            cache: false,
             success: function () {
                 var iframe = $('<embed id="iframe-pdf" class="iframe-pdf"  style="width:1380px; height:800px;" frameborder="0" ></embed>');
 
