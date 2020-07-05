@@ -7,6 +7,7 @@
 <div class="m-content">
 	<div class="row">
 		  <div class="col-10">
+            <div class="alertform"></div>
         <div class="m-portlet m-portlet--tab">
           <div class="m-portlet__head">
               <div class="m-portlet__head-caption">
@@ -48,9 +49,9 @@
                   </div>
                   <div class="form-group m-form__group">
                     <label for="companyAddress">Categories</label>
-                    <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple">
+                    <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple" data-select2-tag="true" autocomplete="off">
                         @foreach ($categories as $category)
-                        <option value=" {{ $category->id }} " > {{ $category->category_name }} </option>
+                        <option  value=" {{ $category->id }} " > {{ $category->category_name }} </option>
                         @endforeach
                     </select>
                     {{-- <input type="text" autocomplete="off" class="form-control @error('company_address') is-invalid @enderror" name="company_address" id="companyAddress" placeholder="Company Address" value="{{ old('company_address') }}"> --}}
@@ -68,4 +69,20 @@
 		</div>
 	</div>
 </div>
+
+@endsection
+@section('require')
+<script>
+    $(document).ready(function () {
+    let categories =  {!! $categories !!}
+        if (categories.length <= 0) {
+            $('button[type=submit]').prop('disabled', true);
+            $('#eventID').prop('disabled', true);
+            $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                        <strong>Warning!</strong> Categories Not Available Yet. <a href="{{ url('categories/create')}}" target="_blank" >click here</a> to add Category
+                                    </div>`);
+        }
+    })
+
+</script>
 @endsection

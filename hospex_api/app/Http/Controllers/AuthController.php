@@ -84,16 +84,17 @@ class AuthController extends Controller
         $email      = $request->input('email');
         $password   = $request->input('password');
         $type       = $request->input('type');
-        $table      = $type == 'visitor' ? 'App\Visitor' : 'App\Exhibitor';
-        $emailcolumn= $table == 'App\Visitor' ? 'visitor_email' : 'email';
+        $table      = $type == 'visitor' ? 'App\Visitor' : 'App\EventExhibitor';
+        // $emailcolumn= $table == 'App\Visitor' ? 'visitor_email' : '$company()->company_email';
         $respon = [
             'success'   => false,
             'message'   => 'Login Fail',
             'data'      => ''
         ];
 
-        $user = $table::where($emailcolumn, $email)->first();
-       
+        $user =  $table == 'App\Visitor' ? $table::where('visitor_email', $email)->first() : $table::whereHas('company', function (Builder $subquery) use($email){
+                        $subquery->where('company_email', $email);
+                    })->first();
         if ($user) {
             if (Hash::check($password, $user->password)) {
                 if ($user->event_id != $eventId) {
@@ -105,7 +106,7 @@ class AuthController extends Controller
                 $data['foto']       = "foto.jpg";
                 $data['nama']       = ($type == 'visitor' ? $user->visitor_name : $user->company->company_name);
                 $data['user_name']  = 'user_name';
-                $data['email']      = $user->$emailcolumn;
+                $data['email']      = ($type == 'visitor' ? $user->visitor_email : $user->company->company_email);
                 $data['type']       = $type;
                 return response()->json(['success'   => true,
                     'message'   => 'Login Success',
@@ -113,9 +114,8 @@ class AuthController extends Controller
                         'user'          => $data,
                         'api_token'     => $apiToken
                     ]
-                ], 201);
+                ], 200);
             }
-
             return response()->json($respon, 400);
         }else{
             return response()->json($respon, 400);

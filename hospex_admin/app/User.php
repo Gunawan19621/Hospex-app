@@ -7,10 +7,12 @@ namespace App;
 // use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+// use DataViewer, Notifiable;
 class User extends Authenticatable 
 // implements Authenticatable
 {
-    // use Notifiable;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.

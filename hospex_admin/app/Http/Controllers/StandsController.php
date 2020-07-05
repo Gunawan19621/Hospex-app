@@ -66,7 +66,8 @@ class StandsController extends Controller
         $exhibitors = $event == null ? EventExhibitor::all() : EventExhibitor::where('event_id', $event)->get();
         $areas      = $event == null ? Area::all() : Area::where('event_id', $event)->get();
         $events     = $event == null ? Event::all() : Event::whereId($event)->get();
-        return view('stand.create',compact('title','areas','exhibitors','events'));
+        $event    = $event == null ? '' : $event;
+        return view('stand.create',compact('title','areas','exhibitors','events', 'event'));
     }
 
     /**

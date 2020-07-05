@@ -147,28 +147,10 @@ $(document).ready(function(){
     } ).draw();
 })
 $('#m_table_1').on('click', '.delete', function () {
-  
   var id = $(this).data("id");
+  var link = 'events';
+  confirmDelete(link,id)
   
-  if(confirm("Are You sure want to delete !")){
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    $.ajax({
-        dataType:'json',
-        type: "DELETE",
-        url: `{{ url('events')}}/${id}`,
-        success: function (data) {
-            $('#m_table_1').DataTable().ajax.reload();
-            alertMessage(data);
-        },
-        error: function (data) {
-            console.log('Error:', data);
-        }
-    });
-  }
 }); 
 
 </script>

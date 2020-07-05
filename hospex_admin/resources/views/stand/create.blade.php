@@ -80,15 +80,15 @@
                     <div class="modal-body">
                         <div class="form-group m-form__group">
                             <label for="eventitel">Area Name</label>
-                            <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ old('area_name') }}">
+                            <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Area Name Input" value="{{ old('area_name') }}">
                             @error('area_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
                         <div class="form-group m-form__group eventSelect">
                             <label for="eventitel">Event</label>
                             <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
                                 <option value="" > Event </option>
-                                @foreach ($events as $event)
-                                    <option value=" {{ $event->id }} " > {{ $event->event_title.'('.$event->year.')' }} </option>
+                                @foreach ($events as $ev)
+                                    <option value=" {{ $ev->id }} " > {{ $ev->event_title.'('.$ev->year.')' }} </option>
                                 @endforeach
                             </select>
                         
@@ -110,24 +110,25 @@
  @section('require')
      <script>
          $(document).ready(function(){
-            let  areas      =  {!! $areas !!},
-            exhibitors =  {!! $exhibitors !!};
+            let    areas      =  {!! $areas !!},
+                exhibitors =  {!! $exhibitors !!};
+                var link = `{{ url('areas/create').'/'.$event }}`;
+                console.log(event)
             if (areas.length <= 0) {
 
-                var link = `{{ url('areas/create').'/'.$event }}`;
                     $('button[type=submit]').prop('disabled', true);
                     $('#areaID').prop('disabled', true);
                     $('.alertform').append(`<div class="alert alert-warning" role="alert">
                                                 <strong>Warning!</strong> Areas Not Available Yet, <a href="javascript:void(0);" data-toggle="modal" data-target="#m_modal_1">click here</a> to add area
                                             </div>`);
-                }
-                if (exhibitors.length <= 0) {
-                    $('button[type=submit]').prop('disabled', true);
-                    $('#exhibitorID').prop('disabled', true);
-                    $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                                <strong>Warning!</strong> Exhibitors Not Available Yet.
-                                            </div>`);
-                }
+            }
+            if (exhibitors.length <= 0) {
+                $('button[type=submit]').prop('disabled', true);
+                $('#exhibitorID').prop('disabled', true);
+                $('.alertform').append(`<div class="alert alert-warning" role="alert">
+                                            <strong>Warning!</strong> Exhibitors Not Available Yet. <a href="{{ url('exhibitors/create')}}/{!! $event !!}" target="_blank" >click here</a> to add Exhibitors
+                                        </div>`);
+            }
 
          })
          $('.simpan').on('click',function(){

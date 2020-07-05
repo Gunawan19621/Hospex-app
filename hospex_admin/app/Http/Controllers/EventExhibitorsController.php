@@ -61,12 +61,12 @@ class EventExhibitorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($event = null)
     {
         $title = 'Add Exhibitor';
-        $companies = Company::all();
-        // dd($companies);
-        $events     = Event::all();
+        $companies = $event == null ? Company::all() : Company::all();
+        $events     = $event == null ? Event::all() : Event::whereId($event)->get();
+        // dd($events);
         return view('exhibitor.create', compact('title','companies','events'));
     }
 

@@ -77,14 +77,14 @@
             $('button[type=submit]').prop('disabled', true);
             $('#m_select2_3').prop('disabled', true);
             $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                        <strong>Warning!</strong> Companies Not Available Yet.
+                                        <strong>Warning!</strong> Companies Not Available Yet.  <a href="{{ url('companies/create')}}" target="_blank" >click here</a> to add Company
                                     </div>`);
         }
         if (events.length <= 0) {
             $('button[type=submit]').prop('disabled', true);
             $('#eventID').prop('disabled', true);
             $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                        <strong>Warning!</strong> Companies Not Available Yet.
+                                        <strong>Warning!</strong> Event Not Available Yet. <a href="{{ url('events/create')}}" target="_blank" >click here</a> to add Event
                                     </div>`);
         }
     })

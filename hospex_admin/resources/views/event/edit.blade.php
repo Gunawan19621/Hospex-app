@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">City</label>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-z]/g,'');" autocomplete="off" class="form-control m-input @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ $event->city }}">
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-zA-Z, ]/g,'');" autocomplete="off" class="form-control m-input @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ $event->city }}">
                     @error('city') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">

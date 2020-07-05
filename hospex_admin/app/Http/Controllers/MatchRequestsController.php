@@ -42,11 +42,11 @@ class MatchRequestsController extends Controller
             return datatables()->of(Match::all())
                     ->addIndexColumn()
                     ->editColumn('status', function(Match $match) {
-                        return ( $match->status == 0 ? 
+                        return ( $match->status == 0 || $match->status_visitor == 0? 
                             // $this->viewForm($match->id)
-                            function($match){
-                                return view('match.viewForm',compact('match'));
-                            }
+                            ' <a href="javascript::void(0);" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" >
+                                <span><i class="fa fa-calendar-check-o"></i><span>Approve</span></span>
+                            </a>'
                             : 
                             '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
                                 <span> <i class="fa fa-calendar-check-o"></i><span>Approved</span></span>

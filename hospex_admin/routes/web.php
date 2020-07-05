@@ -44,10 +44,10 @@ Route::delete('/events/{event}','EventController@destroy');
 Route::get('/events/{event}/edit','EventController@edit');
 Route::get('/events/{event}/exhibitor','EventController@exhibitor');
 Route::get('/events/{event}/area','EventController@area')->name('events.area');
-Route::get('/events/{event}/site-plan','EventController@siteplan')->name('events.area');
+Route::get('/events/{event}/site-plan','EventController@siteplan');
 Route::get('/events/{event}/upload-site-plan','EventController@uploadSiteplan');
 Route::patch('/events/{event}/site-plan','EventController@fileStore');
-Route::get('dropzone/{event}/fetch','EventController@siteplan');
+Route::get('dropzone/{event}/fetch','EventController@fetch');
 Route::get('/dropzone/delete','EventController@dropzoneDelete')->name('dropzone.delete');
 
 Route::patch('/events/{event}','EventController@update');
@@ -74,7 +74,8 @@ Route::resource('sponsors', 'EventSponsorController');
 Route::resource('areas', 'AreasController');
 
 // Exhibitors
-Route::resource('exhibitors', 'EventExhibitorsController');
+Route::get('exhibitors/create/{event?}','EventExhibitorsController@create');
+Route::resource('exhibitors', 'EventExhibitorsController')->except(['create']);
 
 // Stand
 Route::get('/stands/create/{event?}','StandsController@create');

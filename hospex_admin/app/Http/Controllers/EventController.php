@@ -146,8 +146,8 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        // $delete = Event::destroy($event->id);
-        // $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
+        $delete = Event::destroy($event->id);
+        $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
         return response()->json('1-Event Deleted', 200);
         // return redirect('/events')->with('status',$response);
     }
@@ -236,7 +236,7 @@ class EventController extends Controller
                 ->make(true);
         }
         
-        return view('exhibitor.event',compact('title'));
+        return view('exhibitor.event',compact('title','event'));
     }
     public function fileStore(Request $request, Event $event)
     {
@@ -296,6 +296,8 @@ class EventController extends Controller
     function fetch(Event $event)
     {
         $fileName = $event->siteplan;
+        $file = Storage::get('event/'.$fileName);
+        
         // $destinationPath = public_path('images/'.$fileName);
       
 
@@ -328,7 +330,7 @@ class EventController extends Controller
             //  ];
   
             //  return Response::download($images , 'filename');
-
+            // return response()->json($data, 200, $headers);
             $response = Response::make($images,200);
             $response->header('Content-Type', 'application/pdf');
             return $response;
