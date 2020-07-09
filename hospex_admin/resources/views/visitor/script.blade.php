@@ -17,16 +17,19 @@
                     data : "visitor_name", name : "visitor_name",
                 },
                 {
+                    data : "company", name : "company",
+                },
+                {
                     data : "visitor_email", name : "visitor_email",
                 },
-                // {
-                //     data : "company_name", name : "company_name",
-                // },
-                // {
-                //     data:"action",
-                //     name: "action",
-                //     orderable: false
-                // }
+                {
+                    data : "phone", name : "phone",
+                },
+                {
+                    data:"action",
+                    name: "action",
+                    orderable: false
+                }
             ]
         })
        

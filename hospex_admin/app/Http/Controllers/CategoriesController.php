@@ -28,7 +28,7 @@ class CategoriesController extends Controller
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                                 <div class="dropdown-menu dropdown-menu-right">       
                                     <a class="dropdown-item" href="'.url('categories/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                    <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                    <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a> 
                                 </div>
                             </span>';
                             // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
@@ -112,7 +112,10 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $delete = Category::destroy($category->id);
+        $response = $delete ? '1-Category Deleted' : '0-Category Failed to Delete';
+        return response()->json('1-Category Deleted', 200);
+        // return redirect('/categories')->with('status',$response);
     }
     public function getCategories()
     {

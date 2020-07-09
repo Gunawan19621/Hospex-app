@@ -32,5 +32,11 @@
         })
        
     })
+$('#m_table_1').on('click', '.delete', function () {
+  
+    var id = $(this).data("id");
+    var link = 'areas';
+    confirmDelete(link,id)
+});
 
 </script>

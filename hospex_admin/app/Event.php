@@ -25,4 +25,8 @@ class Event extends Model
     {
         return $this->hasMany(Area::class);
     }
+    public function visitors()
+    {
+        return $this->hasMany(Visitor::class);
+    }
 }
