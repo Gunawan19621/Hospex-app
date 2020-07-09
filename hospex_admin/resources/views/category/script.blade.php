@@ -26,6 +26,5 @@
         })
        
     })
-    <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a> 
 
 </script>
