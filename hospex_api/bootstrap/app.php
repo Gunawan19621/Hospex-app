@@ -1,6 +1,6 @@
 <?php
-
-require_once __DIR__.'/../vendor/autoload.php';
+require_once dirname(__DIR__).'/vendor/autoload.php';
+// require_once __DIR__.'/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -96,8 +96,9 @@ $app->routeMiddleware([
 $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\GetEventServiceProvider::class);
+// $app->register(Intervention\Image\ImageServiceProvider::class);
 
-
+// class_alias(Intervention\Image\Facades\Image::class, 'Image');
 
 /*
 |--------------------------------------------------------------------------

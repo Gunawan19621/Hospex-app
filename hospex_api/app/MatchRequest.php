@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class MatchRequest extends Model
 {
     protected $fillable = [
-        'date',
-        'location',
         'event_exhibitor_id',
         'visitor_id',
-        'time',
+        'available_schedule_id'
     ];
     
     public function exhibitor()
@@ -26,5 +24,9 @@ class MatchRequest extends Model
     {
     return \Carbon\Carbon::parse($this->attributes['created_at'])->format('d, M Y H:i');
       
+    }
+    public function availableSchedule()
+    {
+        return $this->belongsTo(AvailableSchedule::class);
     }
 }

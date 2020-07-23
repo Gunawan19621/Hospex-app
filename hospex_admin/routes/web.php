@@ -117,3 +117,9 @@ Route::get('/read', function(){
 
 
 // Route::get('/home', 'HomeController@index')->name('home');
+
+
+// excel
+Route::get('export', 'ExhibitorExcelController@export')->name('export');
+Route::get('importExportView', 'ExhibitorExcelController@importExportView');
+Route::post('import', 'ExhibitorExcelController@import')->name('import');

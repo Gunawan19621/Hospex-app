@@ -6,6 +6,7 @@ use App\MatchRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\MockObject\Builder\Match;
+use Illuminate\Database\Eloquent\Builder;
 
 class BusinessMatchingController extends Controller
 {
@@ -22,11 +23,10 @@ class BusinessMatchingController extends Controller
     public function index($type, $id, $status)
     {
         $whereid = $type == 'visitor' ? ['visitor_id'=>$id] : [ 'event_exhibitor_id'=> $id ];
-        $where = $status == 'confirm' ? Arr::collapse([ $whereid, ['status' => '1', 'status_visitor' => '1' ] ]):  $whereid; 
+        $where = $status == 'confirm' ? Arr::collapse([ $whereid, ['status' => '1'] ]):  $whereid; 
         // return response()->json($where,200);
         $matches = $status == 'confirm' ? MatchRequest::where($where)->get() : MatchRequest::where($where)->where(function($query) {
-            $query->where('status', '<>','1')
-                  ->orwhere('status_visitor', '<>', '1');
+            $query->where('status', '<>','1');
         })->get();
         $tanggal = $matches->reverse()->unique('date')->reverse();
         
@@ -40,19 +40,30 @@ class BusinessMatchingController extends Controller
             $n=array();
             foreach($matches as $match){
                 if($value->date == $match->date){
-                    $n[]= array(
-                                 'id'            => $match->id,
-                                 'logo_PT'       => 'logo1.jpg',
-                                 'nama_PT'       => $match->exhibitor->company->company_name,
-                                 'lokasi'        => $match->location,
-                                 'catatan'       => $match->notes,
-                                 'visitor_name'  => $match->visitor->visitor_name,
-                                 'visitor_email' => $match->visitor->visitor_email,
-                             );
+                    $o = array(
+                        'id'            => $match->id,
+                        'logo_PT'       => 'logo1.jpg',
+                        'nama_PT'       => $match->exhibitor->company->company_name,
+                        'visitor_name'  => $match->visitor->visitor_name,
+                        'visitor_email' => $match->visitor->visitor_email,
+                        'time'          => $match->availableSchedule->time,
+                    );
+                    if ($match->status == '1') {
+                        $o['status'] = 'Approved';
+                    } elseif($match->status == '2') {
+                        $o['status'] = 'Decline';
+                    }else{
+                        $o['status'] = 'Pending';
+                    }
+                    
+                    $n[]= $o;
                 }
             }
             $m['business_match'] = $n;
             $data[] = $m;
+
+
+            // pertama
          //   $data[] = [
          //     'tanggal'           => Carbon::createFromDate($value->date)->format('d M, Y '),
          //     'hari'              => Carbon::parse($value->date)->format('l'),
@@ -180,17 +191,16 @@ class BusinessMatchingController extends Controller
         $date = date('Y-m-d', strtotime($request->input('date')));
         $exhibitor_id       = $request->input('exhibitor_id');
         $visitor_id         = $request->input('visitor_id');
-        $location           = $request->input('location');
-        $time               = Carbon::parse($request->input('time'))->format('h:i:s');
+        // $location           = $request->input('location');
+        // $time               = Carbon::parse($request->input('time'))->format('h:i:s');
+        $time               = $request->input('time');
        
         try {
             $match = MatchRequest::create([
-                'date'                      => $date,
-                'location'                  => $location,
-                'time'                      => $time,
+                'available_schedule_id'     => $time,
                 'event_exhibitor_id'        => $exhibitor_id,
                 'visitor_id'                => $visitor_id,
-                'status_visitor'            => '1'
+                'status'                    => '0'
             ]);
             return response()->json([
                 'success'   => true,
@@ -200,7 +210,7 @@ class BusinessMatchingController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Data Failed to Create',
+                'messag e'   => 'Data Failed to Create',
                 'data'      => $e->getMessage()
             ],503);
         }
@@ -232,16 +242,20 @@ class BusinessMatchingController extends Controller
             ],503);
         }
     }
-    public function approve($match, $type)
+    public function approve($match)
     {
-        $column = $type == 'visitor' ? 'status_visitor' : 'status';
         try{
-            $update = MatchRequest::where(['id'=> $match])->update([ $column      => '1' ]);
-            
+            $approve = MatchRequest::where(['id'=> $match])->update([ 'status'  => '1' ]);
+            $dateExh = MatchRequest::whereId($match)->first();
+            $data    = MatchRequest::where([
+                'event_exhibitor_id' => $dateExh->event_exhibitor_id, 
+                'available_schedule_id'=> $dateExh->available_schedule_id, 
+                'status' => '0',
+                ])->update(['status'=>'2']);
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Success to Save',
-                'data'      => $update
+                'data'      => $approve
             ],201);
         } catch (\Exception $e){
             $response = $e->getMessage();
