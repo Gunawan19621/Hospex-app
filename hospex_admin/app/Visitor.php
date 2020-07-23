@@ -21,4 +21,8 @@ class Visitor extends Model
     {
         return $this->morphOne(User::class, 'usertable');
     }
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventExhibitor extends Model
 {
-    protected $fillable = ['event_id', 'company_id','password', 'api_token'];
+    protected $fillable = ['event_id', 'company_id','password', 'api_token','reset_token'];
 
     public function event()
     {

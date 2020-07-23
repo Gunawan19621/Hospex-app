@@ -34,6 +34,7 @@ class ExhibitorsController extends Controller
                 'email'         => $exhibitor->company->company_email,
                 'info'          => $exhibitor->company->company_info,
                 'event_title'   => $exhibitor->event->event_title,
+                'logo'          => $exhibitor->company->logo,
                 'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                     return $item->category_name;
                 })->implode(', '),
@@ -56,9 +57,9 @@ class ExhibitorsController extends Controller
         }
         
     }
-    public function show($id)
+    public function show($exhibitor)
     {
-        $exhibitor = exhibitor::findorfail($id);
+        $exhibitor = exhibitor::findorfail($exhibitor);
         $data = [
             'id_exhibitor'  => $exhibitor->id, 
             'nama'          => $exhibitor->company->company_name,
@@ -67,6 +68,7 @@ class ExhibitorsController extends Controller
             'email'         => $exhibitor->company->company_email,
             'info'          => $exhibitor->company->company_info,
             'event_title'   => $exhibitor->event->event_title,
+            'logo'          => $exhibitor->company->logo,
             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                     return $item->category_name;
                                 })->implode(', '),

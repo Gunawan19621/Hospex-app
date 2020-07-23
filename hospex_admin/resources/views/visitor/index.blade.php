@@ -30,9 +30,10 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Visitor Name</th>
+                                <th scope="col">Company Name</th>
                                 <th scope="col">Visitor Email</th>
-                                {{-- <th scope="col">Company Name</th> --}}
-                                {{-- <th scope="col">Action</th> --}}
+                                <th scope="col">Phone</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                     </table>

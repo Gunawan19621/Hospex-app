@@ -48,12 +48,12 @@ class AuthController extends Controller
         // }
 
         $eventId = eventId::GetEvent();
-
+       
         $register = Visitor::create([
             'visitor_name'      => $name,
             'visitor_email'      => $email,
             'password'          => $password,
-            'company_id'        => '1',
+            'company_id'        => '3',
             'event_id'          => $eventId,
             'company'           => $company,
             'info'              => $info,

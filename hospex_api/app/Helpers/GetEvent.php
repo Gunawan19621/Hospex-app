@@ -10,8 +10,8 @@ class GetEvent {
         $event =  DB::table('events')
                 ->select('events.id')
                 ->leftJoin('event_schedules', 'events.id', '=', 'event_schedules.event_id')
-                ->whereDate('event_schedules.date',' >= ',$t)
-                ->orderBy('event_schedules.date')
+                ->whereDate('events.date',' >= ',$t)
+                ->orderBy('events.date')
                 ->first();
         // if ($event) {
         //     return response()->json([

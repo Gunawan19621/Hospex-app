@@ -35,7 +35,7 @@ $router->get('/exhibitors/{exhibitor}', 'ExhibitorsController@show');
 // business matching
 $router->post('/match-request', 'BusinessMatchingController@store');
 $router->put('/match-request/{ match }/{ type }', 'BusinessMatchingController@update');
-$router->post('/match-approve/{ match }/{ type }', 'BusinessMatchingController@approve');
+$router->post('/match-approve/{ match }', 'BusinessMatchingController@approve');
 $router->get('/list-business-matching/{type}/{id}/{status}', 'BusinessMatchingController@index');
 
 $router->get('/matchExhibitor', 'BusinessMatchingController@list_matching');
@@ -84,3 +84,10 @@ $router->post('/login', 'AuthController@login');
 //         )->where('password', '$2y$10$JHQU1g4D5a44soPb.TwNGu8OnZrrFxChxDmau/SUQOubcQcIvoJ3a')->get();
 //     return $user;
 // });
+$router->post('/image/upload','ImageController@uploadImage');
+$router->get('/image/logo/{exhibitor}','ImageController@logo');
+
+
+
+// available schedule
+$router->get('/available-schedule/{exhibitor}','AvailableController@index');

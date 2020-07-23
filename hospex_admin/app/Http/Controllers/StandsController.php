@@ -43,7 +43,7 @@ class StandsController extends Controller
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
                                 <a class="dropdown-item" href="'.url('stands/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
                         // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
@@ -149,6 +149,9 @@ class StandsController extends Controller
      */
     public function destroy(Stand $stand)
     {
-        //
+        $delete = Stand::destroy($stand->id);
+        $response = $delete ? '1-Stand Deleted' : '0-Stand Failed to Delete';
+        return response()->json('1-Stand Deleted', 200);
+        // return redirect('/Stands')->with('status',$response);
     }
 }
