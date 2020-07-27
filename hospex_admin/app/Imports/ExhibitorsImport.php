@@ -30,10 +30,10 @@ class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithVal
     public function model(array $row)
     {
         return new EventExhibitor([
-            'event_id'     => $row['event'],
-            'company_id'    => $row['company'], 
-            'api_token'     => '',
-            'reset_token'     => '',
+            'event_id'          => $row['event'],
+            'company_id'        => $row['company'], 
+            'api_token'         => '',
+            'reset_token'       => '',
             'password' => Hash::make('password'),
         ]);
     }
@@ -60,27 +60,34 @@ class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithVal
     //         '2.required' => 'Custom message',
     //     ];
     // }
-    public function collection(Collection $rows)
-    {
-        Validator::make($rows->toArray(), [
-            '*.1' => 'required',
-            '*.2' => 'required',
-        ])->validate();
-        foreach ($rows as $row) 
-        {
-            EventExhibitor::create([
-                'event_id'     => $row[1],
-                'company_id'    => $row[2], 
-                'api_token'     => '',
-                'reset_token'     => '',
-                'password' => Hash::make('password'),
-            ]);
-        }
-    }
+    // public function collection(Collection $rows)
+    // {
+    //     Validator::make($rows->toArray(), [
+    //         '*.company' => 'required',
+    //         '*.event' => 'required',
+    //     ])->validate();
+    //     foreach ($rows as $row) 
+    //     {
+    //         EventExhibitor::create([
+    //             'event_id'     => $row[1],
+    //             'company_id'    => $row[2], 
+    //             'api_token'     => '',
+    //             'reset_token'     => '',
+    //             'password' => Hash::make('password'),
+    //         ]);
+    //     }
+    // }
     // public function onFailure(Failure $failures)
     // {
     //     return $failures;
     //     // Handle the failures how you'd like.
     // }
+    public function customValidationMessages()
+    {
+        return [
+            'company.required' => ':attribute is required, please check file',
+            'event.required' => ':attribute is required, please check file',
+        ];
+    }
    
 }

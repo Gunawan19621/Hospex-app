@@ -121,5 +121,5 @@ Route::get('/read', function(){
 
 // excel
 Route::get('export', 'ExhibitorExcelController@export')->name('export');
-Route::get('importExportView', 'ExhibitorExcelController@importExportView');
+Route::get('import-excel', 'ExhibitorExcelController@importExportView');
 Route::post('import', 'ExhibitorExcelController@import')->name('import');
