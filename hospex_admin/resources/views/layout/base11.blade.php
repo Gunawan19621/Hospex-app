@@ -36,25 +36,25 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--end::Web font -->
 
 		<!--begin::Global Theme Styles -->
-		<link href="{{ url('assets11/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets11/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
 
 		<!--RTL version:<link href="assets/vendors/base/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-		<link href="{{ url('assets11/demo/demo11/base/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets11/demo/demo11/base/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--RTL version:<link href="assets/demo/demo11/base/style.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
 
 		<!--end::Global Theme Styles -->
 
 		<!--begin::Page Vendors Styles -->
-		<link href="{{ url('assets11/vendors/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets11/vendors/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--RTL version:<link href="assets/vendors/custom/fullcalendar/fullcalendar.bundle.rtl.css" rel="stylesheet" type="text/css" />-->
-        <link href="{{ url('assets11/vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets11/vendors/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 	{{-- <link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" /> --}}
 
 		<!--end::Page Vendors Styles -->
-		<link rel="shortcut icon" href="{{ url('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
+		<link rel="shortcut icon" href="{{ asset('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
 	</head>
 
 	<!-- end::Head -->
@@ -76,7 +76,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
 									<a href="index.html" class="m-brand__logo-wrapper">
 										<img alt="" src="{{ asset('assets11/hospexmetro.png')}}">
-										{{-- <img alt="" src="{{ url('assets11/demo/demo11/media/img/logo/logo.png') }}" /> --}}
+										{{-- <img alt="" src="{{ asset('assets11/demo/demo11/media/img/logo/logo.png') }}" /> --}}
 									</a>
 								</div>
 								<div class="m-stack__item m-stack__item--middle m-brand__tools">
@@ -368,7 +368,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="{{ url('assets11/app/media/img//users/user4.jpg')}}" class="m--img-rounded m--marginless m--img-centered" alt="" />
+													<img src="{{ asset('assets11/app/media/img//users/user4.jpg')}}" class="m--img-rounded m--marginless m--img-centered" alt="" />
 												</span>
 												<span class="m-nav__link-icon m-topbar__usericon  m--hide">
 													<span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
@@ -381,7 +381,7 @@ License: You must have a valid license purchased only from themeforest(the above
 													<div class="m-dropdown__header m--align-center">
 														<div class="m-card-user m-card-user--skin-light">
 															<div class="m-card-user__pic">
-																<img src="{{ url('assets11/app/media/img//users/user4.jpg')}}" class="m--img-rounded m--marginless" alt="" />
+																<img src="{{ asset('assets11/app/media/img//users/user4.jpg')}}" class="m--img-rounded m--marginless" alt="" />
 															</div>
 															<div class="m-card-user__details">
 																<span class="m-card-user__name m--font-weight-500">{{ Auth::user()->name }}</span>
@@ -499,6 +499,8 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('matches') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Match Requests</span></a></li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/areas') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Areas</span></a></li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/stands') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Stands</span></a></li>
 							<li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover" m-menu-link-redirect="1"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-graphic-1"></i><span
 									 class="m-menu__link-title"> <span class="m-menu__link-wrap"> <span class="m-menu__link-text">Master</span> <span class="m-menu__link-badge">
 										 {{-- <span class="m-badge m-badge--accent">3</span> --}}
@@ -520,8 +522,7 @@ License: You must have a valid license purchased only from themeforest(the above
 												</ul>
 											</div>
 										</li>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/areas') }}" class="m-menu__link "><span class="m-menu__link-text">Areas</span></a></li>
-										<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1"><a href="{{ url('/stands') }}" class="m-menu__link "><span class="m-menu__link-text">Stands</span></a></li>
+										
 									</ul>
 								</div>
 							</li>
@@ -2647,7 +2648,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
 										<div class="m-messenger__message-pic">
-											<img src="{{ url('assets11/app/media/img//users/user3.jpg')}}" alt="" />
+											<img src="{{ asset('assets11/app/media/img//users/user3.jpg')}}" alt="" />
 										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
@@ -2677,7 +2678,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
 										<div class="m-messenger__message-pic">
-											<img src="{{ url('assets11/app/media/img//users/user3.jpg')}}" alt="" />
+											<img src="{{ asset('assets11/app/media/img//users/user3.jpg')}}" alt="" />
 										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
@@ -2708,7 +2709,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
 										<div class="m-messenger__message-pic">
-											<img src="{{ url('assets11/app/media/img//users/user3.jpg')}}" alt="" />
+											<img src="{{ asset('assets11/app/media/img//users/user3.jpg')}}" alt="" />
 										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
@@ -2781,7 +2782,7 @@ License: You must have a valid license purchased only from themeforest(the above
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
 										<div class="m-messenger__message-pic">
-											<img src="{{ url('assets11/app/media/img//users/user3.jpg')}}" alt="" />
+											<img src="{{ asset('assets11/app/media/img//users/user3.jpg')}}" alt="" />
 										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
@@ -3104,25 +3105,25 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!-- begin::Quick Nav -->
 
 		<!--begin::Global Theme Bundle -->
-		<script src="{{ url('assets11/vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets11/demo/demo11/base/scripts.bundle.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/vendors/base/vendors.bundle.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/demo/demo11/base/scripts.bundle.js') }}" type="text/javascript"></script>
 
 		<!--end::Global Theme Bundle -->
 
 		<!--begin::Page Vendors -->
-        <script src="{{ url('assets11/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets11/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets11/dataTables.rowsGroup.js') }}" type="text/javascript"></script>
-        <script src="{{ url('assets11/dataTables.rowGroup.min.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets11/vendors/custom/fullcalendar/fullcalendar.bundle.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets11/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets11/dataTables.rowsGroup.js') }}" type="text/javascript"></script>
+        <script src="{{ asset('assets11/dataTables.rowGroup.min.js') }}" type="text/javascript"></script>
         @yield('require')
 		<!--end::Page Vendors -->
 
 		<!--begin::Page Scripts -->
-		<script src="{{ url('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-timepicker.js') }}" type="text/javascript"></script>
-		<script src="{{ url('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/app/js/dashboard.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/select2.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-datepicker.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-timepicker.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
 
 		<!--end::Page Scripts -->
 	@include('script-global')

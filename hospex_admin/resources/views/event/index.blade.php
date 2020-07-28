@@ -32,6 +32,7 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Event Title</th>
                                 <th scope="col">Year</th>
+                                <th scope="col">Date</th>
                                 <th scope="col">City</th>
                                 <th scope="col">Event Location</th>
                                 <th scope="col">Action</th>

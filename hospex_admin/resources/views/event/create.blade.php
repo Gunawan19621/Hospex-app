@@ -37,6 +37,16 @@
                       @error('year') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
+                      <label for="begindate">Begin Date</label>
+                      <input type="text" autocomplete="off" class="form-control @error('begin') is-invalid @enderror input-date" name="begin" id="beginDate" placeholder="Begin Date Input" value="{{ old('begin') }}">
+                      @error('begin') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
+                      <label for="enddate">End Date</label>
+                      <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ old('end') }}">
+                      @error('end') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
                       <label for="eventitel">City</label>
                       <input type="text" onkeyup="this.value=this.value.replace(/[^a-zA-Z, ]/g,'');" autocomplete="off" class="form-control @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ old('city') }}">
                       @error('city') <div class="invalid-feedback"> {{ $message }} </div> @enderror

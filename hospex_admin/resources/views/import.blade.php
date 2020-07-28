@@ -39,7 +39,7 @@
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <button class="btn btn-primary btn-sm">Import Data</button>
-                            <a class="btn btn-warning btn-sm" href="{{ route('export') }}">Export Data</a>
+                            <a class="btn btn-warning btn-sm" href="{{ url('export').'/'.$event }}">Export Data</a>
                         </div>
                     </div>
                 </form>

@@ -111,6 +111,8 @@ $(document).ready(function(){
                     }, {
                         data: "year"
                     }, {
+                        data: "begin"
+                    }, {
                         data: "city"
                     }, {
                         data: "event_location"

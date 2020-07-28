@@ -18,15 +18,18 @@ use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
+use Maatwebsite\Excel\Concerns\WithConditionalSheets;
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 
-class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithValidation
+class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithValidation, WithMultipleSheets, WithCalculatedFormulas
 {
     use Importable;
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
     public function model(array $row)
     {
         return new EventExhibitor([
@@ -34,6 +37,7 @@ class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithVal
             'company_id'        => $row['company'], 
             'api_token'         => '',
             'reset_token'       => '',
+            'device_token'       => '',
             'password' => Hash::make('password'),
         ]);
     }
@@ -89,5 +93,12 @@ class ExhibitorsImport implements ToModel, WithStartRow, WithHeadingRow, WithVal
             'event.required' => ':attribute is required, please check file',
         ];
     }
+    public function sheets(): array
+    {
+        return [
+            0 => $this,
+        ];
+    }
+    
    
 }

@@ -16,13 +16,15 @@ class ExportFormatSheet implements FromCollection, WithTitle, WithHeadings
     private $table;
     private $query;
     private $headre;
+    private $event;
 
-    public function __construct($title, $table, $query=null, $header)
+    public function __construct($title, $table, $query=null, $header, $event)
     {
         $this->title    = $title;
         $this->table    = $table;
         $this->query    = $query;
         $this->header   = $header;
+        $this->event    = $event;
     }
 
     public function collection()
@@ -30,16 +32,10 @@ class ExportFormatSheet implements FromCollection, WithTitle, WithHeadings
         if ($this->title == 'Companies') {
             return collect($this->table::select($this->query)->get());
         }else{
-            $t = Carbon::now();
-            $event =  DB::table('events')
-                    ->select('events.id')
-                    ->leftJoin('event_schedules', 'events.id', '=', 'event_schedules.event_id')
-                    ->whereDate('events.date',' >= ',$t)
-                    ->orderBy('events.date')
-                    ->first();
+            
             $data= array();
             for ($i=1; $i <= 10; $i++) { 
-                $data[] = [$i, $event->id, ''];
+                $data[] = [$i, $this->event, ''];
             }
             return collect($data);
         }

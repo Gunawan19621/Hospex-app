@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
-
 class EventController extends Controller
 {
     /**
@@ -63,17 +62,17 @@ class EventController extends Controller
             'city'              => 'required',
             'event_location'    => 'required'
         ]);
-        $request->request->add(['site_plan' => '']);
 
-        // Event::create([
-        //     'event_title'       => $request->event_title,
-        //     'year'              => $request->year,
-        //     'city'              => $request->city,
-        //     'site_plan'         => $request->site_plan,
-        //     'event_location'    => $request->event_location
-        // ]);
+        $create = Event::create([
+            'event_title'       => $request->event_title,
+            'year'              => $request->year,
+            'city'              => $request->city,
+            'site_plan'         => '',
+            'event_location'    => $request->event_location,
+            'begin'             => Carbon::parse($request->begin),
+            'end'               => Carbon::parse($request->end),
+        ]);
 
-        $create = Event::create($request->all());
         $response = $create ? '1-Event Saved' : '0-Event Failed to Save';
         return redirect('/events')->with('status',$response);
     }

@@ -9,23 +9,29 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
   
 class ExhibitorExcelController extends Controller
 {
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function importExportView()
+    public function importExportView($event=null)
     {
-       return view('import');
+       return view('import', compact('event'));
     }
    
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function export() 
+    public function export($event = null) 
     {
-        return Excel::download(new ExhibitorsExport(), 'Exhibitors.xlsx');
+        $event = $event == null ? $this->eventId() : $event ;
+        
+        return Excel::download(new ExhibitorsExport($event), 'Exhibitors.xlsx');
     }
    
     /**
@@ -36,7 +42,8 @@ class ExhibitorExcelController extends Controller
         // $import = new ExhibitorsImport();
         // $import->import()
         try {
-            Excel::import(new ExhibitorsImport(), request()->file('file'));
+            $import = new ExhibitorsImport();
+            Excel::import($import, request()->file('file'));
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
           
@@ -50,6 +57,18 @@ class ExhibitorExcelController extends Controller
             return redirect()->back()->withErrors($failure->errors())->with('status','0-Data Failed to Save');
         } 
         return back()->with('status','1-Data Successfull to Saved');
+    }
+    public function eventId()
+    {
+        $t      = Carbon::now();
+            $event  = DB::table('events')
+                    ->select('events.id')
+                    ->leftJoin('event_schedules', 'events.id', '=', 'event_schedules.event_id')
+                    ->whereDate('events.begin',' >= ',$t)
+                    ->orderBy('events.begin')
+                    ->first();
+
+        return $event->id;
     }
   
 }
