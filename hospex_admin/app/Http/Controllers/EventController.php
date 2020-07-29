@@ -56,9 +56,10 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        $now = Carbon::now();
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|size:4',
+            'year'              => 'required|date_format:Y|after_or_equal:'.$now->year,
             'city'              => 'required',
             'event_location'    => 'required'
         ]);
@@ -119,9 +120,10 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        $now = Carbon::now();
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|date_format:Y|after_or_equal:now',
+            'year'              => 'required|date_format:Y|after_or_equal:'.$now->year,
             'city'              => 'required',
             'event_location'    => 'required'
         ]);

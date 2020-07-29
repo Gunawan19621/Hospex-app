@@ -67,14 +67,14 @@
     $(document).ready(function () {
     let companies =  {!! $companies !!},
         events =  {!! $events !!};
-        if (companies.length >= 0) {
+        if (companies.length <= 0) {
             $('button[type=submit]').prop('disabled', true);
             $('#m_select2_3').prop('disabled', true);
             $('.alertform').append(`<div class="alert alert-warning" role="alert">
                                       <strong>Warning!</strong> Companies Not Available Yet.  
 											            </div>`);
         }
-        if (events.length >= 0) {
+        if (events.length <= 0) {
             $('button[type=submit]').prop('disabled', true);
             $('#eventID').prop('disabled', true);
             $('.alertform').append(`<div class="alert alert-warning" role="alert">

@@ -112,12 +112,12 @@ $(document).ready(function(){
                         data: "year"
                     }, {
                         data: "begin"
+                    },{
+                        data: "end"
                     }, {
                         data: "city"
                     }, {
                         data: "event_location"
-                    }, {
-                        data: "site_plan"
                     }
                     
                 ],

@@ -41,6 +41,8 @@ class MatchRequestsController extends Controller
         if(request()->ajax()){
             return datatables()->of(Match::all())
                     ->addIndexColumn()
+                    ->addColumn('date', function($data){  return  $data->availableschedule->date; })
+                    ->addColumn('time', function($data){  return  $data->availableschedule->time; })
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0 || $match->status_visitor == 0? 
                             // $this->viewForm($match->id)

@@ -33,8 +33,7 @@
                                 <th scope="col">Visitor Name</th>
                                 <th scope="col">Exhibitor Name</th>
                                 <th scope="col">Date</th>
-                                <th scope="col">Location</th>
-                                <th scope="col">Notes</th>
+                                <th scope="col">Time</th>
                                 <th scope="col">Status</th>
                                 {{-- <th scope="col">Action</th> --}}
                             </tr>

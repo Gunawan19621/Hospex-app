@@ -24,10 +24,7 @@
                     data : "date", name : "date",
                 },
                 {
-                    data : "location", name : "location",
-                },
-                {
-                    data : "notes", name : "notes",
+                    data : "time", name : "time",
                 },
                 {
                     data : "status", name : "status",
