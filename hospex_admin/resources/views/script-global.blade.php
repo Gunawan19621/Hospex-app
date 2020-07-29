@@ -39,6 +39,9 @@ let flash = $('.flash').data('flash'),
                 defaultTime: '10',
 
         });
+        $('.inpuat-date').datepicker({
+            startDate: 'today',
+        });
     })
     function alertMessage(flash){
         if (!jQuery.isEmptyObject(flash)) {

@@ -76,7 +76,7 @@ class EventSchedulesController extends Controller
      */
     public function edit(EventSchedule $eventSchedule)
     {
-        //
+        
     }
 
     /**
@@ -86,9 +86,24 @@ class EventSchedulesController extends Controller
      * @param  \App\EventSchedule  $eventSchedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EventSchedule $eventSchedule)
+    public function update(Request $request, EventSchedule $eventschedule)
     {
-        //
+        $request->validate([
+            'date'              => 'required',
+        ]);
+        try{
+            
+            EventSchedule::whereId($eventschedule->id)
+            ->update([
+                'date'       => Carbon::parse($request->date)->format('Y-m-d'),
+            ]);
+            $response = '1-Schedule Updated';
+        } catch (\Exception $e){
+            $response = '0-Schedule Failed to Update';
+        }
+         
+        
+        return redirect()->back()->with('status', $response);
     }
 
     /**

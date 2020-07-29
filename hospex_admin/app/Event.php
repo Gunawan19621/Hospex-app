@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $fillable = ['event_title','year','city','event_location','site_plan'];
+    protected $fillable = ['event_title','year','city','event_location','site_plan','begin','end'];
 
     public function Schedules()
     {

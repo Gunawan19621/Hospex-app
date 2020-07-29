@@ -28,12 +28,18 @@
                         <div class="m-widget1__item " id="heading{{ $schedule->id }}8">
                             <div class="row m-row--no-padding align-items-center">
                                 <div class="col">
+                                    @if ($schedule->date < $event->begin || $schedule->date > $event->end )
+                                        <div style="width: 88%;background: transparent;color: #ff6341;" class="alert alert-error" role="alert">
+                                            <strong>Warning!</strong> The Date isn't match, please change the date accordingly.
+                                        </div>
+                                    @endif
                                     <h3 class="m-widget1__title">{{ date('l', strtotime($schedule->date) )}}</h3>
                                     <span class="m-widget1__desc">{{ date('F jS, Y', strtotime($schedule->date) )}}</span>
+                                    <a href="javascript:void(0);" data-toggle="modal" data-id="{{ $schedule->id }}" data-target="#m_modal_1"><i class="fa fa-edit"></i></a>  
+                                    
                                 </div>
                                 <div class="col m--align-right collapsed" data-toggle="collapse" data-target="#collapse{{ $schedule->id }}8" aria-expanded="false" aria-controls="collapse{{ $schedule->id }}8">
                                     <i class="fa fa-angle-double-right"><span class="m-widget1__number m--font-accent"></span></i>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -134,6 +140,59 @@
 
     </div>
 </div>
+
+<!--begin::Modal-->
+<div class="modal fade" id="m_modal_1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Form Edit Schedule</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form1" class="m-form m-form--fit m-form--label-align-right"  method="post" action="">
+                @csrf
+                @method('patch')
+                <div class="modal-body">
+                    <div class="form-group m-form__group">
+                        <label for="evenschedule">Event Schedule</label>
+                        <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}">
+                        <input readonly type="hidden" name="id" id="idSchedule" autocomplete="off">
+                        @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary simpan">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--end::Modal-->
 @endsection
 
+@section('require')
+    <script>
+        //triggered when modal is shown
+        $('#m_modal_1').on('shown.bs.modal', function(event) {
 
+            // The reference tag is your anchor tag here
+            var reference_tag   = $(event.relatedTarget); 
+            var id              = reference_tag.data('id');
+            $('#form1').attr('action',`/eventschedules/${id}`)
+
+        })
+        var start =  `{!! $event->begin !!}`;
+        var end = `{!! $event->end !!}`;
+        // set end date to max one year period:
+        $(".date-schedule").datepicker( {
+            startDate: new Date(start),
+            endDate: new Date(end)
+        }).on('changeDate', function(e){
+            $(this).datepicker('hide');
+        });
+
+    </script>
+@endsection 

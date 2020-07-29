@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MatchRequest extends Model
 {
-    protected $fillabel = ['date','time','event_exhibitor_id','visitor_id'];
+    protected $fillable = [
+        'event_exhibitor_id',
+        'visitor_id',
+        'available_schedule_id'
+    ];
     
     public function exhibitor()
     {
@@ -15,5 +19,9 @@ class MatchRequest extends Model
     public function visitor()
     {
         return $this->belongsTo(Visitor::class);
+    }
+    public function availableSchedule()
+    {
+        return $this->belongsTo(AvailableSchedule::class);
     }
 }

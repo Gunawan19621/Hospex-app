@@ -35,10 +35,10 @@ class EventSponsorController extends Controller
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
                                 <a class="dropdown-item" href="'.url('/sponsors/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
-                            </div>
-                        </span>';
-                        $button .= '<a href="'.url('/sponsors/'.$data->id.'').'" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
+                                </div>
+                                </span>';
+                                // <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                        // $button .= '<a href="'.url('/sponsors/'.$data->id.'').'" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
                 ->rawColumns(['action'])

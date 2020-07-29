@@ -21,7 +21,8 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/exhibitors/create/{{ $event->id }}" class="btn btn-primary my-3">Add</a>
+                        <a href="/exhibitors/create/{{ $event->id }}" class="btn btn-primary my-3">Add</a> &nbsp;
+                        <a href="/import-excel/{{ $event->id }}" class="btn btn-success my-3">Import</a>
                     </div>
                 </div>
                 <div class="m-portlet__body">
