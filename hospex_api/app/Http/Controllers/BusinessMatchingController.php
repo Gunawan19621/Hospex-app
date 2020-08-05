@@ -266,4 +266,25 @@ class BusinessMatchingController extends Controller
             ],503);
         }
     }
+    public function updateStatusMeeting($match)
+    {
+       
+        try {
+            $update = MatchRequest::findorfail($match);
+            $update->status_meeting = '1';
+            $update->save();
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Success to Save',
+                'data'      => $update
+            ],201);
+        } catch (\Exception $e) {
+            $response = $e->getMessage();
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Failed to Save',
+                'data'      => $e->getMessage()
+            ],503);
+        }
+    }
 }

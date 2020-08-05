@@ -37,6 +37,7 @@ $router->post('/match-request', 'BusinessMatchingController@store');
 $router->put('/match-request/{ match }/{ type }', 'BusinessMatchingController@update');
 $router->post('/match-approve/{ match }', 'BusinessMatchingController@approve');
 $router->get('/list-business-matching/{type}/{id}/{status}', 'BusinessMatchingController@index');
+$router->get('/match-success/{ id }', 'BusinessMatchingController@updateStatusMeeting');
 
 $router->get('/matchExhibitor', 'BusinessMatchingController@list_matching');
 $router->get('/matchVisitor', 'BusinessMatchingController@list_matching');
