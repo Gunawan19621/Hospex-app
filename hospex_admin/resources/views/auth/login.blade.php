@@ -89,7 +89,7 @@
                                 <h3>HOSPITAL EXPO 2020</h3>
                             </div>
                             <div class="m-login__desc">
-                                The 33rd Indonesia Internationql Hospital, Medical, pharmaceutical, clinical laboratories, equipment and medicine exhibition
+                                The 33rd Indonesia International Hospital, Medical, pharmaceutical, clinical laboratories, equipment and medicine exhibition
                             </div>
                             <div class="m-login__form-action">
                                 {{-- <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill">Get An Account</button> --}}
