@@ -89,7 +89,7 @@
                                 <h3>HOSPITAL EXPO 2020</h3>
                             </div>
                             <div class="m-login__desc">
-                                The 33rd Indonesia Internatioanl Hospital, Medical, pharmaceutical, clinical laboratories, equipment and medicine exhibiton
+                                The 33rd Indonesia Internationql Hospital, Medical, pharmaceutical, clinical laboratories, equipment and medicine exhibition
                             </div>
                             <div class="m-login__form-action">
                                 {{-- <button type="button" id="m_login_signup" class="btn btn-outline-focus m-btn--pill">Get An Account</button> --}}
@@ -110,7 +110,7 @@
                         <form class="m-login__form m-form" method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group m-form__group">
-                                <input id="email" class="form-control m-input @error('email') is-invalid @enderror" type="text" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" class="form-control m-input @error('email') is-invalid @enderror" type="text" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -118,7 +118,7 @@
                                 @enderror
                             </div>
                             <div class="form-group m-form__group">
-                                <input id="password" class="form-control m-input m-login__form-input--last @error('password') is-invalid @enderror" type="Password" name="password" required autocomplete="current-password">
+                                <input id="password" class="form-control m-input m-login__form-input--last @error('password') is-invalid @enderror" type="Password" name="password" required autocomplete="current-password" placeholder="password">
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -197,6 +197,7 @@
                             </div>
                             <div class="m-login__form-action">
                                 <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>
+                                {{-- <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button> --}}
                                 <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom ">Cancel</button>
                             </div>
                         </form>
@@ -210,3 +211,4 @@
 
     
 @endsection
+

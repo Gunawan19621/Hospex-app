@@ -74,7 +74,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						<div class="m-stack__item m-brand  m-brand--skin-light ">
 							<div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
-									<a href="index.html" class="m-brand__logo-wrapper">
+									<a href="/" class="m-brand__logo-wrapper">
 										<img alt="" src="{{ asset('assets11/hospexmetro.png')}}">
 										{{-- <img alt="" src="{{ asset('assets11/demo/demo11/media/img/logo/logo.png') }}" /> --}}
 									</a>
@@ -479,10 +479,10 @@ License: You must have a valid license purchased only from themeforest(the above
 					<!-- BEGIN: Aside Menu -->
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
-							<li class="m-menu__section m-menu__section--first">
+							{{-- <li class="m-menu__section m-menu__section--first">
 								<h4 class="m-menu__section-text">Departments</h4>
 								<i class="m-menu__section-icon flaticon-more-v2"></i>
-							</li>
+							</li> --}}
 							{{-- <li class="m-menu__item  m-menu__item--submenu" aria-haspopup="true" m-menu-submenu-toggle="hover"><a href="javascript:;" class="m-menu__link m-menu__toggle"><i class="m-menu__link-icon flaticon-layers"></i><span class="m-menu__link-text">Resources</span><i
 									 class="m-menu__ver-arrow la la-angle-right"></i></a>
 								<div class="m-menu__submenu "><span class="m-menu__arrow"></span>
@@ -2584,13 +2584,13 @@ License: You must have a valid license purchased only from themeforest(the above
 				<div class="m-container m-container--fluid m-container--full-height m-page__container">
 					<div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
 						<div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
-							<span class="m-footer__copyright">
+							{{-- <span class="m-footer__copyright">
 								2017 &copy; Metronic theme by <a href="https://keenthemes.com" class="m-link">Keenthemes</a>
-							</span>
+							</span> --}}
 						</div>
 						<div class="m-stack__item m-stack__item--right m-stack__item--middle m-stack__item--first">
 							<ul class="m-footer__nav m-nav m-nav--inline m--pull-right">
-								<li class="m-nav__item">
+								{{-- <li class="m-nav__item">
 									<a href="#" class="m-nav__link">
 										<span class="m-nav__link-text">About</span>
 									</a>
@@ -2614,7 +2614,7 @@ License: You must have a valid license purchased only from themeforest(the above
 									<a href="#" class="m-nav__link" data-toggle="m-tooltip" title="Support Center" data-placement="left">
 										<i class="m-nav__link-icon flaticon-info m--icon-font-size-lg3"></i>
 									</a>
-								</li>
+								</li> --}}
 							</ul>
 						</div>
 					</div>

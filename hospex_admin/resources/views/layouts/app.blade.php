@@ -37,7 +37,7 @@
     <!-- Styles -->
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
-<body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default">
+<body class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default" style= "background-color: white;">
     <div id="app">
         {{-- <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -90,7 +90,7 @@
             </div>
         </nav> --}}
 
-        <main class="">
+        <main class="m-content">
             @yield('content')
         </main>
     </div>
@@ -102,7 +102,7 @@
 
 <!--begin::Page Scripts -->
 <script src="{{ url('assets11/snippets/custom/pages/user/login.js')}}" type="text/javascript"></script>
-
+@include('script-global')
 <!--end::Page Scripts -->
 </body>
 </html>

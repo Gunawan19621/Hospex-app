@@ -102,7 +102,8 @@ class EventExhibitorsController extends Controller
                     'event_id'      => $request->event_id,
                     'company_id'    => $value,
                     'password'      => Hash::make('password'),
-                    'api_token'     => Str::random(40)
+                    'api_token'     => Str::random(40),
+                    'reset_token'     => ''
                 ];
             }
             $create = EventExhibitor::insert($data);

@@ -246,7 +246,7 @@ class BusinessMatchingController extends Controller
     {
         try{
             $approve = MatchRequest::where(['id'=> $match])->update([ 'status'  => '1' ]);
-            $dateExh = MatchRequest::whereId($match)->first();
+            $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
                 'event_exhibitor_id' => $dateExh->event_exhibitor_id, 
                 'available_schedule_id'=> $dateExh->available_schedule_id, 
