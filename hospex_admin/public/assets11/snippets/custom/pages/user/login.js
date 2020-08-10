@@ -80,6 +80,9 @@ var SnippetLogin = function() {
                 var t = $(this),
                     r = $(this).closest("form"),
                     sub = r.attr("action");
+                var data =  {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    email : r.find('input[name=email]').val()};
                 r.validate({
                     rules: {
                         email: {
@@ -87,17 +90,32 @@ var SnippetLogin = function() {
                             email: !0
                         }
                     }
-                }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), r.ajaxSubmit({
+                }), r.valid() && (t.addClass("m-loader m-loader--right m-loader--light").attr("disabled", !0), $.ajax({
                     url:sub,
                     method:'POST',
-                    success: function(l, s, n, o) {
-                        setTimeout(function() {
-                            t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm(), a();
-                            var l = e.find(".m-login__signin form");
+                    data   :data,
+                    dataType: 'json',
+                    type    : 'ajax',
+                    success: function(resp){
+                        var l = e.find(".m-login__signin form");
                             l.clearForm(), l.validate().resetForm(), i(l, "success", "Cool! Password recovery instruction has been sent to your email.")
-                        }, 2e3)
+                        a();
+                    },
+                    error:function(xhr, status, error){
+                        var err = JSON.parse(xhr.responseText);
+                        alertMessage('0-'+err.errors.email);
+                        
                     }
-                }))
+                    // success: function(l, s, n, o) {
+                    //     setTimeout(function() {
+                    //         t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm(), a();
+                    //         var l = e.find(".m-login__signin form");
+                    //         l.clearForm(), l.validate().resetForm(), i(l, "success", "Cool! Password recovery instruction has been sent to your email.")
+                    //     }, 2e3)
+                    // }
+                }).then(setTimeout(function() {
+                            t.removeClass("m-loader m-loader--right m-loader--light").attr("disabled", !1), r.clearForm(), r.validate().resetForm();
+                        }, 3000)))
             })
         }
     }
