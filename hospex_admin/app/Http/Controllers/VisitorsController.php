@@ -24,9 +24,9 @@ class VisitorsController extends Controller
         if(request()->ajax()){
             return datatables()->of(Visitor::all())
                     ->addIndexColumn()
-                    // ->addColumn('company_name', function($data){
-                    //     return $data->company->company_name;
-                    // })
+                    ->addColumn('event', function($data){
+                        return $data->event->event_title. ' - '. $data->event->year;
+                    })
                     ->addColumn('action', function($data){
                         // $button = '<span class="dropdown">
                         // <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 

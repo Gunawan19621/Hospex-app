@@ -25,20 +25,57 @@
                     </div>
                 </div>
                 <div class="m-portlet__body">
-                    <!--begin: Datatable -->
-                    <table class="table table-striped- table-bordered table-hover table-checkable" id="m_table_1">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Visitor Name</th>
-                                <th scope="col">Exhibitor Name</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Time</th>
-                                <th scope="col">Status</th>
-                                {{-- <th scope="col">Action</th> --}}
-                            </tr>
-                        </thead>
-                    </table>
+                    <div class="tabs">
+                        <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#approve" role="tab" onclick="approve()">Approve</a>
+                            </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#pending" role="tab" onclick="pending()">Pending</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="approve" role="tabpanel">
+                                <!--begin: Datatable -->
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="approveTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Event</th>
+                                            <th scope="col">Visitor Name</th>
+                                            <th scope="col">Visitor Company</th>
+                                            <th scope="col">Visitor Email</th>
+                                            <th scope="col">Exhibitor Name</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Status Meeting</th>
+                                            {{-- <th scope="col">Action</th> --}}
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tab-pane " id="pending" role="tabpanel">
+                                <!--begin: Datatable -->
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="pendingTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Event</th>
+                                            <th scope="col">Visitor Name</th>
+                                            <th scope="col">Visitor Company</th>
+                                            <th scope="col">Visitor Email</th>
+                                            <th scope="col">Exhibitor Name</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Status Request</th>
+                                            {{-- <th scope="col">Action</th> --}}
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

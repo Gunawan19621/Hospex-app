@@ -26,6 +26,9 @@
                     data : "phone", name : "phone",
                 },
                 {
+                    data : "event", name : "event",
+                },
+                {
                     data:"action",
                     name: "action",
                     orderable: false

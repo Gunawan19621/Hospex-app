@@ -85,6 +85,7 @@ Route::resource('stands', 'StandsController')->except(['create']);
 Route::resource('visitors', 'VisitorsController');
 
 // Matches
+Route::get('matches/pending', 'MatchRequestsController@pendingMatch')->name('matches.pending');
 Route::resource('matches', 'MatchRequestsController');
 Route::patch('matches/{match}/approve', 'MatchRequestsController@approve');
 

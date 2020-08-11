@@ -1,6 +1,7 @@
 @extends('layout.base11')
 @section('title', $title)
 @section('container')
+<div class="flash" data-flash="{{ session('status') }}"></div>
     <!--begin::Portlet-->
     <div class="m-portlet">
         <div class="m-portlet__head">
@@ -10,6 +11,9 @@
                         Upload File Site Plan
                     </h3>
                 </div>
+            </div>
+            <div class="m-portlet__head-tools">
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
             </div>
         </div>
 
@@ -88,61 +92,66 @@
             submitButton.addEventListener("click",function(){
                 drop.processQueue();
             });
-            this.on("complete",function(){
+            this.on("complete",function(resp){
                 if(this.getQueuedFiles().length == 0 && this.getUploadingFiles().length == 0 )
                 {
                     var _this = this;
                     _this.removeAllFiles();
                 }
-                list_image();
+                if (resp.status == 'success') {
+                    alertMessage('1-Siteplan Successfull Saved')
+                } else {
+                    alertMessage('1-Siteplan Failed to Save')
+                }
+                // list_image();
             })
         }
     };
-    list_image();
-    function list_image(){
-        var eventId = {!! $event->id !!};
-        var pdf_url = ` {{ url('dropzone/${eventId}/fetch') }} `;
-        // $.ajax({
-        //     url : "{{ url('dropzone.fetch') }}",
-        //     // cache: false,
-        //     contentType: 'application/json',
-        //     // processData: false,
-        //     success: function(response){
-        //         // alert('ok')
-        //         // var file = fileName;
-        //         $('#preview').html(file_gets_contents(response));
-        // // window.location = "someFilePath?file=" + file;
-        //         // console.log(file_gets_contents(data))
+    // list_image();
+    // function list_image(){
+    //     var eventId = {!! $event->id !!};
+    //     var pdf_url = ` {{ url('dropzone/${eventId}/fetch') }} `;
+    //     // $.ajax({
+    //     //     url : "{{ url('dropzone.fetch') }}",
+    //     //     // cache: false,
+    //     //     contentType: 'application/json',
+    //     //     // processData: false,
+    //     //     success: function(response){
+    //     //         // alert('ok')
+    //     //         // var file = fileName;
+    //     //         $('#preview').html(file_gets_contents(response));
+    //     // // window.location = "someFilePath?file=" + file;
+    //     //         // console.log(file_gets_contents(data))
 
-        //     }
-        // })
-        $.ajax({
-            url: '',
-            type: 'GET',
-            processData: false,
-            contentType: "application/json; charset=utf-8",
-            xhrFields: { withCredentials: true },
-            cache: false,
-            success: function () {
-                var iframe = $('<embed id="iframe-pdf" class="iframe-pdf"  style="width:1380px; height:800px;" frameborder="0" ></embed>');
+    //     //     }
+    //     // })
+    //     $.ajax({
+    //         url: '',
+    //         type: 'GET',
+    //         processData: false,
+    //         contentType: "application/json; charset=utf-8",
+    //         xhrFields: { withCredentials: true },
+    //         cache: false,
+    //         success: function () {
+    //             var iframe = $('<embed id="iframe-pdf" class="iframe-pdf"  style="width:1380px; height:800px;" frameborder="0" ></embed>');
 
-                iframe.attr('src', pdf_url);
-                // iframe.load(function () {
-                //     btn_generate_pdf.text(old_text).removeClass('disabled').css('pointer-events', '');
-                //     div_iframe.show();
-                // });
-                $('#preview').html(iframe);
-            }
-        });
-        // PDFObject.embed("{{ url('dropzone.fetch') }}", "#preview");
-    }
+    //             iframe.attr('src', pdf_url);
+    //             // iframe.load(function () {
+    //             //     btn_generate_pdf.text(old_text).removeClass('disabled').css('pointer-events', '');
+    //             //     div_iframe.show();
+    //             // });
+    //             $('#preview').html(iframe);
+    //         }
+    //     });
+    //     // PDFObject.embed("{{ url('dropzone.fetch') }}", "#preview");
+    // }
     $(document).on('click', '.remove_image', function deleteImage(){
         var name = $(this).attr('id');
         $.ajax({
             url : "{{ route('dropzone.delete') }}",
             data: {name:name},
             success:function(data){
-                list_image();
+                // list_image();
             }
         })
     })

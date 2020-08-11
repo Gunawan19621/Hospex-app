@@ -33,6 +33,7 @@
                                 <th scope="col">Company Name</th>
                                 <th scope="col">Visitor Email</th>
                                 <th scope="col">Phone</th>
+                                <th scope="col">Event</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
