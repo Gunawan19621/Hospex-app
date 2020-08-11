@@ -285,9 +285,9 @@ class EventController extends Controller
                     
                     $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
                       # code...
-                        return response()->json(['success' => $fileName]);
-                    }else{
-                      return 'gagal';
+                    return response()->json(['success' => '1']);
+                }else{
+                    return  response()->json(['success'=> '0']);
                   }
      
             }
