@@ -6,6 +6,9 @@ use App\EventSchedule;
 use App\EventRundown;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Connection;
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -124,3 +127,35 @@ Route::get('/read', function(){
 Route::get('export/{event?}', 'ExhibitorExcelController@export')->name('export');
 Route::get('import-excel/{event?}', 'ExhibitorExcelController@importExportView');
 Route::post('import', 'ExhibitorExcelController@import')->name('import');
+
+Route::get('/connection', function () {
+// phpinfo();die;
+
+ try {
+        DB::connection()->getPdo();
+        if(DB::connection()->getDatabaseName()){
+            echo "Yes! Successfully connected to the DB: " . DB::connection()->getDatabaseName();
+        }else{
+            die("Could not find the database. Please check your configuration.");
+        }
+    } catch (\Exception $e) {
+    	echo $e;
+        die("Could not open connection to database server.  Please check your configuration.");
+    }
+
+    // Test database connection
+    // try {
+        
+    //     DB::connection()->getDatabaseName();
+    //      $admins = DB::select('SELECT * FROM admins');
+    //  //     $user = User::findorfail(1);//test ambil data
+    //      dd($admins);
+    // 	return $admins;
+
+    //     echo "Connected successfully to: " . DB::connection()->getDatabaseName();
+    // } catch (\Exception $e) {
+    //     die("Could not connect to the database. Please check your configuration. error:" . $e );
+    // }
+
+    // return 'welcome';
+});
