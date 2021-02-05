@@ -26,11 +26,14 @@ class EventController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
     public function index()
+    
     {
+        // echo 'horeee';
         $events = Event::all();
+        // dd($events);
         return view('event.index',compact('events'));
     }
 
