@@ -43,8 +43,8 @@ class EventExhibitorsController extends Controller
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('exhibitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                <a class="dropdown-item" href="'.url('exhibitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>     
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
                         // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
@@ -102,8 +102,7 @@ class EventExhibitorsController extends Controller
                     'event_id'      => $request->event_id,
                     'company_id'    => $value,
                     'password'      => Hash::make('password'),
-                    'api_token'     => Str::random(40),
-                    'reset_token'     => ''
+                    'api_token'     => Str::random(40)
                 ];
             }
             $create = EventExhibitor::insert($data);
@@ -167,8 +166,11 @@ class EventExhibitorsController extends Controller
      * @param  \App\EventExhibitor  $eventExhibitor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EventExhibitor $eventExhibitor)
+    public function destroy(EventExhibitor $exhibitor)
     {
-        //
+        $delete = EventExhibitor::destroy($exhibitor->id);
+        $response = $delete ? '1-Exhibitor Deleted' : '0-Exhibitor Failed to Delete';
+        return response()->json('1-Exhibitor Deleted', 200);
+        // return redirect('/exhibitors')->with('status',$response);
     }
 }

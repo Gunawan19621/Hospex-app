@@ -69,9 +69,10 @@ class AreasController extends Controller
             'area_name'     => 'required',
             'event_id'      => 'required|numeric'
         ]);
-        $create=Area::create($request->all());
+        $create = Area::create($request->all());
         $response = $create ? '1-Area Saved' : '0-Area Failed to Save';
-        return redirect()->back()->with('status',$response);
+
+        return redirect('/areas')->with('status', $response);
     }
 
     /**

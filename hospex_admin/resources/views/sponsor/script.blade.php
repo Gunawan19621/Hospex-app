@@ -1,7 +1,7 @@
 
 <script>
     $(document).ready(function(){
-            // alert('edit')    
+        
         var table =$('#m_table_1').DataTable({
             processing : true,
             serverSide  : true,
@@ -30,9 +30,11 @@
                 }
             ]
         })
-            
-        
-       
     })
-
+$('#m_table_1').on('click', '.delete', function () {
+  
+  var id = $(this).data("id");
+  var link = 'sponsors';
+  confirmDelete(link,id)
+});
 </script>

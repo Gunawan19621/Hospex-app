@@ -34,9 +34,10 @@ class EventSponsorController extends Controller
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('/sponsors/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                </div>
-                                </span>';
+                                <a class="dropdown-item" href="'.url('/sponsors/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>  
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
+                            </div>
+                            </span>';
                                 // <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
                         // $button .= '<a href="'.url('/sponsors/'.$data->id.'').'" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
@@ -135,8 +136,11 @@ class EventSponsorController extends Controller
      * @param  \App\EventSponsor  $eventSponsor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(EventSponsor $eventSponsor)
+    public function destroy(EventSponsor $sponsor)
     {
-        //
+        $delete = EventSponsor::destroy($sponsor->id);
+        $response = $delete ? '1-Sponsor Deleted' : '0-Sponsor Failed to Delete';
+        return response()->json('1-Sponsor Deleted', 200);
+        // return redirect('/sponsors')->with('status',$response);
     }
 }

@@ -42,8 +42,22 @@ class MatchRequestsController extends Controller
             return datatables()->of(Match::where(['status' => '1'])->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
-                    ->addColumn('date', function($data){  return  $data->availableschedule->date; })
-                    ->addColumn('time', function($data){  return  $data->availableschedule->time; })
+                    ->addColumn('date', function($data){
+                        if($data->availableschedule){
+                            return $data->availableschedule->date;
+                        }
+                        else{
+                            return '';
+                        }
+                    })
+                    ->addColumn('time', function($data){
+                        if($data->availableschedule){
+                            return $data->availableschedule->time;
+                        }
+                        else{
+                            return '';
+                        }
+                    })
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status_meeting == 0? 
                             // $this->viewForm($match->id)
@@ -89,8 +103,22 @@ class MatchRequestsController extends Controller
             return datatables()->of(Match::whereIn('status',['0','2'])->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
-                    ->addColumn('date', function($data){  return  $data->availableschedule->date; })
-                    ->addColumn('time', function($data){  return  $data->availableschedule->time; })
+                    ->addColumn('date', function($data){
+                        if($data->availableschedule){
+                            return $data->availableschedule->date;
+                        }
+                        else{
+                            return '';
+                        }
+                    })
+                    ->addColumn('time', function($data){
+                        if($data->availableschedule){
+                            return $data->availableschedule->time;
+                        }
+                        else{
+                            return '';
+                        }
+                    })
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0? 
                             // $this->viewForm($match->id)
