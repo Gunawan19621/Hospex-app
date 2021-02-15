@@ -43,7 +43,10 @@ class EventSchedulesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['date'=>'required|date|after_or_equal:now', 'event_id' => 'required|numeric']);
+        $request->validate([
+            'date'      => 'required|date_format:Y-m-d',
+            'event_id'  => 'required|numeric'
+        ]);
         // EventSchedule::create($request->all());
         
         $event = Event::find($request->event_id);
@@ -89,7 +92,7 @@ class EventSchedulesController extends Controller
     public function update(Request $request, EventSchedule $eventschedule)
     {
         $request->validate([
-            'date'              => 'required',
+            'date'      => 'required|date_format:Y-m-d',
         ]);
         try{
             
@@ -101,7 +104,6 @@ class EventSchedulesController extends Controller
         } catch (\Exception $e){
             $response = '0-Schedule Failed to Update';
         }
-         
         
         return redirect()->back()->with('status', $response);
     }

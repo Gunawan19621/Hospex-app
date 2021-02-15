@@ -62,14 +62,15 @@ class EventController extends Controller
         $now = Carbon::now();
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|date_format:Y|after_or_equal:'.$now->year,
+            'begin'             => 'required|date_format:Y-m-d',
+            'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
             'city'              => 'required',
             'event_location'    => 'required'
         ]);
 
         $create = Event::create([
             'event_title'       => $request->event_title,
-            'year'              => $request->year,
+            'year'              => Carbon::createFromFormat('Y-m-d', $request->begin)->year,
             'city'              => $request->city,
             'site_plan'         => '',
             'event_location'    => $request->event_location,
@@ -91,8 +92,7 @@ class EventController extends Controller
     {
         $title = 'Exhibitors';
         $event = Event::findorfail($event->id);
-        $schedules = $event->Schedules()
-                    ->orderBy('date');
+        $schedules = $event->Schedules()->orderBy('date');
         return view('event_schedule.schedules', compact('schedules','event','title'));
     }
     
@@ -126,14 +126,18 @@ class EventController extends Controller
         $now = Carbon::now();
         $request->validate([
             'event_title'       => 'required',
-            'year'              => 'required|date_format:Y|after_or_equal:'.$now->year,
+            'begin'             => 'required|date_format:Y-m-d',
+            'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
             'city'              => 'required',
             'event_location'    => 'required'
         ]);
+
         $update =Event::where('id', $event->id)
                 ->update([
                     'event_title'       => $request->event_title,
-                    'year'              => $request->year,
+                    'year'              => Carbon::createFromFormat('Y-m-d', $request->begin)->year,
+                    'begin'             => Carbon::parse($request->begin),
+                    'end'               => Carbon::parse($request->end),
                     'city'              => $request->city,
                     'event_location'    => $request->event_location
                 ]);
@@ -150,6 +154,16 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if($event->Schedules){
+            foreach ($event->Schedules as $schedule) {
+                if($schedule->rundowns){
+                    foreach ($schedule->rundowns as $rundown) {
+                        $rundown->delete();
+                    }
+                }
+                $schedule->delete();
+            }
+        }
         $delete = Event::destroy($event->id);
         $response = $delete ? '1-Event Deleted' : '0-Event Failed to Delete';
         return response()->json('1-Event Deleted', 200);
@@ -160,13 +174,15 @@ class EventController extends Controller
         $events['data'] = Event::all();
         return $events;
     }
-    public function area(Event $event)
+
+    public function stand(Event $event)
     {
         $title = 'Stand Event';
         if(request()->ajax()){
             $data = collect($event->areas)->map(function($item, $key){
                 return collect($item->stands)->map(function($stand, $index) use($item){
                     return [
+                        'id'                => $stand->id,
                         'stand_name'        => $stand->stand_name,
                         'company_name'      => $stand->exhibitor->company->company_name,
                         'area_name'         => $item->area_name
@@ -179,11 +195,10 @@ class EventController extends Controller
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('exhibitors/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                <a class="dropdown-item" href="'.url('stands/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
-                        $button .= '<a href="{{ url(`events/$data->id`) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
                 ->rawColumns(['action'])
@@ -191,13 +206,13 @@ class EventController extends Controller
         }
         return view('stand.stand_event', compact('title','event'));
     }
+
     public function exhibitor(Event $event)
     {
-        $exhibitors= $event->exhibitors;
-        $data=[];
+        $exhibitors = $event->exhibitors;
+        $data = [];
         foreach ($exhibitors as $key => $exhibitor) {
-            
-            $x['id']      = $exhibitor->id;
+            $x['id']                = $exhibitor->id;
             $x['company_name']      = $exhibitor->company->company_name;
             $x['company_address']   = $exhibitor->company->company_address;
             $catgories = $exhibitor->company->categories;
@@ -213,8 +228,7 @@ class EventController extends Controller
         }
         $title = 'Exhibitor';
         // dd($event->exhibitors()->with('company'));
-        $query=$event->exhibitors()
-        ->with('company');
+        $query = $event->exhibitors()->with('company');
         if(request()->ajax()){
             return datatables()->of($query)
                     ->addIndexColumn()
@@ -229,11 +243,10 @@ class EventController extends Controller
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('exhibitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                <a class="dropdown-item" href="'.url('exhibitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>     
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
-                        $button .= '<a href="{{ url(`events/$data->id`) }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
                 ->rawColumns(['action','company'])
@@ -242,6 +255,7 @@ class EventController extends Controller
         
         return view('exhibitor.event',compact('title','event'));
     }
+
     public function fileStore(Request $request, Event $event)
     {
         if($request->hasFile('file')) {
@@ -281,22 +295,22 @@ class EventController extends Controller
                
                 //   $up =  Storage::disk('logs')->storeAs('eventss/', $request->file('file'), $fileName);
               $up = $request->file('file')->storeAs('event/', $fileName);
-          
-
-                  
-                  if ($up == true) {
+            
+                if ($up == true) {
                     
                     $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
                       # code...
                     return response()->json(['success' => '1']);
-                }else{
+                }
+                else{
                     return  response()->json(['success'=> '0']);
-                  }
+                }
      
             }
             
         }
     }
+
     function fetch(Event $event)
     {
         $fileName = $event->siteplan;
@@ -344,6 +358,7 @@ class EventController extends Controller
         }
         // return response()->file($images);
     }
+
     public function siteplan(Event $event)
     {
         $title = 'Site Plan';
@@ -367,6 +382,7 @@ class EventController extends Controller
         //return view('event.form_upload', compact('slice','title','event','content'));
 
     }
+
     function dropzoneDelete(Request $request)
     {
         if($request->get('name'))

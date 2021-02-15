@@ -84,6 +84,13 @@
                 }
             ]
         })
+
+        $('#m_table_1').on('click', '.delete', function () {
+          var id = $(this).data("id");
+          var link = 'exhibitors';
+          confirmDelete(link,id)
+          
+        }); 
        
     })
 

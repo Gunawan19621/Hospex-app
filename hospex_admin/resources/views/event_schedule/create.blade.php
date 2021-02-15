@@ -64,7 +64,9 @@
         // set end date to max one year period:
         $(".date-schedule").datepicker( {
             startDate: new Date(start),
-            endDate: new Date(end)
+            endDate: new Date(end),
+            format: 'yyyy-mm-dd',
+            orientation: "bottom",
         }).on('changeDate', function(e){
             $(this).datepicker('hide');
         });

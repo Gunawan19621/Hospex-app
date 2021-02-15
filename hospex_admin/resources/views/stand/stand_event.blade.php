@@ -81,6 +81,13 @@
         // },
             rowsGroup: [3,2],
         })
+
+        $('#m_table_1').on('click', '.delete', function () {
+  
+          var id = $(this).data("id");
+          var link = 'stands';
+          confirmDelete(link,id)
+        });
        
         
     })

@@ -81,7 +81,7 @@
 														<div class="m-timeline-1__item-body">
 															<div class="m-list-pics">
                                                                 @foreach ($task->performers as $performer)
-    																<a href="../../#"><img src="{{ url('assets11/app/media/img/users/100_13.jpg') }}" title="">{{ $performer->name }}</a><br>
+    																<a href="#"><img src="{{ url('assets11/app/media/img/users/100_13.jpg') }}" title=""></a>{{ $performer->name }}<br>
                                                                 @endforeach
 															</div>
 															<div class="m-timeline-1__item-body m--margin-top-15">
@@ -189,7 +189,9 @@
         // set end date to max one year period:
         $(".date-schedule").datepicker( {
             startDate: new Date(start),
-            endDate: new Date(end)
+            endDate: new Date(end),
+            format: 'yyyy-mm-dd',
+            orientation: "bottom"
         }).on('changeDate', function(e){
             $(this).datepicker('hide');
         });

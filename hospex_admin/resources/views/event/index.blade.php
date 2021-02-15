@@ -36,12 +36,6 @@
                                 <th scope="col">End Date</th>
                                 <th scope="col">City</th>
                                 <th scope="col">Event Location</th>
-                                {{-- <th scope="col">Action</th> --}}
-                                {{-- <th scope="col">Event Location</th>
-                                <th scope="col">Event Location</th>
-                                <th scope="col">Event Location</th>
-                                <th scope="col">Event Location</th>
-                                <th scope="col">Event Location</th> --}}
                             </tr>
                         </thead>
                     </table>

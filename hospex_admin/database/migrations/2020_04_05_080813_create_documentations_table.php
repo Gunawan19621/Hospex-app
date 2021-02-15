@@ -16,7 +16,7 @@ class CreateDocumentationsTable extends Migration
         Schema::create('documentations', function (Blueprint $table) {
             $table->id();
             $table->longText('photo');
-            $table->foreignId('event_id')->references('id')->on('events');
+            $table->foreignId('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();
         });
     }

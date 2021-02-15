@@ -46,7 +46,7 @@ Route::get('/events/{event}','EventController@show');
 Route::delete('/events/{event}','EventController@destroy');
 Route::get('/events/{event}/edit','EventController@edit');
 Route::get('/events/{event}/exhibitor','EventController@exhibitor');
-Route::get('/events/{event}/area','EventController@area')->name('events.area');
+Route::get('/events/{event}/stand','EventController@stand');
 Route::get('/events/{event}/site-plan','EventController@siteplan');
 Route::get('/events/{event}/upload-site-plan','EventController@uploadSiteplan');
 Route::patch('/events/{event}/site-plan','EventController@fileStore');

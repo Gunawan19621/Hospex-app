@@ -20,6 +20,8 @@ class CreateEventsTable extends Migration
             $table->string('city');
             $table->longText('site_plan');
             $table->string('event_location');
+            $table->date('begin');
+            $table->date('end');
             $table->timestamps();
         });
     }

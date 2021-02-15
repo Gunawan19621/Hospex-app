@@ -32,18 +32,13 @@
                     @error('event_title') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                      <label for="eventitel">Year</label>
-                      <input type="text" autocomplete="off" class="form-control @error('year') is-invalid @enderror year" name="year" id="eventyear" placeholder="Event Year Input" value="{{ old('year') }}">
-                      @error('year') <div class="invalid-feedback"> {{ $message }} </div> @enderror
-                  </div>
-                  <div class="form-group m-form__group">
                       <label for="begindate">Begin Date</label>
-                      <input type="text" autocomplete="off" class="form-control @error('begin') is-invalid @enderror input-date" name="begin" id="beginDate" placeholder="Begin Date Input" value="{{ old('begin') }}">
+                      <input type="text" autocomplete="off" class="form-control @error('begin') is-invalid @enderror input-date" name="begin" id="beginDate" placeholder="Begin Date Input" value="{{ old('begin') }}" readonly>
                       @error('begin') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                       <label for="enddate">End Date</label>
-                      <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ old('end') }}">
+                      <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ old('end') }}" readonly>
                       @error('end') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
@@ -74,3 +69,16 @@
 	</div>
 </div>
 @endsection
+@section('require')
+    <script>
+        $('#beginDate, #endDate').datepicker({
+            format: 'yyyy-mm-dd',
+            changeMonth: true,
+            changeYear: true,
+            orientation: "bottom",
+            yearRange: "-100:+0"
+        }).on('changeDate', function(e){
+            $(this).datepicker('hide');
+        });
+    </script>
+@endsection 

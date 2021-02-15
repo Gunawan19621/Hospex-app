@@ -26,7 +26,7 @@
               </div>
           </div>
           <form action="" method="post">
-            <input type="text" name="_token">
+            <input type="hidden" name="_token">
           </form>
             <form class="m-form m-form--fit m-form--label-align-right" id="form1" method="post" action="/eventrundown">
                 @csrf
@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group m-form__group">
                         <label for="eventitel">Task Duration (Minutes)</label>
-                        <input type="text" autocomplete="off" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control @error('taskduration') is-invalid @enderror " name="taskduration" id="taskdurationschedule" placeholder="Event Schedule task duration" value="{{ old('taskduration') }}">
+                        <input type="number" autocomplete="off" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control @error('taskduration') is-invalid @enderror " name="taskduration" id="taskdurationschedule" placeholder="Event Schedule task duration" value="{{ old('taskduration') }}">
                         <input type="hidden" name="event_schedule_id" value="{{ $schedule->id }}">
                         <div class="invalid-feedback"> {{ $errors->first('taskduration') }} </div>
                     </div>

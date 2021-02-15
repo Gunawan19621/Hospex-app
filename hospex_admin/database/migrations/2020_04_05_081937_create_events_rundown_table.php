@@ -19,7 +19,7 @@ class CreateEventsRundownTable extends Migration
             $table->string('task');
             $table->integer('duration');
             $table->string('location');
-            $table->foreignId('event_schedule_id')->references('id')->on('event_schedules');
+            $table->foreignId('event_schedule_id')->references('id')->on('event_schedules')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CreateEventSchedulesTable extends Migration
         Schema::create('event_schedules', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->foreignId('event_id')->references('id')->on('events');
+            $table->foreignId('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->timestamps();
 
         });
