@@ -8,6 +8,8 @@ use App\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use App\Helpers\GetEvent;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,3 +101,65 @@ Route::get('/connection', function () {
         die("Could not open connection to database server.  Please check your configuration.");
     }
 });
+
+
+
+
+
+//API
+$router->get('/api/', function () use ($router) {
+    return $router->app->version();
+});
+
+// Generate Application Key
+$router->get('/api/key', function ()
+{
+    return Str::random(32);
+});
+
+
+// exhibitors
+$router->get('/api/exhibitors', 'Api\ExhibitorsController@index');
+$router->get('/api/exhibitors/{exhibitor}', 'Api\ExhibitorsController@show');
+
+// business matching
+$router->post('/api/match-request', 'Api\BusinessMatchingController@store');
+$router->put('/api/match-request/{ match }/{ type }', 'Api\BusinessMatchingController@update');
+$router->post('/api/match-approve/{ match }', 'Api\BusinessMatchingController@approve');
+$router->get('/api/list-business-matching/{type}/{id}/{status}', 'Api\BusinessMatchingController@index');
+$router->get('/api/match-success/{ id }', 'Api\BusinessMatchingController@updateStatusMeeting');
+
+$router->get('/api/matchExhibitor', 'Api\BusinessMatchingController@list_matching');
+$router->get('/api/matchVisitor', 'Api\BusinessMatchingController@list_matching');
+
+
+// schedule
+$router->get('/api/schedules', 'Api\SchedulesController@index');
+$router->get('/api/schedules/{id}', 'Api\SchedulesController@show');
+
+$router->get('/api/event', function () {
+    $id = GetEvent::GetEvent();
+    $data = Event::whereId($id)->select(['id','event_title','year','event_location','city','site_plan'])->get();
+    if (!$data->isEmpty()) {
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Found',
+            'data'      => $data
+        ],200);
+    } else {
+        return response()->json([
+            'success'   => False,
+            'message'   => 'Data Not Found',
+            'data'      => ''
+        ],404);
+    }
+});
+
+$router->post('/api/register', 'Api\AuthController@register');
+$router->post('/api/login', 'Api\AuthController@login');
+$router->post('/api/user/change-password','Api\AuthController@changePassword');
+$router->post('/api/image/upload','Api\ImageController@uploadImage');
+$router->get('/api/image/logo/{exhibitor}','Api\ImageController@logo');
+
+// available schedule
+$router->get('/api/available-schedule/{exhibitor}','Api\AvailableController@index');
