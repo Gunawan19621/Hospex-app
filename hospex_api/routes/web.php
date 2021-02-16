@@ -65,9 +65,9 @@ $router->get('/event', function () {
     }
 });
 
-
 $router->post('/register', 'AuthController@register');
 $router->post('/login', 'AuthController@login');
+$router->post('/user/change-password','AuthController@changePassword');
 // $router->get('/read', function(){
 //     $user = User::whereHasMorph(
 //             'usertable',
@@ -87,8 +87,6 @@ $router->post('/login', 'AuthController@login');
 // });
 $router->post('/image/upload','ImageController@uploadImage');
 $router->get('/image/logo/{exhibitor}','ImageController@logo');
-
-
 
 // available schedule
 $router->get('/available-schedule/{exhibitor}','AvailableController@index');

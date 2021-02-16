@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Collection;
-use App\EventExhibitor as exhibitor;
+use App\EventExhibitor;
 use App\Helpers\GetEvent as eventId;
 
 class ExhibitorsController extends Controller
@@ -19,8 +19,7 @@ class ExhibitorsController extends Controller
 
     public function index()
     {
-        $eventId = eventId::GetEvent();
-        $exhibitors = exhibitor::where('event_id', 1)->get();
+        $exhibitors = EventExhibitor::all();
         
         $data = [];
 
@@ -58,7 +57,7 @@ class ExhibitorsController extends Controller
 
     public function show($exhibitor)
     {
-        $exhibitor = exhibitor::findorfail($exhibitor);
+        $exhibitor = EventExhibitor::findorfail($exhibitor);
         $data = [
             'id_exhibitor'  => $exhibitor->id, 
             'nama'          => $exhibitor->company->company_name,

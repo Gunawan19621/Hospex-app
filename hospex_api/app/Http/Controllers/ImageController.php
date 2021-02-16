@@ -12,61 +12,22 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 class ImageController extends BaseController
 {
     public function uploadImage(Request $request)
-    {   
-        if($request->hasFile('image')) {
-            $exhibitor        = EventExhibitor::findorfail($request->exhibitor);
-            $company          = Company::findorfail($exhibitor->company_id);
-            $file             = $request->file('image');
-            $sourceProperties = getimagesize($file);
-            $fileNewName      = $company->company_name;
-            $folderPath       = base_path()."public/upload/company-logo/";
-            $ext              = pathinfo($file, PATHINFO_EXTENSION);
-            $imageType        = $sourceProperties[2];
-    
-            switch ($imageType) {
-                case IMAGETYPE_PNG:
-                    $imageResourceId = imagecreatefrompng($file); 
-                    $targetLayer = $this->imageResize($imageResourceId,$sourceProperties[0],$sourceProperties[1]);
-                    imagepng($targetLayer,$folderPath. $fileNewName. "_thump". $ext);
-                    break;
-                case IMAGETYPE_GIF:
-                    $imageResourceId = imagecreatefromgif($file); 
-                    $targetLayer = $this->imageResize($imageResourceId,$sourceProperties[0],$sourceProperties[1]);
-                    imagegif($targetLayer,$folderPath. $fileNewName. "_thump". $ext);
-                    break;
-                case IMAGETYPE_JPEG:
-                    $imageResourceId = imagecreatefromjpeg($file); 
-                    $targetLayer = $this->imageResize($imageResourceId,$sourceProperties[0],$sourceProperties[1]);
-                    imagejpeg($targetLayer,$folderPath. $fileNewName. "_thump". $ext);
-                    break;
-                default:
-                    echo "Invalid Image type.";
-                    exit;
-                    break;
-            }
-
-            move_uploaded_file($file, $folderPath. $fileNewName. $ext);
-
-            $company->update(['logo'=>$folderPath. $fileNewName]);
-            return $this->responseRequestSuccess($folderPath. $fileNewName);
-        }
-        else{
-            return $this->responseRequestError('File not found');
-        }
-
-        $response = null;
-        $user     = (object) ['image' => ""];
-
+    {
         if ($request->hasFile('image')) {
-            $original_filename     = $request->file('image')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext              = end($original_filename_arr);
-            $destination_path      = './upload/exhibitor-logo/';
-            $image                 = 'U-' . time() . '.' . $file_ext;
+            // $original_filename     = $request->file('image')->getClientOriginalName();
+            // $original_filename_arr = explode('.', $original_filename);
+            // $file_ext              = end($original_filename_arr);
+            // $destination_path      = 'public/upload/exhibitor-logo/';
+            // $image                 = 'U-' . time() . '.' . $file_ext;
+
+            $filename = time().'.'.request()->image->getClientOriginalExtension();
+            request()->image->move(public_path('images'), $filename);
 
             if ($request->file('image')->move($destination_path, $image)) {
-                $user->image = '/upload/exhibitor-logo/' . $image;
-                $user->image = getimagesize($request->file('image'));
+                $user->image = $filename;
+                $user->save();
+                // $user->image = '/upload/exhibitor-logo/' . $image;
+                // $user->image = getimagesize($request->file('image'));
                 
                 return $this->responseRequestSuccess($user);
             }

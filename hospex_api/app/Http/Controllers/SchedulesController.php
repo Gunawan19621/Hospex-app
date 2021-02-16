@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Collection;
-use App\EventSchedule as schedule;
+use App\EventSchedule;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Support\Carbon;
 
@@ -21,8 +21,7 @@ class SchedulesController extends Controller
     
     public function index()
     {
-        $eventId   = eventId::GetEvent();
-        $schedules = schedule::where('event_id', $eventId)->orderby('date')->get();
+        $schedules = EventSchedule::orderby('date')->get();
         
         $data = [];
 
@@ -61,14 +60,13 @@ class SchedulesController extends Controller
 
     public function show($id)
     {
-        $rundowns = schedule::findorfail($id)->rundowns;
+        $rundowns = EventSchedule::findorfail($id)->rundowns;
         $data = [];
         foreach ($rundowns as $key => $rundown) {
             $data[] = [
                 'time'          => $rundown->time,
                 'task'          => $rundown->task,
-                'duration'      => $rundown->duration,
-                
+                'duration'      => $rundown->duration
             ];
         }
         if (count($rundowns) > 0) {

@@ -479,6 +479,7 @@ class ComposerStaticInit84f0769a26d80676c0961d9c6aacd539
     );
 
     public static $classMap = array (
+        'App\\Admin' => __DIR__ . '/../..' . '/app/Admin.php',
         'App\\Area' => __DIR__ . '/../..' . '/app/Area.php',
         'App\\AvailableSchedule' => __DIR__ . '/../..' . '/app/AvailableSchedule.php',
         'App\\Category' => __DIR__ . '/../..' . '/app/Category.php',
@@ -489,6 +490,7 @@ class ComposerStaticInit84f0769a26d80676c0961d9c6aacd539
         'App\\EventRundown' => __DIR__ . '/../..' . '/app/EventRundown.php',
         'App\\EventSchedule' => __DIR__ . '/../..' . '/app/EventSchedule.php',
         'App\\EventSponsor' => __DIR__ . '/../..' . '/app/EventSponsor.php',
+        'App\\EventVisitor' => __DIR__ . '/../..' . '/app/EventVisitor.php',
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
         'App\\Events\\ExampleEvent' => __DIR__ . '/../..' . '/app/Events/ExampleEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
@@ -497,7 +499,6 @@ class ComposerStaticInit84f0769a26d80676c0961d9c6aacd539
         'App\\Http\\Controllers\\AvailableController' => __DIR__ . '/../..' . '/app/Http/Controllers/AvailableController.php',
         'App\\Http\\Controllers\\BusinessMatchingController' => __DIR__ . '/../..' . '/app/Http/Controllers/BusinessMatchingController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
-        'App\\Http\\Controllers\\ExampleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ExampleController.php',
         'App\\Http\\Controllers\\ExhibitorsController' => __DIR__ . '/../..' . '/app/Http/Controllers/ExhibitorsController.php',
         'App\\Http\\Controllers\\ImageController' => __DIR__ . '/../..' . '/app/Http/Controllers/ImageController.php',
         'App\\Http\\Controllers\\SchedulesController' => __DIR__ . '/../..' . '/app/Http/Controllers/SchedulesController.php',
@@ -515,8 +516,6 @@ class ComposerStaticInit84f0769a26d80676c0961d9c6aacd539
         'App\\Providers\\GetEventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/GetEventServiceProvider.php',
         'App\\Stand' => __DIR__ . '/../..' . '/app/Stand.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
-        'App\\UserView' => __DIR__ . '/../..' . '/app/UserView.php',
-        'App\\Visitor' => __DIR__ . '/../..' . '/app/Visitor.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Brick\\Math\\BigDecimal' => __DIR__ . '/..' . '/brick/math/src/BigDecimal.php',
         'Brick\\Math\\BigInteger' => __DIR__ . '/..' . '/brick/math/src/BigInteger.php',

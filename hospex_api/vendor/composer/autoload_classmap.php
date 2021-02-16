@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Admin' => $baseDir . '/app/Admin.php',
     'App\\Area' => $baseDir . '/app/Area.php',
     'App\\AvailableSchedule' => $baseDir . '/app/AvailableSchedule.php',
     'App\\Category' => $baseDir . '/app/Category.php',
@@ -16,6 +17,7 @@ return array(
     'App\\EventRundown' => $baseDir . '/app/EventRundown.php',
     'App\\EventSchedule' => $baseDir . '/app/EventSchedule.php',
     'App\\EventSponsor' => $baseDir . '/app/EventSponsor.php',
+    'App\\EventVisitor' => $baseDir . '/app/EventVisitor.php',
     'App\\Events\\Event' => $baseDir . '/app/Events/Event.php',
     'App\\Events\\ExampleEvent' => $baseDir . '/app/Events/ExampleEvent.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
@@ -24,7 +26,6 @@ return array(
     'App\\Http\\Controllers\\AvailableController' => $baseDir . '/app/Http/Controllers/AvailableController.php',
     'App\\Http\\Controllers\\BusinessMatchingController' => $baseDir . '/app/Http/Controllers/BusinessMatchingController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
-    'App\\Http\\Controllers\\ExampleController' => $baseDir . '/app/Http/Controllers/ExampleController.php',
     'App\\Http\\Controllers\\ExhibitorsController' => $baseDir . '/app/Http/Controllers/ExhibitorsController.php',
     'App\\Http\\Controllers\\ImageController' => $baseDir . '/app/Http/Controllers/ImageController.php',
     'App\\Http\\Controllers\\SchedulesController' => $baseDir . '/app/Http/Controllers/SchedulesController.php',
@@ -42,8 +43,6 @@ return array(
     'App\\Providers\\GetEventServiceProvider' => $baseDir . '/app/Providers/GetEventServiceProvider.php',
     'App\\Stand' => $baseDir . '/app/Stand.php',
     'App\\User' => $baseDir . '/app/User.php',
-    'App\\UserView' => $baseDir . '/app/UserView.php',
-    'App\\Visitor' => $baseDir . '/app/Visitor.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
     'Brick\\Math\\BigDecimal' => $vendorDir . '/brick/math/src/BigDecimal.php',
     'Brick\\Math\\BigInteger' => $vendorDir . '/brick/math/src/BigInteger.php',

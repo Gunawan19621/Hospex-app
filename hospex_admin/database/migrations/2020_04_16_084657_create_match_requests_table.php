@@ -15,9 +15,7 @@ class CreateMatchRequestsTable extends Migration
     {
         Schema::create('match_requests', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->time('time');
-            $table->enum('status',[0,1]);
+            $table->enum('status',[0,1,2]);
             $table->unsignedBigInteger('event_exhibitor_id');
             $table->unsignedBigInteger('event_visitor_id');
             $table->unsignedBigInteger('available_schedule_id');

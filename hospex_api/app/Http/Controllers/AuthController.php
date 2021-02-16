@@ -23,6 +23,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        
     }
     
     public function register(Request $request)
@@ -33,6 +34,15 @@ class AuthController extends Controller
         $address    = $request->input('address');
         $phone      = $request->input('phone');
         $password   = $request->input('password');
+
+        $checkUser = User::where('email',$email)->first();
+        if($checkUser){
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Register Fail',
+                'data'      => ''
+            ], 400);
+        }
 
         $companyCreate = Company::create([
             'company_name'       => $company,
@@ -54,7 +64,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Register Success',
-                'data'      => $register
+                'data'      => ''
             ], 201);
         }
         else {
@@ -68,7 +78,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $eventId = eventId::GetEvent();
         $email      = $request->input('email');
         $password   = $request->input('password');
         $type       = $request->input('type');
@@ -102,6 +111,35 @@ class AuthController extends Controller
                 ], 200);
             }
             return response()->json($respon, 400);
+        }
+        else{
+            return response()->json($respon, 400);
+        }
+    }
+
+    public function changePassword(Request $request)
+    {
+        $id         = $request->input('id');
+        $password   = $request->input('password');
+        $type       = $request->input('type');
+
+        $respon = [
+            'success'   => false,
+            'message'   => 'Change Password Fail',
+            'data'      => ''
+        ];
+
+        $user = User::where('id', $id)->first();
+        if ($user) {
+            $user->update([
+                'password' => Hash::make($password)
+            ]);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Change Password Success',
+                'data'      => ''
+            ], 200);
         }
         else{
             return response()->json($respon, 400);

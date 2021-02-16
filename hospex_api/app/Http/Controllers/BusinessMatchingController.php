@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MatchRequest;
+use App\AvailableSchedule;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\MockObject\Builder\Match;
@@ -133,32 +134,49 @@ class BusinessMatchingController extends Controller
 
     public function store(Request $request)
     {
-        $date               = date('Y-m-d', strtotime($request->input('date')));
-        $exhibitor_id       = $request->input('exhibitor_id');
-        $visitor_id         = $request->input('visitor_id');
-        // $location           = $request->input('location');
-        // $time               = Carbon::parse($request->input('time'))->format('h:i:s');
-        $time               = $request->input('time');
-       
         try {
-            $match = MatchRequest::create([
-                'available_schedule_id'     => $time,
-                'event_exhibitor_id'        => $exhibitor_id,
-                'event_visitor_id'          => $visitor_id,
-                'status'                    => '0'
-            ]);
+            if($request->input('time') == null || $request->input('time') == ""){
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Failed to Create',
+                    'data'      => ''
+                ],503);
+            }
 
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Succesfull Created',
-                'data'      => collect($match)->except(['created_at','updated_at'])
-            ],201);
+            $exhibitor_id = $request->input('exhibitor_id');
+            $visitor_id   = $request->input('visitor_id');
+            $time         = $request->input('time');
+
+            $checkAvailable = AvailableSchedule::where('id',$time)->first();
+            if($checkAvailable){
+                $match = MatchRequest::create([
+                    'available_schedule_id'     => $time,
+                    'event_exhibitor_id'        => $exhibitor_id,
+                    'event_visitor_id'          => $visitor_id,
+                    'status'                    => '0',
+                    'time'                      => $checkAvailable->time,
+                    'date'                      => $checkAvailable->date
+                ]);
+
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Succesfull Created',
+                    'data'      => collect($match)->except(['created_at','updated_at'])
+                ],201);
+            }
+            else{
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Failed to Create',
+                    'data'      => ''
+                ],503);
+            }
         }
         catch (Exception $e) {
             return response()->json([
                 'success'   => true,
-                'messag e'   => 'Data Failed to Create',
-                'data'      => $e->getMessage()
+                'message'   => 'Data Failed to Create',
+                'data'      => ''
             ],503);
         }
     }
