@@ -32,17 +32,17 @@ $(document).ready(function(){
             render: function(a, e, t, n) {
                 return `<span class="dropdown">
                     <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
-                        <div class="dropdown-menu dropdown-menu-right">       
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/edit') }}"><i class="la la-edit"></i> Edit</a>        
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ url('events/${t.id}/edit') }}"><i class="la la-edit"></i> Edit</a>
                             <a class="dropdown-item delete" href="javascript:void(0);" data-id="${ t.id }" ><i class="la la-trash"></i> Hapus</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}') }}"><i class="la la-edit"></i> Schedule</a>        
+                            <a class="dropdown-item" href="{{ url('events/${t.id}') }}"><i class="la la-edit"></i> Schedule</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}/area') }}"><i class="la la-edit"></i> Area</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}/exhibitor') }}"><i class="la la-edit"></i> Exhibitor</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}/stand') }}"><i class="la la-edit"></i> Stand</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/upload-site-plan') }}"><i class="la la-edit"></i> Upload SIteplan</a>        
+                            <a class="dropdown-item" href="{{ url('events/${t.id}/site-plan') }}"><i class="la la-edit"></i> Siteplan</a>
+                            <a class="dropdown-item" href="{{ url('events/${t.id}/upload-site-plan') }}"><i class="la la-edit"></i> Upload Siteplan</a>
                         </div>
-                    </span>
-                    <a href="{{ url('events/${t.id}/site-plan') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`
+                    </span>`
             },
         }
                 ]

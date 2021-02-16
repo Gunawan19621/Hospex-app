@@ -84,7 +84,7 @@
         maxFiles: 1,  // 1 file
         uploadMultiple:false,
         addRemoveLinks: true,
-        acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        acceptedFiles: ".pdf",
         init: function(){
             // this.hiddenFileInput.removeAttribute('multiple');
             var submitButton = document.querySelector('#submit');

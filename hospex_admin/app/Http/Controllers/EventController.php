@@ -46,10 +46,6 @@ class EventController extends Controller
     {
         return view('event.create');
     }
-    public function formDelete()
-    {
-        return view('event.formdelete');
-    }
 
     /**
      * Store a newly created resource in storage.

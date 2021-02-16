@@ -43,7 +43,6 @@ class CompaniesController extends Controller
                                 <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
                             </div>
                         </span>';
-                        $button .= '<a href="'.url('companies/'.$data->id.'').'" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
                 ->rawColumns(['action'])
