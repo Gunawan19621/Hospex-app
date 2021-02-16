@@ -44,55 +44,6 @@
         </div>
     </div>
 </div>
-   
-
-    <!-- END EXAMPLE TABLE PORTLET-->
-
-{{-- <div class="container">
-    <h1><a href="/events/create" class="btn btn-primary my-3">Add</a></h1>
-    @if ( session('status') )
-        <div class="alert alert-success">{{ session('status') }}</div>
-    @endif
-	<div class="row">
-		<div class="col-10">
-            <h1 class="mt-3"> Events</h1>
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Event Title</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">City</th>
-                        <th scope="col">Site Plan</th>
-                        <th scope="col">Event Location</th>
-                        <th scope="col">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($events as $event)
-                    <tr>
-                        <td scope="row">{{ $loop->iteration }}</td>
-                        <td>{{ $event->event_title }}</td>
-                        <td>{{ $event->year }}</td>
-                        <td>{{ $event->city }}</td>
-                        <td>{{ $event->site_plan }}</td>
-                        <td>{{ $event->event_location }}</td>
-                        <td>
-                            <a href=" /events/{{$event->id}}/edit " class="badge badge-success">Edit</a>
-                            <form action=" events/{{ $event->id}} " method="post" class="d-inline">
-                                @method('delete')
-                                @csrf
-                            <button type="submit" class="badge badge-danger">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                        
-                    @endforeach
-                </tbody>
-            </table>
-		</div>
-	</div>
-</div> --}}
 @endsection
 
 @section('require')

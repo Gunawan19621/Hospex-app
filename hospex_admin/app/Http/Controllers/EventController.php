@@ -169,6 +169,7 @@ class EventController extends Controller
         return response()->json('1-Event Deleted', 200);
         // return redirect('/events')->with('status',$response);
     }
+
     public function getevents()
     {
         $events['data'] = Event::all();
@@ -254,6 +255,31 @@ class EventController extends Controller
         }
         
         return view('exhibitor.event',compact('title','event'));
+    }
+
+    public function area(Event $event)
+    {
+        $title = 'Areas';
+        if (request()->ajax()) 
+        {
+            return datatables()->of($event->areas)
+                    ->addIndexColumn()
+                    ->addColumn('event_location', function($data){  return  $data->event->event_location; })
+                    ->addColumn('note', function($data){  return  $data->event->event_title.'-'.$data->event->year; })
+                    ->addColumn('action', function($data){
+                            $button = '<span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                                <div class="dropdown-menu dropdown-menu-right">       
+                                    <a class="dropdown-item" href="'.url('areas/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
+                                    <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a> 
+                                </div>
+                            </span>';
+                            return $button;
+                        })
+                    ->rawColumns(['action','note','event_location'])
+                    ->make(true);
+        }
+        return view('area.event_area', compact('title','event'));
     }
 
     public function fileStore(Request $request, Event $event)
