@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddStatusToMatchRequests extends Migration
+class CreateAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddStatusToMatchRequests extends Migration
      */
     public function up()
     {
-        Schema::table('match_requests', function (Blueprint $table) {
-            $table->enum('status',[0,1])->after('visitor_id');
+        Schema::create('admins', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ class AddStatusToMatchRequests extends Migration
      */
     public function down()
     {
-        Schema::table('match_requests', function (Blueprint $table) {
-            $table->dropColumn('status');
-        });
+        Schema::dropIfExists('admins');
     }
 }

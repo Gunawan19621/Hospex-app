@@ -31,7 +31,8 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Exhibitor</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">Email</th>
                                 <th scope="col">Event</th>
                                 <th scope="col">Action</th>
                             </tr>

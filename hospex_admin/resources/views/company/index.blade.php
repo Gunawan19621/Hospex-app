@@ -16,7 +16,7 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Companies Lists
+                            Company Lists
                         </h3>
                         </div>
                     </div>
@@ -30,10 +30,11 @@
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Company Name</th>
-                                <th scope="col">Company Email</th>
-                                <th scope="col">Company Web</th>
-                                <th scope="col">Company Address</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Web</th>
+                                <th scope="col">Info</th>
                                 <th scope="col">Categories</th>
                                 <th scope="col">Action</th>
                             </tr>

@@ -18,9 +18,11 @@
                     data : "company_name", name : "company_name",
                 },
                 {
+                    data : "email", name : "email",
+                },
+                {
                     data : "event_info", name : "event_info",
                 },
-               
                 {
                     data:"action",
                     name: "action",

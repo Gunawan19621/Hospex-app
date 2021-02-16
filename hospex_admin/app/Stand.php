@@ -12,6 +12,7 @@ class Stand extends Model
     {
         return $this->belongsTo(Area::class,'area_id','id');
     }
+    
     public function exhibitor()
     {
         return $this->belongsTo(EventExhibitor::class,'event_exhibitor_id','id');

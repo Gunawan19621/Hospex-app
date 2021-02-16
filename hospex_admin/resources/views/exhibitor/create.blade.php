@@ -21,13 +21,12 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ url('exhibitors') }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
           <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/exhibitors">
           @csrf
               <div class="m-portlet__body">
-              
                 <div class="form-group m-form__group">
                     <label for="eventitel">Event</label>
                     <select class="form-control  @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >

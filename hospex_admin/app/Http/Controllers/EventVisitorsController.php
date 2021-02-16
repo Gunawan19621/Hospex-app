@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Visitor;
+use App\EventVisitor;
 use App\Company;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class VisitorsController extends Controller
+class EventVisitorsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,19 +22,24 @@ class VisitorsController extends Controller
     {
         $title = 'Visitors';
         if(request()->ajax()){
-            return datatables()->of(Visitor::all())
+            return datatables()->of(EventVisitor::all())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){
                         return $data->event->event_title. ' - '. $data->event->year;
                     })
+                    ->addColumn('company', function($data){
+                        return $data->company->company_name;
+                    })
+                    ->addColumn('visitor_name', function($data){
+                        return $data->company->users[0]->name;
+                    })
+                    ->addColumn('visitor_email', function($data){
+                        return $data->company->users[0]->email;
+                    })
+                    ->addColumn('phone', function($data){
+                        return $data->company->users[0]->phone;
+                    })
                     ->addColumn('action', function($data){
-                        // $button = '<span class="dropdown">
-                        // <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
-                        //     <div class="dropdown-menu dropdown-menu-right">       
-                        //         <a class="dropdown-item" href="'.url('visitors/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                        //         <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
-                        //     </div>
-                        // </span>';
                         $button = '<a href="'. url('visitors/'.$data->id).' " class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
@@ -65,11 +70,10 @@ class VisitorsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'visitor_name'    => 'required',
-            'visitor_email'   => 'required|email:rfc|unique:event_visitors,visitor_email',
-            'company_id'      => 'required|numeric',
+            'event_id'    => 'required',
+            'company_id'  => 'required|numeric',
         ]);
-        $create = Visitor::create($request->all());
+        $create = EventVisitor::create($request->all());
         $response = $create ? '1-Visitor Saved!' : '0-Visitor Failed to Save!';
         return redirect('/visitors')->with('status',$response);
     }
@@ -77,10 +81,10 @@ class VisitorsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\EventVisitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function show(Visitor $visitor)
+    public function show(EventVisitor $visitor)
     {
         $title = 'Visitor Detail';
         return view('visitor.detail',compact('title','visitor'));
@@ -89,10 +93,10 @@ class VisitorsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\EventVisitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Visitor $visitor)
+    public function edit(EventVisitor $visitor)
     {
         $title = 'Edit Visitor';
         $companies  = Company::all();
@@ -103,20 +107,18 @@ class VisitorsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Visitor  $visitor
+     * @param  \App\EventVisitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Visitor $visitor)
+    public function update(Request $request, EventVisitor $visitor)
     {
         $request->validate([
-            'visitor_name'    => 'required',
-            'visitor_email'   => 'required|email:rfc|unique:event_visitors,visitor_email,'.$visitor->id.',id',
-            'company_id'      => 'required|numeric',
+            'event_id'    => 'required',
+            'company_id'  => 'required|numeric',
         ]);
-        $update = Visitor::where('id',$visitor->id)
+        $update = EventVisitor::where('id',$visitor->id)
             ->update([
-                'visitor_name'    => $request->visitor_name,
-                'visitor_email'   => $request->visitor_email,
+                'event_id'        => $request->event_id,
                 'company_id'      => $request->company_id,
             ]);
         $response = $update ? '1-Visitor Updated!' : '0-Visitor Failed to Update!';
@@ -126,10 +128,10 @@ class VisitorsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Visitor  $visitor
+     * @param  \App\EventVisitor  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Visitor $visitor)
+    public function destroy(EventVisitor $visitor)
     {
         //
     }

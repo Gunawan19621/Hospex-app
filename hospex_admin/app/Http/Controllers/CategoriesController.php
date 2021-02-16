@@ -31,7 +31,6 @@ class CategoriesController extends Controller
                                     <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a> 
                                 </div>
                             </span>';
-                            // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
                             return $button;
                         })
                     ->rawColumns(['category_name','action'])

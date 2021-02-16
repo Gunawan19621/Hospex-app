@@ -48,10 +48,18 @@ class AuthController extends Controller
         // }
 
         $eventId = eventId::GetEvent();
+
+        $companyCreate = Company::create([
+            'company_name'       => $name,
+            'company_email'      => $email,
+            'company_web'        => '',
+            'company_address'    => '',
+            'company_info'       => '',
+        ]);
        
         $register = Visitor::create([
             'visitor_name'      => $name,
-            'visitor_email'      => $email,
+            'visitor_email'     => $email,
             'password'          => $password,
             'company_id'        => '3',
             'event_id'          => $eventId,

@@ -17,10 +17,11 @@ class CreateMatchRequestsTable extends Migration
             $table->id();
             $table->date('date');
             $table->time('time');
+            $table->enum('status',[0,1]);
             $table->unsignedBigInteger('event_exhibitor_id');
-            $table->unsignedBigInteger('visitor_id');
+            $table->unsignedBigInteger('event_visitor_id');
             $table->foreign('event_exhibitor_id')->references('id')->on('event_exhibitors')->onDelete('cascade');
-            $table->foreign('visitor_id')->references('id')->on('event_visitors')->onDelete('cascade');
+            $table->foreign('event_visitor_id')->references('id')->on('event_visitors')->onDelete('cascade');
             $table->timestamps();
         });
     }

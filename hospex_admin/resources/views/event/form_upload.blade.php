@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="m-portlet__head-tools">
-                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ url('events') }}" class="btn btn-primary my-3">Back</a>
             </div>
         </div>
 

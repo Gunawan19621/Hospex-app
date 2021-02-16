@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Event;
 use App\EventSchedule;
 use App\EventRundown;
-use App\User;
+use App\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Connection;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +54,7 @@ Route::resource('categories', 'CategoriesController');
 Route::resource('companies', 'CompaniesController');
 
 // Sponsors
-Route::resource('sponsors', 'EventSponsorController');
+Route::resource('sponsors', 'EventSponsorsController');
 
 // Areas
 Route::get('/areas/create/{event?}','AreasController@create');
@@ -69,12 +69,12 @@ Route::get('/stands/create/{event?}','StandsController@create');
 Route::resource('stands', 'StandsController')->except(['create']);
 
 // Visitors
-Route::resource('visitors', 'VisitorsController');
+Route::resource('visitors', 'EventVisitorsController');
 
 // Matches
 Route::get('matches/pending', 'MatchRequestsController@pendingMatch')->name('matches.pending');
 Route::resource('matches', 'MatchRequestsController');
-Route::patch('matches/{match}/approve', 'MatchRequestsController@approve');
+Route::get('matches/{match}/approve', 'MatchRequestsController@approve');
 
 
 Route::get('/', function(){

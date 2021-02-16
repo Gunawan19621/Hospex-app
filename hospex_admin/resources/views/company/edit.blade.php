@@ -15,12 +15,12 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Edit Company
+                      Form Edit Exhibitor Company
                   </h3>
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ url('/companies') }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
           <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/companies/{{$company->id}}">
@@ -33,9 +33,14 @@
                     @error('company_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                      <label for="companyEmail">company Email </label>
-                      <input type="text" autocomplete="off" class="form-control @error('company_email') is-invalid @enderror" name="company_email" id="companyEmail" placeholder="Company Email Input" value="{{ $company->company_email }}">
-                      @error('company_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                      <label for="exhibitorEmail">Email</label>
+                      <input type="email" autocomplete="off" class="form-control @error('exhibitor_email') is-invalid @enderror " name="exhibitor_email" id="exhibitorEmail" placeholder="Email Input" value="{{ $company->users[0]->email }}" readonly>
+                      @error('exhibitor_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
+                      <label for="exhibitorPassword">Password</label>
+                      <input type="password" autocomplete="off" class="form-control @error('exhibitor_password') is-invalid @enderror " name="exhibitor_password" id="exhibitorPassword" placeholder="Password Input">
+                      @error('exhibitor_password') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                   <label for="companyWeb">Company Web </label>
@@ -43,12 +48,14 @@
                       @error('company_web') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                  <label for="companyAddress">Company Address
-                    
-
-                  </label>
-                        <input type="text" autocomplete="off" class="form-control @error('company_address') is-invalid @enderror" name="company_address" id="companyAddress" placeholder="Company Address" value="{{ $company->company_address }}">
-                        @error('company_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                        <label for="exhibitorAddress">Address</label>
+                        <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ $company->users[0]->address }}">
+                        @error('exhibitor_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
+                        <label for="companyInfo">Company Info</label>
+                        <input type="text" autocomplete="off" class="form-control @error('company_info') is-invalid @enderror" name="company_info" id="companyInfo" placeholder="Company Info Input" value="{{ $company->company_info }}">
+                        @error('company_info') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                     <label for="companyAddress">Categories</label>
@@ -57,7 +64,6 @@
                             <option value="{{ $category->id }}" @if (gettype(array_search($category->id, $array)) == 'integer') selected @endif > {{ $category->category_name }}  </option>
                         @endforeach
                     </select>
-                    {{-- <input type="text" autocomplete="off" class="form-control @error('company_address') is-invalid @enderror" name="company_address" id="companyAddress" placeholder="Company Address" value="{{ old('company_address') }}"> --}}
                     @error('company_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
               </div>
               </div>

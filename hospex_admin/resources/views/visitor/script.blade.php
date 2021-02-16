@@ -14,10 +14,10 @@
                     searchable: false
                 },
                 {
-                    data : "visitor_name", name : "visitor_name",
+                    data : "company", name : "company",
                 },
                 {
-                    data : "company", name : "company",
+                    data : "visitor_name", name : "visitor_name",
                 },
                 {
                     data : "visitor_email", name : "visitor_email",

@@ -21,7 +21,7 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ url('/areas') }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
           <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/areas">

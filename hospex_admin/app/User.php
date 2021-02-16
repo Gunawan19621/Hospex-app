@@ -2,46 +2,16 @@
 
 namespace App;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-// use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-// use DataViewer, Notifiable;
-class User extends Authenticatable 
-// implements Authenticatable
+
+class User extends Model
 {
-    use Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $table    = 'admins';
     protected $fillable = [
-        'name', 'email', 'password', 'usertable_id', 'usertable_type'
+        'company_id', 'name', 'email', 'password', 'type', 'address', 'phone'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = ['email_verified_at' => 'datetime'];
-    
-    public function usertable()
+    public function company()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Company::class);
     }
 }

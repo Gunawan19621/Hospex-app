@@ -19,8 +19,8 @@ class CreatePerformersTable extends Migration
             $table->string('email');
             $table->text('info');
             $table->string('phone');
-            $table->unsignedBigInteger('events_rundown_id');
-            $table->foreign('events_rundown_id')->references('id')->on('events_rundown')->onDelete('cascade');
+            $table->unsignedBigInteger('event_rundown_id');
+            $table->foreign('event_rundown_id')->references('id')->on('event_rundowns')->onDelete('cascade');
             $table->timestamps();
         });
     }

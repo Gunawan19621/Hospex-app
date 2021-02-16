@@ -7,7 +7,7 @@ use App\Event;
 use App\Company;
 use App\EventSponsor;
 
-class EventSponsorController extends Controller
+class EventSponsorsController extends Controller
 {
     /**
      * Display a listing of the resource.

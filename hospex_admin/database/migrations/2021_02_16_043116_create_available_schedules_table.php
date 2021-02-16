@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEventsRundownTable extends Migration
+class CreateAvailableSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateEventsRundownTable extends Migration
      */
     public function up()
     {
-        Schema::create('events_rundown', function (Blueprint $table) {
+        Schema::create('available_schedules', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('event_id');
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->time('time');
-            $table->string('task');
-            $table->integer('duration');
-            $table->string('location');
-            $table->foreignId('event_schedule_id')->references('id')->on('event_schedules')->onDelete('cascade');
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateEventsRundownTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events_rundown');
+        Schema::dropIfExists('available_schedules');
     }
 }

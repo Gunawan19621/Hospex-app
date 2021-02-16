@@ -31,9 +31,7 @@ class EventController extends Controller
     public function index()
     
     {
-        // echo 'horeee';
         $events = Event::all();
-        // dd($events);
         return view('event.index',compact('events'));
     }
 
@@ -96,7 +94,7 @@ class EventController extends Controller
     {
         $title = 'Site Plan';
         $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
-        return view('event/form_upload', compact('title','event','slice'));
+        return view('event.form_upload', compact('title','event','slice'));
     }
 
     /**

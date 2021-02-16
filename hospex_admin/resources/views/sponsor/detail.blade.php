@@ -20,7 +20,6 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        {{-- <a href="/visitors/create" class="btn btn-primary my-3">Add</a> --}}
                     </div>
                 </div>
                 <form class="m-form m-form--fit m-form--label-align-right">

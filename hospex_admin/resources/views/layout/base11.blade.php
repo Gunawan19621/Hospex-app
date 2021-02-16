@@ -179,7 +179,8 @@ License: You must have a valid license purchased only from themeforest(the above
 								<a href="{{ url('events') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Events</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('/areas') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Areas</span></a></li>
+								<a href="{{ url('/areas') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Areas</span></a>
+							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors</span></a>
 							</li>

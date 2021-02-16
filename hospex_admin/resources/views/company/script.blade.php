@@ -23,13 +23,16 @@
                         data : "company_name", name : "company_name",
                     },
                     {
-                        data : "company_email", name : "company_email",
+                        data : "email", name : "email",
+                    },
+                    {
+                        data : "address", name : "address",
                     },
                     {
                         data : "company_web", name : "company_web",
                     },
                     {
-                        data : "company_address", name : "company_address",
+                        data : "company_info", name : "company_info",
                     },
                     {
                         data : "categories", name : "categories",
@@ -41,10 +44,12 @@
                     }
                 ]
             })
-            
         }
-        
-       
     })
-
+$('#m_table_1').on('click', '.delete', function () {
+  var id = $(this).data("id");
+  var link = 'companies';
+  confirmDelete(link,id)
+  
+});
 </script>

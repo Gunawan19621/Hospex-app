@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Company;
 use App\Category;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +24,9 @@ class CompaniesController extends Controller
     {
         $title = 'Companies';
         if (request()->ajax()) {
-            return datatables()->of(Company::all())
+            return datatables()->of(Company::whereHas('users', function ($query) {
+                    $query->where('type','exhibitor');            
+                }))
                 ->addIndexColumn()
                 ->addColumn('categories', function($data){
                     $categories = $data->categories()->select('category_name')->get();
@@ -35,12 +39,20 @@ class CompaniesController extends Controller
                     }
                     return $items;
                 })
+                ->addColumn('email', function($data){
+                    $users = $data->users->first();
+                    return $users->email;
+                })
+                ->addColumn('address', function($data){
+                    $users = $data->users->first();
+                    return $users->address;
+                })
                 ->addColumn('action', function($data){
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('companies/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>        
-                                <a class="dropdown-item" href="#"><i class="la la-trash"></i> Hapus</a>        
+                                <a class="dropdown-item" href="'.url('companies/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
                         return $button;
@@ -74,29 +86,38 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'company_name'       => 'required',
-            'company_email'      => 'required',
+            'exhibitor_email'    => 'required|email|unique:users,email',
+            'exhibitor_password' => 'required',
             'company_web'        => 'required',
-            'company_address'    => 'required',
-            // 'company_info'       => 'required',
+            'exhibitor_address'  => 'required'
         ]);
         try{
             
             DB::transaction(function() use ($request) {
-                
+                if($request->company_info == null){
+                    $request->company_info = "";
+                }
                 $company = Company::create([
                     'company_name'       => $request->company_name,
-                    'company_email'      => $request->company_email,
                     'company_web'        => $request->company_web,
-                    'company_address'    => $request->company_address,
-                    'company_info'       => $request->company_info,
-                    // 'logo'               => ''
+                    'company_info'       => $request->company_info
                 ]);
                 $company->categories()->attach($request->categories);
+
+                $user = User::create([
+                    'company_id' => $company->id,
+                    'name'       => $request->company_name,
+                    'email'      => $request->exhibitor_email,
+                    'password'   => Hash::make($request->exhibitor_password),
+                    'address'    => $request->exhibitor_address,
+                    'type'       => 'exhibitor'
+                ]);
             });
             DB::commit();
             $response = '1-Company Saved';
         } catch (\Exception $e){
             DB::rollBack();
+            dd($e);
             $response = '0-Company Failed to Save';
         }
        
@@ -144,26 +165,41 @@ class CompaniesController extends Controller
     public function update(Request $request, Company $company)
     {
         $request->validate([
-            'company_name'      => 'required',
-            'company_email'     => 'required|E-mail',
-            'company_web'       => 'required',
-            'company_address'   => 'required',
-            'categories'        => 'distinct'
+            'company_name'       => 'required',
+            'company_web'        => 'required',
+            'exhibitor_address'  => 'required'
         ]);
+        
         try{
-            
             DB::transaction(function() use ($company, $request) {
-    
+                if($request->company_info == null){
+                    $request->company_info = "";
+                }
                 Company::whereId($company->id)
                     ->update([
                         'company_name'       => $request->company_name,
-                        'company_email'      => $request->company_email,
                         'company_web'        => $request->company_web,
-                        'company_address'    => $request->company_address,
+                        'company_info'       => $request->company_info
                     ]);
     
                 $company = Company::find($company->id);
                 $company->categories()->sync($request->categories);
+
+                if($request->exhibitor_password == null){
+                    $user = User::where('company_id',$company->id)->first();
+                    $user->update([
+                        'name'      => $request->company_name,
+                        'address'   => $request->exhibitor_address
+                    ]);
+                }
+                else{
+                    $user = User::where('company_id',$company->id)->first();
+                    $user->update([
+                        'name'      => $request->company_name,
+                        'password'  => Hash::make($request->exhibitor_password),
+                        'address'   => $request->exhibitor_address
+                    ]);
+                }
             });
             DB::commit();
             $response = '1-Company Updated';
@@ -184,6 +220,9 @@ class CompaniesController extends Controller
      */
     public function destroy(Company $company)
     {
+        $delete = Company::destroy($company->id);
+        $response = $delete ? '1-Company Deleted' : '0-Company Failed to Delete';
+        return response()->json('1-Company Deleted', 200);
         //
     }
 }

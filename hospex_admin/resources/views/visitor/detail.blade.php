@@ -25,20 +25,10 @@
                 </div>
                 <form class="m-form m-form--fit m-form--label-align-right">
                     <div class="m-portlet__body">
-                        <div class="form-group m-form__group m--margin-top-10 m--hide">
-                            <div class="alert m-alert m-alert--default" role="alert">
-                                The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
-                            </div>
-                        </div>
-                        <!--<div class="form-group m-form__group row">-->
-                        <!--    <div class="col-10 ml-auto">-->
-                        <!--        <h3 class="m-form__section">1. Personal Details</h3>-->
-                        <!--    </div>-->
-                        <!--</div>-->
                          <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Visitor Name</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->visitor_name }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->name }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
@@ -51,32 +41,32 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Company Name</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->company_name }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Email</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->visitor_email }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->email }}">
                                 <!--<span class="m-form__help">If you want your invoices addressed to a company. Leave blank to use your full name.</span>-->
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Phone No.</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->phone }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->phone }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Address</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->address }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->address }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Info</label>
                             <div class="col-7">
-                                <textarea class="form-control m-input" disabled name="" id="" cols="30" rows="10" >{{ $visitor->info }}</textarea>
+                                <textarea class="form-control m-input" disabled name="" id="" cols="30" rows="10" >{{ $visitor->company->company_info }}</textarea>
                               
                             </div>
                         </div>

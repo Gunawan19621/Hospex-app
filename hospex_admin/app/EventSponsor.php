@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventSponsor extends Model
 {
-    protected $fillable = ['sponsor_name','event_id', 'company_id' ];
-    protected $table = 'event_sponsors';
+    protected $fillable = ['sponsor_name','event_id', 'company_id'];
 
     public function company()
     {

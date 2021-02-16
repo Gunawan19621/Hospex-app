@@ -19,8 +19,6 @@ class CreateEventExhibitorsTable extends Migration
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
-            $table->string('password');
-            $table->string('api_token');
             $table->timestamps();
         });
     }

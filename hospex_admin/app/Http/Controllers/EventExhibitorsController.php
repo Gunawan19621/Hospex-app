@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\EventExhibitor;
 use App\Event;
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -33,9 +34,9 @@ class EventExhibitorsController extends Controller
                 $array[] = [
                     'id'                => $exhibitor->id,
                     'company_name'      => $exhibitor->company->company_name,
+                    'email'             => $exhibitor->company->users[0]->email,
                     'event_info'        => $exhibitor->event->event_title.' ('.$exhibitor->event->year.')'
                 ];
-                
             }
             return datatables()->of($array)
                     ->addIndexColumn()
@@ -47,7 +48,6 @@ class EventExhibitorsController extends Controller
                                 <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
-                        // $button .= '<a href="{{ url('events/$data->id}') }}" class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>`;
                         return $button;
                     })
                 ->rawColumns(['action'])
@@ -101,8 +101,6 @@ class EventExhibitorsController extends Controller
                 $data[]=[
                     'event_id'      => $request->event_id,
                     'company_id'    => $value,
-                    'password'      => Hash::make('password'),
-                    'api_token'     => Str::random(40)
                 ];
             }
             $create = EventExhibitor::insert($data);
