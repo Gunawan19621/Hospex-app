@@ -26,10 +26,18 @@ class SchedulesController extends Controller
         $data = [];
 
         foreach ($schedules as $key => $schedule) {
+            if($schedule->rundowns){
+                $rundowns = $schedule->rundowns[0]->location;
+            }
+            else{
+                $rundowns = '';
+            }
+
             $data[] = [
                 'id'            => $schedule->id,
                 'hari'          => Carbon::parse($schedule->date)->format('l'),
                 'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
+                'lokasi'        => $rundowns,
                 'acara'         => $schedule->rundowns()->get()->map(function($item){
                     return [
                         "tema"         => $item->task,
