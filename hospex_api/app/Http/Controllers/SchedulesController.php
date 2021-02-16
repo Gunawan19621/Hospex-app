@@ -21,31 +21,26 @@ class SchedulesController extends Controller
     
     public function index()
     {
-        $eventId = eventId::GetEvent();
-        $schedules = schedule::where('event_id', $eventId)
-                        ->orderby('date')->get();
+        $eventId   = eventId::GetEvent();
+        $schedules = schedule::where('event_id', $eventId)->orderby('date')->get();
         
-        $data= [];
+        $data = [];
 
         foreach ($schedules as $key => $schedule) {
-            
-                $data[] = [
-                    'id'            => $schedule->id,
-                    'hari'          => Carbon::parse($schedule->date)->format('l'),
-                    'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
-                    'acara'         => $schedule->rundowns()->get()->map(function($item){
-                        return [
-                            "tema"         => $item->task,
-                            "lokasi"       => $item->location,
-                            "pengisi"      => $item->performers()->get()->map(function($performer){
-                                                return ['nama' => $performer->name];
-                                    }),
-                            "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
-                            "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
-                        ];
-                    }),
-                ];
-
+            $data[] = [
+                'id'            => $schedule->id,
+                'hari'          => Carbon::parse($schedule->date)->format('l'),
+                'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
+                'acara'         => $schedule->rundowns()->get()->map(function($item){
+                    return [
+                        "tema"         => $item->task,
+                        "lokasi"       => $item->location,
+                        "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
+                        "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
+                        "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
+                    ];
+                }),
+            ];
         }
 
         if (!$schedules->isEmpty()) {
@@ -54,19 +49,20 @@ class SchedulesController extends Controller
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
-        } else {
+        }
+        else {
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
                 'data'      => ''
             ],404);
         }
-        
     }
+
     public function show($id)
     {
         $rundowns = schedule::findorfail($id)->rundowns;
-        $data=[];
+        $data = [];
         foreach ($rundowns as $key => $rundown) {
             $data[] = [
                 'time'          => $rundown->time,
@@ -81,13 +77,13 @@ class SchedulesController extends Controller
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
-        } else {
+        }
+        else {
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
                 'data'      => ''
             ],503);
         }
-        
     }
 }

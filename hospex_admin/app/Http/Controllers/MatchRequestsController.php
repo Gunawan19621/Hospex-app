@@ -27,6 +27,8 @@ class MatchRequestsController extends Controller
             return datatables()->of(Match::where(['status' => '1'])->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
+                    ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
+                    ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0? 
                             '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
@@ -68,6 +70,8 @@ class MatchRequestsController extends Controller
             return datatables()->of(Match::whereIn('status',['0','2'])->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
+                    ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
+                    ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
                         return ( $match->status == 0? 
                             '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'

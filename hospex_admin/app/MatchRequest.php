@@ -26,4 +26,9 @@ class MatchRequest extends Model
     {
         return $this->belongsTo(AvailableSchedule::class);
     }
+
+    public function getUpdatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])->format('d, M Y H:i');
+    }
 }

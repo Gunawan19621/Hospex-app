@@ -32,4 +32,9 @@ class Event extends Model
     {
         return $this->hasMany(EventVisitor::class);
     }
+
+    public function availableSchedules()
+    {
+        return $this->hasMany(AvailableSchedule::class);
+    }
 }

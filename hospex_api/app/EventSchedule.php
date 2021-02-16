@@ -9,7 +9,7 @@ class EventSchedule extends Model
 {
     protected $fillable = ['date','event_id'];
     
-    public function Event()
+    public function event()
     {
         return $this->belongsToMany(Event::class);
     }

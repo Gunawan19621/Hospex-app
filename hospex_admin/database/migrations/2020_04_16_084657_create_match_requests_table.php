@@ -20,8 +20,10 @@ class CreateMatchRequestsTable extends Migration
             $table->enum('status',[0,1]);
             $table->unsignedBigInteger('event_exhibitor_id');
             $table->unsignedBigInteger('event_visitor_id');
+            $table->unsignedBigInteger('available_schedule_id');
             $table->foreign('event_exhibitor_id')->references('id')->on('event_exhibitors')->onDelete('cascade');
             $table->foreign('event_visitor_id')->references('id')->on('event_visitors')->onDelete('cascade');
+            $table->foreign('available_schedule_id')->references('id')->on('available_schedules')->onDelete('cascade');
             $table->timestamps();
         });
     }

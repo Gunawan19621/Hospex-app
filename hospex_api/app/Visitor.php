@@ -4,10 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Visitor extends Model
+class EventVisitor extends Model
 {
-    protected $table    = 'event_visitors';
-    protected $fillable= ['visitor_name','visitor_email','company_id','password','event_id','company','info','address','phone','api_token'];
+    protected $fillable = ['company_id','event_id'];
 
     public function company()
     {
@@ -17,8 +16,8 @@ class Visitor extends Model
     {
         return $this->hasMany(MatchRequest::class);
     }
-    public function user()
+    public function event()
     {
-        return $this->morphOne(User::class, 'usertable');
+        return $this->belongsTo(Event::class);
     }
 }

@@ -13,19 +13,6 @@ class GetEvent {
                 ->whereDate('events.date',' >= ',$t)
                 ->orderBy('events.date')
                 ->first();
-        // if ($event) {
-        //     return response()->json([
-        //         'success'   => true,
-        //         'message'   => 'Data Found',
-        //         'data'      => $event->id
-        //     ],200);
-        // }else{
-        //     return response()->json([
-        //         'success'   => false,
-        //         'message'   => 'Data  Not Found',
-        //         'data'      => ''
-        //     ],404);
-        // }
         return ( $event ? $event->id : '');
     }
 }

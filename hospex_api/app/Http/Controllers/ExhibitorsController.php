@@ -22,24 +22,22 @@ class ExhibitorsController extends Controller
         $eventId = eventId::GetEvent();
         $exhibitors = exhibitor::where('event_id', 1)->get();
         
-        $data= [];
+        $data = [];
 
         foreach ($exhibitors as $key => $exhibitor) {
-            
             $data[] = [
                 'id_exhibitor'  => $exhibitor->id, 
                 'nama'          => $exhibitor->company->company_name,
-                'alamat'        => $exhibitor->company->company_address,
+                'alamat'        => $exhibitor->company->users[0]->address,
                 'website'       => $exhibitor->company->company_web,
-                'email'         => $exhibitor->company->company_email,
+                'email'         => $exhibitor->company->users[0]->email,
                 'info'          => $exhibitor->company->company_info,
                 'event_title'   => $exhibitor->event->event_title,
-                'logo'          => $exhibitor->company->logo,
+                'logo'          => '',
                 'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                     return $item->category_name;
                 })->implode(', '),
             ];
-
         }
 
         if (!$exhibitors->isEmpty()) {
@@ -48,27 +46,28 @@ class ExhibitorsController extends Controller
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
-        } else {
+        }
+        else {
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
                 'data'      => ''
             ],404);
         }
-        
     }
+
     public function show($exhibitor)
     {
         $exhibitor = exhibitor::findorfail($exhibitor);
         $data = [
             'id_exhibitor'  => $exhibitor->id, 
             'nama'          => $exhibitor->company->company_name,
-            'alamat'        => $exhibitor->company->company_address,
+            'alamat'        => $exhibitor->company->users[0]->address,
             'website'       => $exhibitor->company->company_web,
-            'email'         => $exhibitor->company->company_email,
+            'email'         => $exhibitor->company->users[0]->email,
             'info'          => $exhibitor->company->company_info,
             'event_title'   => $exhibitor->event->event_title,
-            'logo'          => $exhibitor->company->logo,
+            'logo'          => '',
             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                     return $item->category_name;
                                 })->implode(', '),
@@ -85,13 +84,13 @@ class ExhibitorsController extends Controller
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
-        } else {
+        }
+        else {
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
                 'data'      => ''
             ],503);
         }
-        
     }
 }
