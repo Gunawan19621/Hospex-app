@@ -28,12 +28,31 @@ class BusinessMatchingController extends Controller
 
     public function index($type, $id, $status)
     {
-        $whereid = $type   == 'visitor' ? ['event_visitor_id' => $id] : [ 'event_exhibitor_id' => $id ];
-        $where   = $status == 'confirm' ? Arr::collapse([ $whereid, ['status' => '1'] ]):  $whereid; 
+        $user = User::where('id',$id)->first();
+        if($status == 'confirm'){
+            $status = '1';
+        }
+        else{
+            $status = '0';
+        }
 
-        $matches = $status == 'confirm' ? MatchRequest::where($where)->get() : MatchRequest::where($where)->where(function($query) {
-            $query->where('status', '<>','1');
-        })->get();
+        if($type == 'visitor'){
+            $matches = MatchRequest::join('event_visitors', 'event_visitors.id', '=', 'match_requests.event_visitor_id')
+                ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
+                ->select('match_requests.*','event_visitors.event_id','event_visitors.company_id','available_schedules.time','available_schedules.date')
+                ->where('event_visitors.company_id',$user->company->id)
+                ->where('match_requests.status', $status)
+                ->get();
+        }
+        else{
+            $matches = MatchRequest::join('event_exhibitors', 'event_exhibitors.id', '=', 'match_requests.event_exhibitor_id')
+                ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
+                ->select('match_requests.*','event_exhibitors.event_id','event_exhibitors.company_id','available_schedules.time','available_schedules.date')
+                ->where('event_exhibitors.company_id',$user->company->id)
+                ->where('match_requests.status', $status)
+                ->get();
+        }
+
         $tanggal = $matches->reverse()->unique('date')->reverse();
  
         $data = [];

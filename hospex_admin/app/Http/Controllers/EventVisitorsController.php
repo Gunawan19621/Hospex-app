@@ -97,7 +97,8 @@ class EventVisitorsController extends Controller
         $company = Company::create([
             'company_name' => $request->company_name,
             'company_web'  => '',
-            'company_info' => ''
+            'company_info' => '',
+            'image'        => ''
         ]);
 
         $create = User::create([

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AvailableSchedule;
 use App\EventExhibitor;
+use App\MatchRequest;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -23,15 +24,13 @@ class AvailableController extends Controller
 
     public function index($exhibitor)
     {
-        $g         = DB::table('match_requests')->select('available_schedule_id')->where(['event_exhibitor_id' => $exhibitor])->get();
+        $g         = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
         $flattened = $g->map(function($item){
             return $item->available_schedule_id;
         });
-        $data = DB::table('available_schedules')
+        $data = AvailableSchedule::join('events', 'available_schedules.event_id', '=', 'events.id')
+                    ->join('event_exhibitors','events.id','=','event_exhibitors.event_id')
                     ->select('available_schedules.*')
-                    ->leftJoin('events', 'available_schedules.event_id', '=', 'events.id')
-                    ->leftjoin('event_exhibitors','events.id','=','event_exhibitors.event_id')
-                    // ->where(['available_schedules.event_id' => '2', 'event_exhibitors.id' => $exhibitor])
                     ->whereNotIn('available_schedules.id', $flattened)
                     ->orderBy('available_schedules.date')
                     ->get();

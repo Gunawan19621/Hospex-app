@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\EventExhibitor;
 use App\Company;
+use App\User;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -13,30 +14,38 @@ class ImageController extends BaseController
 {
     public function uploadImage(Request $request)
     {
+        $exhibitor = $request->input('exhibitor');
+
         if ($request->hasFile('image')) {
-            // $original_filename     = $request->file('image')->getClientOriginalName();
-            // $original_filename_arr = explode('.', $original_filename);
-            // $file_ext              = end($original_filename_arr);
-            // $destination_path      = 'public/upload/exhibitor-logo/';
-            // $image                 = 'U-' . time() . '.' . $file_ext;
+            $user = User::where('id',$exhibitor)->first();
 
-            $filename = time().'.'.request()->image->getClientOriginalExtension();
-            request()->image->move(public_path('images'), $filename);
+            try {
+                $filename = time().'.'.request()->image->getClientOriginalExtension();
+                request()->image->move(public_path('images'), $filename);
 
-            if ($request->file('image')->move($destination_path, $image)) {
-                $user->image = $filename;
+                $user->company->image = public_path('images').'/'.$filename;
                 $user->save();
-                // $user->image = '/upload/exhibitor-logo/' . $image;
-                // $user->image = getimagesize($request->file('image'));
-                
-                return $this->responseRequestSuccess($user);
+
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'success',
+                    'data'      => ''
+                ],200);
+            } catch (Exception $e) {
+                return response()->json([
+                    'success'   => false,
+                    'message'   => 'Data Failed to Save',
+                    'data'      => $e->getMessage()
+                ],503);
             }
-            else {
-                return $this->responseRequestError('Cannot upload file');
-            }
+            
         }
         else {
-            return $this->responseRequestError('File not found');
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Data Failed to Save',
+                'data'      => $e->getMessage()
+            ],503);
         }
     }
 

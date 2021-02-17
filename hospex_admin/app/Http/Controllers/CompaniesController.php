@@ -100,7 +100,8 @@ class CompaniesController extends Controller
                 $company = Company::create([
                     'company_name'       => $request->company_name,
                     'company_web'        => $request->company_web,
-                    'company_info'       => $request->company_info
+                    'company_info'       => $request->company_info,
+                    'image'              => ''
                 ]);
                 $company->categories()->attach($request->categories);
 

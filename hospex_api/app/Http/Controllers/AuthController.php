@@ -48,6 +48,7 @@ class AuthController extends Controller
             'company_name'       => $company,
             'company_web'        => '',
             'company_info'       => '',
+            'image'              => ''
         ]);
 
         $register = User::create([
@@ -95,7 +96,7 @@ class AuthController extends Controller
                 $user->update(['api_token' => $apiToken ]);
                 
                 $data['id']         = $user->id;
-                $data['foto']       = "foto.jpg";
+                $data['foto']       = $user->company->image;
                 $data['nama']       = $user->name;
                 $data['user_name']  = 'user_name';
                 $data['email']      = $email;

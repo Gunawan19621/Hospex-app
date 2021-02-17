@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Support\Collection;
 use App\EventExhibitor;
+use Illuminate\Support\Carbon;
 use App\Helpers\GetEvent as eventId;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Carbon;
 
 class ExhibitorsController extends Controller
 {
@@ -24,6 +24,7 @@ class ExhibitorsController extends Controller
     {
         $t = Carbon::now();
         $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
+                ->select('event_exhibitors.*','events.begin')
                 ->whereDate('events.begin',' >= ',$t)
                 ->orderBy('events.begin')
                 ->get();
@@ -40,7 +41,7 @@ class ExhibitorsController extends Controller
                 'email'         => $exhibitor->company->users[0]->email,
                 'info'          => $exhibitor->company->company_info,
                 'event_title'   => $exhibitor->event->event_title,
-                'logo'          => '',
+                'logo'          => $exhibitor->company->image,
                 'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                     return $item->category_name;
                 })->implode(', '),
