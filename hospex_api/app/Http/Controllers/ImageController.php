@@ -24,7 +24,7 @@ class ImageController extends BaseController
                 request()->image->move(public_path('images'), $filename);
 
                 $user->company->image = public_path('images').'/'.$filename;
-                $user->save();
+                $user->company->save();
 
                 return response()->json([
                     'success'   => true,
