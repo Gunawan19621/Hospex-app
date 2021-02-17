@@ -217,13 +217,13 @@ class BusinessMatchingController extends Controller
         try{
             $approve = MatchRequest::where([
                 'id' => $match
-            ])->update([ 'status'  => '1' ]);
+            ])->update([ 'status' => '1' ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
                 'event_exhibitor_id'    => $dateExh->event_exhibitor_id, 
                 'available_schedule_id' => $dateExh->available_schedule_id, 
                 'status'                => '0',
-                ])->update(['status'=>'2']);
+            ])->update(['status' => '2']);
 
             return response()->json([
                 'success'   => true,
@@ -244,15 +244,25 @@ class BusinessMatchingController extends Controller
     public function updateStatusMeeting($match)
     {
         try {
-            $update = MatchRequest::findorfail($match);
-            $update->status_meeting = '1';
-            $update->save();
+            $update = MatchRequest::where('id',$match)->first();
 
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Success to Save',
-                'data'      => $update
-            ],201);
+            if($update){
+                $update->status_meeting = '1';
+                $update->save();
+
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Success to Save',
+                    'data'      => $update
+                ],201);
+            }
+            else{
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data Failed to Save',
+                    'data'      => ''
+                ],503);
+            }
         }
         catch (\Exception $e) {
             $response = $e->getMessage();
