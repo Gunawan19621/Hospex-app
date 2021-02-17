@@ -19,27 +19,38 @@
                         </h3>
                         </div>
                     </div>
-                    <div class="m-portlet__head-tools">
-                        {{-- <a href="/visitors/create" class="btn btn-primary my-3">Add</a> --}}
-                    </div>
                 </div>
                 <form class="m-form m-form--fit m-form--label-align-right">
                     <div class="m-portlet__body">
                          <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Visitor Name</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Name</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->name }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->name }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Event Name</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Event</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->event->event_title }}">
-                            
+                                @if($visitor->company->visitors)
+                                    <?php $event_all = ''; ?>
+                                    @foreach($visitor->company->visitors as $event_visitor)
+                                    <?php
+                                        if($event_all == ''){
+                                            $event_all = $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
+                                        }
+                                        else{
+                                            $event_all = $event_all. ', ' . $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
+                                        }
+                                    ?>
+                                    @endforeach
+                                    <input class="form-control m-input" disabled type="text" value="{{ $event_all }}">
+                                @else
+                                    <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->visitors->event->event_title }}">
+                                @endif
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Company Name</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Company</label>
                             <div class="col-7">
                                 <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->company_name }}">
                             </div>
@@ -47,20 +58,19 @@
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Email</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->email }}">
-                                <!--<span class="m-form__help">If you want your invoices addressed to a company. Leave blank to use your full name.</span>-->
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->email }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Phone No.</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Phone</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->phone }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->phone }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Address</label>
                             <div class="col-7">
-                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->company->users[0]->address }}">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->address }}">
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
