@@ -39,7 +39,7 @@ class AuthController extends Controller
         if($checkUser){
             return response()->json([
                 'success'   => false,
-                'message'   => 'Register Fail',
+                'message'   => 'Register Fail. Email has been taken',
                 'data'      => ''
             ], 400);
         }
