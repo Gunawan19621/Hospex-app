@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use App\EventExhibitor;
 use App\Helpers\GetEvent as eventId;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 
 class ExhibitorsController extends Controller
 {
@@ -21,7 +22,12 @@ class ExhibitorsController extends Controller
 
     public function index()
     {
-        $exhibitors = EventExhibitor::all();
+        $t = Carbon::now();
+        $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
+                ->whereDate('events.begin',' >= ',$t)
+                ->orderBy('events.begin')
+                ->get();
+        // $exhibitors = EventExhibitor::all();
         
         $data = [];
 

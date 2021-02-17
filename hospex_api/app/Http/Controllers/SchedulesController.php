@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Collection;
 use App\EventSchedule;
 use App\Helpers\GetEvent as eventId;

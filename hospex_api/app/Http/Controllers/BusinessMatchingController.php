@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\MatchRequest;
 use App\AvailableSchedule;
+use App\User;
+use App\EventVisitor;
+use App\EventExhibitor;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\MockObject\Builder\Match;
@@ -149,10 +153,17 @@ class BusinessMatchingController extends Controller
 
             $checkAvailable = AvailableSchedule::where('id',$time)->first();
             if($checkAvailable){
+                $userVisitor = User::where('id',$visitor_id)->first();
+
+                $createEventVisitor = EventVisitor::create([
+                    'company_id' => $userVisitor->company->id,
+                    'event_id'   => $checkAvailable->event->id
+                ]);
+
                 $match = MatchRequest::create([
                     'available_schedule_id'     => $time,
                     'event_exhibitor_id'        => $exhibitor_id,
-                    'event_visitor_id'          => $visitor_id,
+                    'event_visitor_id'          => $createEventVisitor->id,
                     'status'                    => '0',
                     'time'                      => $checkAvailable->time,
                     'date'                      => $checkAvailable->date

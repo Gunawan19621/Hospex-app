@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\AvailableSchedule;
 use App\EventExhibitor;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+
 class AvailableController extends Controller
 {
     /**
