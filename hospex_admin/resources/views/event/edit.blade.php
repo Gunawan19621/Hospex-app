@@ -21,43 +21,43 @@
                 </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('events') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
             </div>
 
           <!--begin::Form-->
-          <form class="m-form m-form--fit m-form--label-align-right" method="post" action="/events/{{$event->id}}">
+          <form class="m-form m-form--fit m-form--label-align-right" method="post" action="{{ url('events').'/'.$event->id }}">
             @method('patch')
             @csrf
             <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="eventitel">Event Title</label>
-                    <input type="text" autocomplete="off" class="form-control m-input @error('event_title') is-invalid @enderror " name="event_title" id="eventTitle" placeholder="Event Title Input" value="{{ $event->event_title }}">
+                    <input type="text" autocomplete="off" class="form-control m-input @error('event_title') is-invalid @enderror " name="event_title" id="eventTitle" placeholder="Event Title Input" value="{{ $event->event_title }}" required>
                     @error('event_title') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="begindate">Begin Date</label>
-                    <input type="text" autocomplete="off" class="form-control @error('begin') is-invalid @enderror input-date" name="begin" id="beginDate" placeholder="Begin Date Input" value="{{ $event->begin }}">
+                    <input type="text" autocomplete="off" class="form-control @error('begin') is-invalid @enderror input-date" name="begin" id="beginDate" placeholder="Begin Date Input" value="{{ $event->begin }}" required readonly>
                     @error('begin') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="enddate">End Date</label>
-                    <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ $event->end }}">
+                    <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ $event->end }}" required readonly>
                     @error('end') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">City</label>
-                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-zA-Z, ]/g,'');" autocomplete="off" class="form-control m-input @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ $event->city }}">
+                    <input type="text" onkeyup="this.value=this.value.replace(/[^a-zA-Z, ]/g,'');" autocomplete="off" class="form-control m-input @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ $event->city }}" required>
                     @error('city') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Event Location</label>
-                    <input type="text" autocomplete="off" class="form-control m-input @error('event_location') is-invalid @enderror" name="event_location" id="eventLocation" placeholder="Event Location Input" value="{{ $event->event_location }}">
+                    <input type="text" autocomplete="off" class="form-control m-input @error('event_location') is-invalid @enderror" name="event_location" id="eventLocation" placeholder="Event Location Input" value="{{ $event->event_location }}" required>
                     @error('event_location') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Link Buy Event</label>
-                    <input type="text" autocomplete="off" class="form-control m-input @error('link_buy_event') is-invalid @enderror" name="link_buy_event" id="linkBuyEvent" placeholder="Link Buy Event Input" value="{{ $event->link_buy_event }}">
+                    <input type="text" autocomplete="off" class="form-control m-input @error('link_buy_event') is-invalid @enderror" name="link_buy_event" id="linkBuyEvent" placeholder="Link Buy Event Input" value="{{ $event->link_buy_event }}" required>
                     @error('link_buy_event') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
             </div>

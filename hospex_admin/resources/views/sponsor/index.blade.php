@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/sponsors/create" class="btn btn-primary my-3">Add</a>
+                        <a href="{{ url('sponsors/create') }}" class="btn btn-primary my-3">Add</a>
                     </div>
                 </div>
                 <div class="m-portlet__body">

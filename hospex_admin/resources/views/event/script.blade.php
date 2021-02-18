@@ -26,6 +26,9 @@ $(document).ready(function(){
                     },
                     {
                         data: "link_buy_event"
+                    },
+                    {
+                        data: ""
                     }
                 ],
         columnDefs: [{

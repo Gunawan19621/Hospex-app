@@ -21,20 +21,20 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('/stands') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/stands">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('stands') }}">
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="companyName">Stand Name</label>
-                    <input type="text" autocomplete="off" class="form-control @error('stand_name') is-invalid @enderror " name="stand_name" id="standName" placeholder="Stand Name Input" value="{{ old('stand_name') }}">
+                    <input type="text" autocomplete="off" class="form-control @error('stand_name') is-invalid @enderror " name="stand_name" id="standName" placeholder="Stand Name Input" value="{{ old('stand_name') }}" required>
                     @error('stand_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Area</label>
-                    <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ old('area_id') }}" >
+                    <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ old('area_id') }}" required>
                       <option value="" > Area </option>
                       @foreach ($areas as $area)
                       <option value=" {{ $area->id }} " > {{ $area->area_name }} </option>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Exhibitor</label>
-                    <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ old('exhibitor_id') }}" >
+                    <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ old('exhibitor_id') }}" required>
                       <option value="" > Exhibitor </option>
                       @foreach ($exhibitors as $exhibitor)
                       <option value=" {{ $exhibitor->id }} " > {{ $exhibitor->company->company_name }} </option>
@@ -80,12 +80,12 @@
                     <div class="modal-body">
                         <div class="form-group m-form__group">
                             <label for="eventitel">Area Name</label>
-                            <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Area Name Input" value="{{ old('area_name') }}">
+                            <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Area Name Input" value="{{ old('area_name') }}" required>
                             @error('area_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                         </div>
                         <div class="form-group m-form__group eventSelect">
                             <label for="eventitel">Event</label>
-                            <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
+                            <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
                                 <option value="" > Event </option>
                                 @foreach ($events as $ev)
                                     <option value=" {{ $ev->id }} " > {{ $ev->event_title.'('.$ev->year.')' }} </option>

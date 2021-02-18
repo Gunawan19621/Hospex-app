@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/events/create" class="btn btn-primary my-3">Add</a>
+                        <a href="{{ url('events/create') }}" class="btn btn-primary my-3">Add</a>
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -37,6 +37,7 @@
                                 <th scope="col">City</th>
                                 <th scope="col">Event Location</th>
                                 <th scope="col">Link Buy</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                     </table>

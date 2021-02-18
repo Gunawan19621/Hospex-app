@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/available-schedule/create" class="btn btn-primary my-3">Add</a>
+                        <a href="{{ url('available-schedule/create') }}" class="btn btn-primary my-3">Add</a>
                     </div>
                 </div>
                 <div class="m-portlet__body">

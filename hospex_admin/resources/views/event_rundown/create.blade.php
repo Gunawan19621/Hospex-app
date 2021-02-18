@@ -28,31 +28,31 @@
           <form action="" method="post">
             <input type="hidden" name="_token">
           </form>
-            <form class="m-form m-form--fit m-form--label-align-right" id="form1" method="post" action="/eventrundown">
+            <form class="m-form m-form--fit m-form--label-align-right" id="form1" method="post" action="{{ url('eventrundown') }}">
                 @csrf
+                <input type="hidden" name="event_schedule_id" value="{{ $schedule->id }}">
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group">
                         <label for="eventitel">Task Name</label>
-                        <input type="text" autocomplete="off" class="form-control @error('task') is-invalid @enderror " name="task" id="task" placeholder="Task Name" value="{{ old('task') }}">
+                        <input type="text" autocomplete="off" class="form-control @error('task') is-invalid @enderror " name="task" id="task" placeholder="Task Name" value="{{ old('task') }}" required>
                         <div class="invalid-feedback feedback-task"> {{ $errors->first('task') }} </div>
                     </div>
                     <div class="form-group m-form__group">
                       <label for="eventitel">Time</label>
                         <div class="input-group-append">
-                        <input type="text" autocomplete="off" class="form-control input-time @error('time') is-invalid @enderror " name="time" id="m_timepicker_1_validate" placeholder="Time Schedule" value="{{ old('time') }}">
+                        <input type="text" autocomplete="off" class="form-control input-time @error('time') is-invalid @enderror " name="time" id="m_timepicker_1_validate" placeholder="Time Schedule" value="{{ old('time') }}" required readonly>
 													<span class="input-group-text"><i class="la la-clock-o"></i></span>
 												</div>
                         <div class="invalid-feedback"> {{ $errors->first('time') }} </div>
                     </div>
                     <div class="form-group m-form__group">
                         <label for="eventitel">Task Duration (Minutes)</label>
-                        <input type="number" autocomplete="off" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control @error('taskduration') is-invalid @enderror " name="taskduration" id="taskdurationschedule" placeholder="Event Schedule task duration" value="{{ old('taskduration') }}">
-                        <input type="hidden" name="event_schedule_id" value="{{ $schedule->id }}">
+                        <input type="number" autocomplete="off" onkeyup="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control @error('taskduration') is-invalid @enderror " name="taskduration" id="taskdurationschedule" placeholder="Event Schedule task duration" value="{{ old('taskduration') }}" required>
                         <div class="invalid-feedback"> {{ $errors->first('taskduration') }} </div>
                     </div>
                     <div class="form-group m-form__group">
                         <label for="location">Location</label>
-                        <input type="text" autocomplete="off" class="form-control @error('location') is-invalid @enderror " name="location" id="location" placeholder="Location" value="{{ old('location') }}">
+                        <input type="text" autocomplete="off" class="form-control @error('location') is-invalid @enderror " name="location" id="location" placeholder="Location" value="{{ old('location') }}" required>
                         <div class="invalid-feedback"> {{ $errors->first('location') }} </div>
                     </div>
                 </div>

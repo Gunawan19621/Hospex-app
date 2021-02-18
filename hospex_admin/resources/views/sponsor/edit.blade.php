@@ -20,7 +20,7 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('sponsors') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
           <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/sponsors/{{$sponsor->id}}">
@@ -29,7 +29,7 @@
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
                       <label for="eventitel">Event</label>
-                      <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ $sponsor->event_id }}" >
+                      <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ $sponsor->event_id }}" required>
                         <option value="" > Event </option>
                         @foreach ($events as $event)
                             <option value=" {{ $event->id }} " @if ($event->id == $sponsor->event_id) selected @endif > {{ $event->event_title }} </option>
@@ -39,12 +39,12 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="sponsorName">Sponsor Name</label>
-                    <input type="text" autocomplete="off" class="form-control @error('sponsor_name') is-invalid @enderror " name="sponsor_name" id="SponsorName" placeholder="Sponsor Name Input" value="{{ $sponsor->sponsor_name }}">
+                    <input type="text" autocomplete="off" class="form-control @error('sponsor_name') is-invalid @enderror " name="sponsor_name" id="SponsorName" placeholder="Sponsor Name Input" value="{{ $sponsor->sponsor_name }}" required>
                     @error('sponsor_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                   <div class="form-group m-form__group">
                       <label for="eventitel">Companies</label>
-                      <select class="form-control " name="company_id" placeholder="Select Sponsor Companies">
+                      <select class="form-control " name="company_id" placeholder="Select Sponsor Companies" required>
                         @foreach ($companies as $company)
                         <option value=" {{ $company->id }} " @if ($company->id == $sponsor->company_id) selected @endif > {{ $company->company_name }} </option>
                         @endforeach

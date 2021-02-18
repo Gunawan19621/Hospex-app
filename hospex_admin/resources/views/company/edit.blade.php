@@ -23,18 +23,18 @@
                 <a href="{{ url('/companies') }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/companies/{{$company->id}}">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('companies').'/'.$company->id }}">
             @method('patch')
             @csrf
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
                   <label for="companyName">Company Name </label>
-                    <input type="text" autocomplete="off" class="form-control @error('company_name') is-invalid @enderror " name="company_name" id="companyName" placeholder="Company Name Input" value="{{ $company->company_name }}">
+                    <input type="text" autocomplete="off" class="form-control @error('company_name') is-invalid @enderror " name="company_name" id="companyName" placeholder="Company Name Input" value="{{ $company->company_name }}" required>
                     @error('company_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                       <label for="exhibitorEmail">Email</label>
-                      <input type="email" autocomplete="off" class="form-control @error('exhibitor_email') is-invalid @enderror " name="exhibitor_email" id="exhibitorEmail" placeholder="Email Input" value="{{ $company->users[0]->email }}" readonly>
+                      <input type="email" autocomplete="off" class="form-control @error('exhibitor_email') is-invalid @enderror " name="exhibitor_email" id="exhibitorEmail" placeholder="Email Input" value="{{ $company->users[0]->email }}" readonly required>
                       @error('exhibitor_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
@@ -44,12 +44,12 @@
                   </div>
                   <div class="form-group m-form__group">
                   <label for="companyWeb">Company Web </label>
-                      <input type="text" autocomplete="off" class="form-control @error('company_web') is-invalid @enderror" name="company_web" id="companyWeb" placeholder="Company Web Input" value="{{ $company->company_web }}">
+                      <input type="text" autocomplete="off" class="form-control @error('company_web') is-invalid @enderror" name="company_web" id="companyWeb" placeholder="Company Web Input" value="{{ $company->company_web }}" required>
                       @error('company_web') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                         <label for="exhibitorAddress">Address</label>
-                        <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ $company->users[0]->address }}">
+                        <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ $company->users[0]->address }}" required>
                         @error('exhibitor_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">

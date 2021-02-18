@@ -21,20 +21,20 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('/areas') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/areas">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('areas') }}">
           @csrf
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
                     <label for="eventitel">Area Name</label>
-                    <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ old('area_name') }}">
+                    <input type="text" class="form-control @error('area_name') is-invalid @enderror " name="area_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ old('area_name') }}" required>
                     @error('area_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                     <label for="eventitel">Event</label>
-                    <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
+                    <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
                       <option value="" > Event </option>
                       @foreach ($events as $event)
                       <option value=" {{ $event->id }} " > {{ $event->event_title.'('.$event->year.')' }} </option>

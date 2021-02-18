@@ -107,9 +107,14 @@ class AvailableScheduleController extends Controller
      */
     public function update(Request $request, AvailableSchedule $availableSchedule)
     {
-        $request->validate( [ 'date' => 'required', 'time' => 'required' ] );
+        $request->validate([
+            'event_id'  => 'required',
+            'date'      => 'required',
+            'time'      => 'required'
+        ]);
         $update = AvailableSchedule::where('id', $availableSchedule->id)
             ->update([
+                'event_id' => $request->event_id,
                 'date'     => $request->date,
                 'time'     => $request->time,
         ]);

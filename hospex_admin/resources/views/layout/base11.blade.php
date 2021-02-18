@@ -74,7 +74,7 @@ License: You must have a valid license purchased only from themeforest(the above
 						<div class="m-stack__item m-brand  m-brand--skin-light ">
 							<div class="m-stack m-stack--ver m-stack--general m-stack--fluid">
 								<div class="m-stack__item m-stack__item--middle m-brand__logo">
-									<a href="/" class="m-brand__logo-wrapper">
+									<a href="#" class="m-brand__logo-wrapper">
 										<img alt="" src="{{ asset('assets11/hospexmetro.png')}}">
 									</a>
 								</div>

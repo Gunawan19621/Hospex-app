@@ -20,16 +20,16 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('/categories') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/categories/{{$category->id}}">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('categories').'/'.$category->id }}">
           @method('patch')
           @csrf
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
                     <label for="eventitel">Category Name</label>
-                    <input type="text" class="form-control @error('category_name') is-invalid @enderror " name="category_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ $category->category_name }}">
+                    <input type="text" class="form-control @error('category_name') is-invalid @enderror " name="category_name" id="categoryName" autocomplete="off" placeholder="Category Name Input" value="{{ $category->category_name }}" required>
                     @error('category_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
               </div>

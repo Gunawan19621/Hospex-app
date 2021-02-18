@@ -21,22 +21,32 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('available-schedule') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/available-schedule/{{$availableSchedule->id}}">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('available-schedule').'/'.$availableSchedule->id }}">
             @method('patch')
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
+                    <label for="eventitel">Event</label>
+                    <select class="form-control  @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
+                      <option value="" > Event </option>
+                      @foreach ($events as $event)
+                      <option value=" {{ $event->id }} " {{ $availableSchedule->event_id == $event->id ? 'selected' : '' }} > {{ $event->event_title.'('.$event->year.')' }} </option>
+                      @endforeach
+                  </select>
+                  <div class="invalid-feedback d-block"> {{ $errors->first('event_id') }} </div>
+                </div>
+                <div class="form-group m-form__group">
                     <label for="date">Date</label>
-                    <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Available Schedule Date" value="{{ $availableSchedule->date }}">
+                    <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Available Schedule Date" value="{{ $availableSchedule->date }}" required readonly>
                     @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                   <label for="time">Time</label>
                     <div class="input-group-append">
-                    <input type="text" autocomplete="off" class="form-control input-time @error('time') is-invalid @enderror " name="time" id="m_timepicker_1_validate" placeholder="Available Schedule Time" value="{{ $availableSchedule->time }}">
+                    <input type="text" autocomplete="off" class="form-control input-time @error('time') is-invalid @enderror " name="time" id="m_timepicker_1_validate" placeholder="Available Schedule Time" value="{{ $availableSchedule->time }}" required readonly>
                       <span class="input-group-text"><i class="la la-clock-o"></i></span>
                     </div>
                     <div class="invalid-feedback"> {{ $errors->first('time') }} </div>

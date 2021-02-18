@@ -28,7 +28,7 @@
                     @csrf
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group">
-                            <input type="file" name="file" class="form-control">
+                            <input type="file" name="file" class="form-control" required>
                             @if ($errors->any())
                                     @foreach ($errors->all() as $item)
                                     <div class="invalid-feedback d-block"> {{ $item }} </div>
@@ -39,7 +39,10 @@
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <button class="btn btn-primary btn-sm">Import Data</button>
+                            @if($event == null)
+                            @else
                             <a class="btn btn-warning btn-sm" href="{{ url('export').'/'.$event }}">Export Data</a>
+                            @endif
                         </div>
                     </div>
                 </form>

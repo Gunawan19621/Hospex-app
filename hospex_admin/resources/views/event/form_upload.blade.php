@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="m-portlet__head-tools">
-                <a href="{{ url('events') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
             </div>
         </div>
 
@@ -21,7 +21,7 @@
         <div class="m-portlet__body">
             <div class="row">
                 <div class="offset-lg-4 col-lg-4 col-md-9 col-sm-12">
-                    <form class="m-dropzone dropzone" id="my-dropzone" method="POST" action="/events/{{ $event->id }}/site-plan">
+                    <form class="m-dropzone dropzone" id="my-dropzone" method="POST" action="{{ url('events').'/'.$event->id.'/site-plan' }}">
                         @method('patch')
                         @csrf
                     </form>
@@ -45,13 +45,6 @@
 
         <!--end::Form-->
     </div>
-    {{-- <div class="m-portlet__body" id="preview1" >
-        <div class="col-md-10"
-        style="margin-bottom:0px;" align="center">
-        <embed src="{{ route('dropzone.fetch') ?: '' }}" 
-         style="width:1380px; height:800px;" frameborder="0" />
-        </div>
-    </div> --}}
 
     <!--end::Portlet-->
 @endsection

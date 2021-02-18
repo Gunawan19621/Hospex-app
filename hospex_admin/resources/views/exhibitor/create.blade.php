@@ -21,15 +21,15 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('exhibitors') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/exhibitors">
+          <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('exhibitors') }}">
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="eventitel">Event</label>
-                    <select class="form-control  @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
+                    <select class="form-control  @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
                       <option value="" > Event </option>
                       @foreach ($events as $event)
                       <option value=" {{ $event->id }} " {{ old('event_id') == $event->id ? 'selected' : '' }} > {{ $event->event_title.'('.$event->year.')' }} </option>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Company</label>
-                    <select class="form-control @error('company_id') is-invalid @enderror m-select2" id="m_select2_3" name="company_id[]" multiple="multiple" >
+                    <select class="form-control @error('company_id') is-invalid @enderror m-select2" id="m_select2_3" name="company_id[]" multiple="multiple" required>
                       <option value="" > Company </option>
                       @foreach ($companies as $company)
                       <option value=" {{ $company->id }} " @if (!empty(old('company_id'))){{ in_array($company->id, old('company_id'))  ? 'selected' : '' }}@endif  > {{ $company->company_name }} </option>

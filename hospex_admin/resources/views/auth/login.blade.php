@@ -140,11 +140,11 @@
                             </div>
                             <div class="m-login__form-action mb-0">
                                 <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">{{ __('Login') }}</button>
-                                @if (Route::has('password.request'))
+                                <!-- @if (Route::has('password.request'))
                                         <a class="btn btn-link m-link" id="m_login_forget_password" href="javascript:void(0);">
                                             {{ __('Forgot Password?') }}
                                         </a>
-                                    @endif
+                                    @endif -->
                             </div>
                         </form>
                     </div>
@@ -197,7 +197,6 @@
                             </div>
                             <div class="m-login__form-action">
                                 <button id="m_login_forget_password_submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button>
-                                {{-- <button type="submit" class="btn btn-focus m-btn m-btn--pill m-btn--custom m-btn--air">Request</button> --}}
                                 <button id="m_login_forget_password_cancel" class="btn btn-outline-focus m-btn m-btn--pill m-btn--custom ">Cancel</button>
                             </div>
                         </form>

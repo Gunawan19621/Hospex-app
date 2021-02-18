@@ -15,31 +15,31 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Add Stand
+                      Form Edit Visitor
                   </h3>
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('visitors') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/visitors/{{$visitor->id}}">
+        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('visitors').'/'.$visitor->id }}">
         @method('patch')
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="companyName">Visitor Name</label>
-                    <input type="text" autocomplete="off" class="form-control @error('visitor_name') is-invalid @enderror " name="visitor_name" id="visitorName" placeholder="Stand Name Input" value="{{ $visitor->visitor_name }}">
+                    <input type="text" autocomplete="off" class="form-control @error('visitor_name') is-invalid @enderror " name="visitor_name" id="visitorName" placeholder="Stand Name Input" value="{{ $visitor->visitor_name }}" required>
                     @error('visitor_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="companyName">Visitor Email</label>
-                    <input type="text" autocomplete="off" class="form-control @error('visitor_email') is-invalid @enderror " name="visitor_email" id="visitorEmail" placeholder="Stand Name Input" value="{{ $visitor->visitor_email }}">
+                    <input type="email" autocomplete="off" class="form-control @error('visitor_email') is-invalid @enderror " name="visitor_email" id="visitorEmail" placeholder="Stand Name Input" value="{{ $visitor->visitor_email }}" required readonly>
                     @error('visitor_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Company</label>
-                    <select class="form-control @error('company_id') is-invalid @enderror " name="company_id" id="companyID" value="{{ $visitor->company_id }}" >
+                    <select class="form-control @error('company_id') is-invalid @enderror " name="company_id" id="companyID" value="{{ $visitor->company_id }}" required>
                       <option value="" > Company </option>
                       @foreach ($companies as $company)
                     <option value=" {{ $company->id }} " @if( $company->id == $visitor->company_id ) {{ 'selected' }} @endif > {{ $company->company_name }} </option>

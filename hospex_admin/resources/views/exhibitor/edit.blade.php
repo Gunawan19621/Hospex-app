@@ -21,16 +21,16 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('exhibitors') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/exhibitors/{{$exhibitor->id}}">
+        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('exhibitors').'/'.$exhibitor->id }}">
             @method('patch')
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="eventitel">Event</label>
-                    <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" >
+                    <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
                       <option value="" > Event </option>
                       @foreach ($events as $event)
                       <option value=" {{ $event->id }} " @if ( $event->id == $exhibitor->event_id) {{'selected'}} @endif > {{ $event->event_title.'('.$event->year.')' }} </option>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Company</label>
-                    <select class="form-control @error('company_id') is-invalid @enderror " name="company_id" id="companyID" value="{{ old('company_id') }}" >
+                    <select class="form-control @error('company_id') is-invalid @enderror " name="company_id" id="companyID" value="{{ old('company_id') }}" required>
                       <option value="" > Company </option>
                       @foreach ($companies as $company)
                       <option value=" {{ $company->id }} " @if ( $company->id == $exhibitor->company_id) {{'selected'}} @endif > {{ $company->company_name }} </option>

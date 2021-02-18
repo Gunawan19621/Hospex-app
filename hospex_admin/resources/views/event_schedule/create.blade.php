@@ -25,14 +25,14 @@
                 <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-            <form class="m-form m-form--fit m-form--label-align-right" method="post" action="/eventschedules">
+            <form class="m-form m-form--fit m-form--label-align-right" method="post" action="{{ url('eventschedules') }}">
                 @csrf
+                <input type="hidden" readonly class="form-control" name="event_id" id="event_id" value="{{ $events->id }}">
+                        @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 <div class="m-portlet__body">
                     <div class="form-group m-form__group">
                         <label for="evenschedule">Event Schedule</label>
-                        <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}">
-                        <input type="hidden" readonly class="form-control" name="event_id" id="event_id" value="{{ $events->id }}">
-                        @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                        <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}" required readonly>
                     </div>
                 </div>
                 <div class="m-portlet__foot m-portlet__foot--fit">

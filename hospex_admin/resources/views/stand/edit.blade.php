@@ -21,21 +21,21 @@
                   </div>
               </div>
               <div class="m-portlet__head-tools">
-                <a href="{{ url('/stands') }}" class="btn btn-primary my-3">Back</a>
+                <a href="{{ \URL::previous() }}" class="btn btn-primary my-3">Back</a>
               </div>
           </div>
-        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="/stands/{{$stand->id}}">
+        <form class="m-form m-form--fit m-form--label-align-right"  method="post" action="{{ url('stands').'/'.$stand->id }}">
             @method('patch')
           @csrf
               <div class="m-portlet__body">
                 <div class="form-group m-form__group">
                     <label for="companyName">Stand Name</label>
-                    <input type="text" autocomplete="off" class="form-control @error('stand_name') is-invalid @enderror " name="stand_name" id="standName" placeholder="Stand Name Input" value="{{ $stand->stand_name }}">
+                    <input type="text" autocomplete="off" class="form-control @error('stand_name') is-invalid @enderror " name="stand_name" id="standName" placeholder="Stand Name Input" value="{{ $stand->stand_name }}" required>
                     @error('stand_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Area</label>
-                    <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ $stand->area_id }}" >
+                    <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ $stand->area_id }}" required>
                       <option value="" > Area </option>
                       @foreach ($areas as $area)
                       <option value=" {{ $area->id }} " @if($area->id == $stand->area_id ) {{'selected'}} @endif > {{ $area->area_name }} </option>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="form-group m-form__group">
                     <label for="eventitel">Exhibitor</label>
-                    <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ $stand->exhibitor_id }}" >
+                    <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ $stand->exhibitor_id }}" required>
                       <option value="" > Exhibitor </option>
                       @foreach ($exhibitors as $exhibitor)
                       <option value=" {{ $exhibitor->id }} " @if($exhibitor->id == $stand->event_exhibitor_id ) {{'selected'}} @endif > {{ $exhibitor->company->company_name }} </option>
