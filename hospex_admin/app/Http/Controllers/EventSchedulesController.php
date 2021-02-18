@@ -89,15 +89,15 @@ class EventSchedulesController extends Controller
      * @param  \App\EventSchedule  $eventSchedule
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, EventSchedule $eventschedule)
+    public function update($id, Request $request)
     {
+        $eventschedule = EventSchedule::where('id',$id)->first();
         $request->validate([
             'date'      => 'required|date_format:Y-m-d',
         ]);
         try{
             
-            EventSchedule::whereId($eventschedule->id)
-            ->update([
+            EventSchedule::whereId($eventschedule->id)->update([
                 'date'       => Carbon::parse($request->date)->format('Y-m-d'),
             ]);
             $response = '1-Schedule Updated';

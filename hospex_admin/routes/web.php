@@ -21,6 +21,8 @@ Auth::routes();
 
 // Events
 Route::group(['middleware' => ['auth']], function () { 
+    Route::patch('/events/eventschedules/{eventschedules}','EventSchedulesController@update');
+
     Route::get('/events','EventController@index');
     Route::post('/events','EventController@store');
     Route::get('/events/getevents', 'EventController@getevents');
@@ -43,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::resource('events','EventController');
     Route::resource('eventschedules','EventSchedulesController');
     Route::get('/eventschedules/create/{event}','EventSchedulesController@create');
+
     Route::resource('eventrundown','EventRundownController');
     Route::get('/eventrundown/create/{schedule}','EventRundownController@create');
 

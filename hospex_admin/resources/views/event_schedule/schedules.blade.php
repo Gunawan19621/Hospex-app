@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
                                         <div class="m-portlet__head-tools">
-                                        <a href="/eventrundown/create/{{ $schedule->id }}" class="btn btn-primary my-3">Add Task</a>
+                                        <a href="{{ url('eventrundown/create').'/'.$schedule->id }}" class="btn btn-primary my-3">Add Task</a>
                                         </div>
                                     </div>
                                     <div class="m-portlet__body">
@@ -137,7 +137,7 @@
                 <div class="modal-body">
                     <div class="form-group m-form__group">
                         <label for="evenschedule">Event Schedule</label>
-                        <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}">
+                        <input type="text" class="form-control @error('date') is-invalid @enderror date-schedule" name="date" autocomplete="off" placeholder="Event Schedule Date" value="{{ old('date') }}" readonly required>
                         <input readonly type="hidden" name="id" id="idSchedule" autocomplete="off">
                         @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                     </div>
@@ -161,7 +161,7 @@
             // The reference tag is your anchor tag here
             var reference_tag   = $(event.relatedTarget); 
             var id              = reference_tag.data('id');
-            $('#form1').attr('action',`/eventschedules/${id}`)
+            $('#form1').attr('action','eventschedules/'+id);
 
         })
         var start =  `{!! $event->begin !!}`;
