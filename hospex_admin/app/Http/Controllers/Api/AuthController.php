@@ -161,7 +161,7 @@ class AuthController extends Controller
             $data['type']       = $user->type;
             $data['phone']      = $user->phone;
             $data['address']    = $user->address;
-            $data['company']    = $user->company->name;
+            $data['company']    = $user->company->company_name;
 
             return response()->json([
                 'success'   => true,
