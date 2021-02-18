@@ -15,8 +15,13 @@ class DumiesTableseeder extends Seeder
     public function run()
     {
         $admin = [
-            ['name'  => 'Admin', 'email' => 'admin@admin.com', 'password' => Hash::make('admin')]
+            ['name'  => 'lulu muhamad', 'email' => 'lulumuhamad01@gmail.com', 'password' => Hash::make('admin1234')]
         ];
         DB::table('admins')->insert($admin);
+
+        $admin2 = [
+            ['name'  => 'Admin', 'email' => 'admin@admin.com', 'password' => Hash::make('admin')]
+        ];
+        DB::table('admins')->insert($admin2);
     }
 }
