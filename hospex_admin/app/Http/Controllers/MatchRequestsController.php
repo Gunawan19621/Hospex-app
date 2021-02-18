@@ -30,12 +30,13 @@ class MatchRequestsController extends Controller
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
                     ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
-                        return ( $match->status == 0? 
-                            '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                        return ( $match->status == 1? 
+                            // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
+                            'Approve'
                             : 
-                            '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
-                                <span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span>
-                            </a>');
+                            // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                            'Pending'
+                            );
                     })
                     // ->editColumn('status', function(Match $match) {
                     //     return ( $match->status_meeting == 0? 
@@ -67,18 +68,19 @@ class MatchRequestsController extends Controller
     public function pendingMatch()
     {
         if(request()->ajax()){
-            return datatables()->of(Match::whereIn('status',['0','2'])->get())
+            return datatables()->of(Match::whereIn('status',['0'])->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
                     ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
-                        return ( $match->status == 0? 
-                            '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                        return ( $match->status == 1? 
+                            // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
+                            'Approve'
                             : 
-                            '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill">
-                                <span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span>
-                            </a>');
+                            // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                            'Pending'
+                            );
                     })
                     ->addColumn('visitor_name', function($data){
                         return $data->visitor->company->users[0]->name;
