@@ -65,7 +65,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Register Success',
-                'data'      => '',
+                'data'      => $register,
                 'status'    => 201
             ], 201);
         }
@@ -112,7 +112,7 @@ class AuthController extends Controller
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Login Fail',
-                    'data'      => [],
+                    'data'      => '',
                     'status'    => 503
                 ], 503);
             }
@@ -121,7 +121,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Login Fail',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ], 503);
         }
@@ -142,7 +142,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Change Password Success',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 200
             ], 200);
         }
@@ -150,7 +150,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Change Password Fail',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ], 503);
         }

@@ -53,42 +53,44 @@ class BusinessMatchingController extends Controller
                 ->get();
         }
 
-        $tanggal = $matches->reverse()->unique('date')->reverse();
- 
         $data = [];
-        foreach ($tanggal as $key => $value) {
-            $m['tanggal'] = Carbon::createFromDate($value->date)->format('d M, Y ');
-            $m['hari']    = Carbon::parse($value->date)->format('l');
-            
-            $n = array();
-            foreach($matches as $match){
-                if($value->date == $match->date){
-                    $o = array(
-                        'id'            => $match->id,
-                        'logo_PT'       => 'logo1.jpg',
-                        'nama_PT'       => $match->exhibitor->company->company_name,
-                        'visitor_name'  => $match->visitor->company->users[0]->name,
-                        'visitor_email' => $match->visitor->company->users[0]->email,
-                        'time'          => $match->availableSchedule->time,
-                    );
+        if(!$matches->isEmpty()){
+            $tanggal = $matches->reverse()->unique('date')->reverse();
+ 
+            foreach ($tanggal as $key => $value) {
+                $m['tanggal'] = Carbon::createFromDate($value->date)->format('d M, Y ');
+                $m['hari']    = Carbon::parse($value->date)->format('l');
+                
+                $n = array();
+                foreach($matches as $match){
+                    if($value->date == $match->date){
+                        $o = array(
+                            'id'            => $match->id,
+                            'logo_PT'       => 'logo1.jpg',
+                            'nama_PT'       => $match->exhibitor->company->company_name,
+                            'visitor_name'  => $match->visitor->company->users[0]->name,
+                            'visitor_email' => $match->visitor->company->users[0]->email,
+                            'time'          => $match->availableSchedule->time,
+                        );
 
-                    if ($match->status == '1') {
-                        $o['status'] = 'Approved';
+                        if ($match->status == '1') {
+                            $o['status'] = 'Approved';
+                        }
+                        else if($match->status == '2') {
+                            $o['status'] = 'Decline';
+                        }
+                        else{
+                            $o['status'] = 'Pending';
+                        }
+                        
+                        $n[]= $o;
                     }
-                    else if($match->status == '2') {
-                        $o['status'] = 'Decline';
-                    }
-                    else{
-                        $o['status'] = 'Pending';
-                    }
-                    
-                    $n[]= $o;
                 }
+                $m['business_match'] = $n;
+                $data[] = $m;    
             }
-            $m['business_match'] = $n;
-            $data[] = $m;    
         }
-        
+
         return response()->json([
             'success'   => true,
             'message'   => 'Data Successfull Found',
@@ -108,19 +110,21 @@ class BusinessMatchingController extends Controller
         $data = [];
         $bm = [];
 
-        foreach ($matches as $key => $match) {    
-            $bm[] = [
-                'company_name' => $match->exhibitor->company->company_name,
-                'jam'          => $match->date,
-                'lokasi'       => $match->location,
-            ];
+        if(!$matches->isEmpty()){
+            foreach ($matches as $key => $match) {    
+                $bm[] = [
+                    'company_name' => $match->exhibitor->company->company_name,
+                    'jam'          => $match->date,
+                    'lokasi'       => $match->location,
+                ];
 
-            $data[]  = [
-                'id'                => $match->id,
-                'hari'              => $match->date,
-                'tanggal'           => $match->date,
-                'bussines_matching' => $bm
-            ]; 
+                $data[]  = [
+                    'id'                => $match->id,
+                    'hari'              => $match->date,
+                    'tanggal'           => $match->date,
+                    'bussines_matching' => $bm
+                ]; 
+            }
         }
         
         return response()->json([
@@ -156,7 +160,7 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => [],
+                    'data'      => '',
                     'status'    => 503
                 ],503);
             }
@@ -194,7 +198,7 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => [],
+                    'data'      => '',
                     'status'    => 503
                 ],503);
             }
@@ -203,7 +207,7 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Create',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ],503);
         }
@@ -234,7 +238,7 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ],503);
         }
@@ -265,7 +269,7 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ],503);
         }
@@ -291,7 +295,7 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Save',
-                    'data'      => [],
+                    'data'      => '',
                     'status'    => 503
                 ],503);
             }
@@ -301,7 +305,7 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ],503);
         }

@@ -24,21 +24,16 @@ class EventController extends Controller
     public function index()
     {
         $data = Event::all();
-        if (!$data->isEmpty()) {
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Found',
-                'data'      => $data,
-                'status'    => 503
-            ],200);
+
+        if($data->isEmpty()){
+            $data = [];
         }
-        else {
-            return response()->json([
-                'success'   => false,
-                'message'   => 'Data Not Found',
-                'data'      => [],
-                'status'    => 503
-            ],503);
-        }
+
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Found',
+            'data'      => $data,
+            'status'    => 200
+        ],200);
     }
 }

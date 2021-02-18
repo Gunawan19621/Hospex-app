@@ -37,7 +37,7 @@ class ImageController extends BaseController
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Save',
-                    'data'      => [],
+                    'data'      => '',
                     'status'    => 503
                 ],503);
             }
@@ -46,7 +46,7 @@ class ImageController extends BaseController
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => [],
+                'data'      => '',
                 'status'    => 503
             ],503);
         }
