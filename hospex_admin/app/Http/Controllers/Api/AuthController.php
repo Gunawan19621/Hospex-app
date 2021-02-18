@@ -41,8 +41,9 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Register Fail. Email has been taken',
-                'data'      => ''
-            ], 400);
+                'data'      => '',
+                'status'    => 503
+            ], 503);
         }
 
         $companyCreate = Company::create([
@@ -65,15 +66,17 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Register Success',
-                'data'      => ''
+                'data'      => '',
+                'status'    => 201
             ], 201);
         }
         else {
             return response()->json([
                 'success'   => false,
                 'message'   => 'Register Fail',
-                'data'      => ''
-            ], 400);
+                'data'      => '',
+                'status'    => 503
+            ], 503);
         }
     }
 
@@ -102,23 +105,26 @@ class AuthController extends Controller
                     'data'      => [
                         'user'      => $data,
                         'api_token' => $apiToken
-                    ]
+                    ],
+                    'status'    => 200
                 ], 200);
             }
             else{
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Login Fail',
-                    'data'      => []
-                ], 400);
+                    'data'      => [],
+                    'status'    => 503
+                ], 503);
             }
         }
         else{
             return response()->json([
                 'success'   => false,
                 'message'   => 'Login Fail',
-                'data'      => []
-            ], 400);
+                'data'      => [],
+                'status'    => 503
+            ], 503);
         }
     }
 
@@ -137,15 +143,17 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Change Password Success',
-                'data'      => ''
+                'data'      => [],
+                'status'    => 200
             ], 200);
         }
         else{
             return response()->json([
                 'success'   => false,
                 'message'   => 'Change Password Fail',
-                'data'      => ''
-            ], 400);
+                'data'      => [],
+                'status'    => 503
+            ], 503);
         }
     }
 }

@@ -22,9 +22,7 @@ class AvailableController extends Controller
         // $this->middleware('login');
     }
 
-    public function index($exhibitor)
-    {
-        $g         = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
+    $g         = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
         $flattened = $g->map(function($item){
             return $item->available_schedule_id;
         });
@@ -38,7 +36,8 @@ class AvailableController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Successfull Found',
-            'data'      => $data
+            'data'      => $data,
+            'status'    => 200
         ],200);
     }
 }

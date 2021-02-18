@@ -39,7 +39,8 @@ class AvailableController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Successfull Found',
-            'data'      => $data
+            'data'      => $data,
+            'status'    => 200
         ],200);
     }
 }

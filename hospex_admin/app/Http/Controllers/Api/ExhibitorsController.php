@@ -55,15 +55,17 @@ class ExhibitorsController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Found',
-                'data'      => $data
+                'data'      => $data,
+                'status'    => 200
             ],200);
         }
         else{
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
-                'data'      => ''
-            ],404);
+                'data'      => [],
+                'status'    => 503
+            ],503);
         }
     }
 
@@ -93,14 +95,16 @@ class ExhibitorsController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Found',
-                'data'      => $data
+                'data'      => $data,
+                'status'    => 200
             ],200);
         }
         else {
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',
-                'data'      => ''
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }

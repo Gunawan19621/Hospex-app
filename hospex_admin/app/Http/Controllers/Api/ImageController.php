@@ -29,14 +29,16 @@ class ImageController extends BaseController
                 return response()->json([
                     'success'   => true,
                     'message'   => 'success',
-                    'data'      => $user->company
+                    'data'      => $user->company,
+                    'status'    => 200
                 ],200);
             }
             catch (Exception $e) {
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Save',
-                    'data'      => []
+                    'data'      => [],
+                    'status'    => 503
                 ],503);
             }
         }
@@ -44,7 +46,8 @@ class ImageController extends BaseController
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => []
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }

@@ -60,15 +60,17 @@ class SchedulesController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Found',
-                'data'      => $data
+                'data'      => $data,
+                'status'    => 200
             ],200);
         }
         else{
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Not Found',
-                'data'      => []
-            ],404);
+                'data'      => [],
+                'status'    => 503
+            ],503);
         }
     }
 
@@ -87,7 +89,8 @@ class SchedulesController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Found',
-            'data'      => $data
+            'data'      => $data,
+            'status'    => 200
         ],200);
     }
 }

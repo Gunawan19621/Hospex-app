@@ -91,7 +91,8 @@ class BusinessMatchingController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Successfull Found',
-            'data'      => $data
+            'data'      => $data,
+            'status'    => 200
         ],200);
     }
 
@@ -124,7 +125,8 @@ class BusinessMatchingController extends Controller
         return response()->json([
             'success'   => true,
             'message'   => 'Data Successfull founded',
-            'data'      => $data
+            'data'      => $data,
+            'status'    => 200
         ],200);
     }
 
@@ -153,7 +155,8 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => []
+                    'data'      => [],
+                    'status'    => 503
                 ],503);
             }
 
@@ -182,14 +185,16 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => true,
                     'message'   => 'Data Succesfull Created',
-                    'data'      => $match
+                    'data'      => $match,
+                    'status'    => 201
                 ],201);
             }
             else{
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => []
+                    'data'      => [],
+                    'status'    => 503
                 ],503);
             }
         }
@@ -197,7 +202,8 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Create',
-                'data'      => []
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }
@@ -218,15 +224,17 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Success to Save',
-                'data'      => $update
-            ],201);
+                'data'      => $update,
+                'status'    => 200
+            ],200);
         }
         catch (\Exception $e){
             $response = $e->getMessage();
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => []
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }
@@ -247,15 +255,17 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Success to Save',
-                'data'      => $approve
-            ],201);
+                'data'      => $approve,
+                'status'    => 200
+            ],200);
         }
         catch (\Exception $e){
             $response = $e->getMessage();
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => ''
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }
@@ -272,14 +282,16 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => true,
                     'message'   => 'Data Success to Save',
-                    'data'      => $update
-                ],201);
+                    'data'      => $update,
+                    'status'    => 200
+                ],200);
             }
             else{
                 return response()->json([
                     'success'   => false,
                     'message'   => 'Data Failed to Save',
-                    'data'      => []
+                    'data'      => [],
+                    'status'    => 503
                 ],503);
             }
         }
@@ -288,7 +300,8 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => []
+                'data'      => [],
+                'status'    => 503
             ],503);
         }
     }
