@@ -9,6 +9,8 @@ use App\User;
 use App\EventVisitor;
 use App\Company;
 use App\EventExhibitor;
+use App\Event;
+use Illuminate\Support\Carbon;
 use Validator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
@@ -82,6 +84,9 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $t = Carbon::now();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
+
         $email      = $request->input('email');
         $password   = $request->input('password');
         $type       = $request->input('type');
@@ -98,6 +103,22 @@ class AuthController extends Controller
                 $data['user_name']  = 'user_name';
                 $data['email']      = $email;
                 $data['type']       = $type;
+                $data['phone']      = $user->phone;
+                $data['address']    = $user->address;
+                $data['company']    = $user->company->name;
+
+                if($event){
+                    $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
+                    if($checkData){
+
+                    }
+                    else{
+                        $create = EventVisitor::create([
+                            'company_id' => $user->company_id,
+                            'event_id'   => $event->id
+                        ]);
+                    }
+                }
 
                 return response()->json([
                     'success'   => true,
@@ -122,6 +143,72 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => false,
                 'message'   => 'Login Fail',
+                'data'      => '',
+                'status'    => 503
+            ], 503);
+        }
+    }
+
+    public function getUser($id)
+    {
+        $user = User::where('id',$id)->first();
+        if($user){
+            $data['id']         = $user->id;
+            $data['foto']       = $user->company->image;
+            $data['nama']       = $user->name;
+            $data['user_name']  = 'user_name';
+            $data['email']      = $user->email;
+            $data['type']       = $user->type;
+            $data['phone']      = $user->phone;
+            $data['address']    = $user->address;
+            $data['company']    = $user->company->name;
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Get User Success',
+                'data'      => $data,
+                'status'    => 200
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Get User Fail',
+                'data'      => '',
+                'status'    => 503
+            ], 503);
+        }
+    }
+
+    public function changeProfile(Request $request)
+    {
+        $name       = $request->input('name');
+        $email      = $request->input('email');
+        $company    = $request->input('company');
+        $address    = $request->input('address');
+        $phone      = $request->input('phone');
+
+        $checkUser = User::where('email',$email)->first();
+        if($checkUser){
+            $checkUser->name    = $name;
+            $checkUser->address = $address;
+            $checkUser->phone   = $phone;
+            $checkUser->save();
+
+            $checkUser->company->company_name = $company;
+            $checkUser->company->save();
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Change Profile Success',
+                'data'      => $checkUser,
+                'status'    => 200
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Change Profile Fail',
                 'data'      => '',
                 'status'    => 503
             ], 503);

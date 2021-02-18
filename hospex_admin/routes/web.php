@@ -147,7 +147,9 @@ $router->get('/api/schedules/{id}', 'Api\SchedulesController@show');
 
 $router->post('/api/register', 'Api\AuthController@register');
 $router->post('/api/login', 'Api\AuthController@login');
+$router->get('/api/user/{id}','Api\AuthController@getUser');
 $router->post('/api/user/change-password','Api\AuthController@changePassword');
+$router->post('/api/user/change-profile','Api\AuthController@changeProfile');
 $router->post('/api/image/upload','Api\ImageController@uploadImage');
 $router->get('/api/image/logo/{exhibitor}','Api\ImageController@logo');
 

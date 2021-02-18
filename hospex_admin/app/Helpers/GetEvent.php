@@ -8,10 +8,7 @@ use App\Event;
 class GetEvent {
     public static function getEvent() {
         $t = Carbon::now();
-        $event = Event::join('event_schedules', 'events.id', '=', 'event_schedules.event_id')
-                ->whereDate('events.begin',' >= ',$t)
-                ->orderBy('events.begin')
-                ->first();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
         return ( $event ? $event->id : '');
     }
 }

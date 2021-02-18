@@ -46,7 +46,9 @@ $router->get('/event', 'EventController@index');
 
 $router->post('/register', 'AuthController@register');
 $router->post('/login', 'AuthController@login');
+$router->get('/user/{id}','AuthController@getUser');
 $router->post('/user/change-password','AuthController@changePassword');
+$router->post('/user/change-profile','AuthController@changeProfile');
 
 $router->post('/image/upload','ImageController@uploadImage');
 $router->get('/image/logo/{exhibitor}','ImageController@logo');

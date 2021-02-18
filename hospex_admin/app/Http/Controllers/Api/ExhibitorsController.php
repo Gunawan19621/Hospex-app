@@ -24,7 +24,7 @@ class ExhibitorsController extends Controller
     public function index()
     {
         $t = Carbon::now();
-        $event = Event::whereDate('events.begin',' <= ',$t)->whereDate('events.end',' >= ',$t)->first();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
         $data = [];
         if($event){

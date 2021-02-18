@@ -172,20 +172,33 @@ class BusinessMatchingController extends Controller
             $checkAvailable = AvailableSchedule::where('id',$time)->first();
             if($checkAvailable){
                 $userVisitor = User::where('id',$visitor_id)->first();
+                $checkEventVisitor = EventVisitor::where('company_id',$userVisitor->company_id)->where('event_id',$checkAvailable->event->id)->first();
 
-                $createEventVisitor = EventVisitor::create([
-                    'company_id' => $userVisitor->company->id,
-                    'event_id'   => $checkAvailable->event->id
-                ]);
+                if($checkEventVisitor){
+                    $match = MatchRequest::create([
+                        'available_schedule_id'     => $time,
+                        'event_exhibitor_id'        => $exhibitor_id,
+                        'event_visitor_id'          => $checkEventVisitor->id,
+                        'status'                    => '0',
+                        'time'                      => $checkAvailable->time,
+                        'date'                      => $checkAvailable->date
+                    ]);
+                }
+                else{
+                    $createEventVisitor = EventVisitor::create([
+                        'company_id' => $userVisitor->company_id,
+                        'event_id'   => $checkAvailable->event->id
+                    ]);
 
-                $match = MatchRequest::create([
-                    'available_schedule_id'     => $time,
-                    'event_exhibitor_id'        => $exhibitor_id,
-                    'event_visitor_id'          => $createEventVisitor->id,
-                    'status'                    => '0',
-                    'time'                      => $checkAvailable->time,
-                    'date'                      => $checkAvailable->date
-                ]);
+                    $match = MatchRequest::create([
+                        'available_schedule_id'     => $time,
+                        'event_exhibitor_id'        => $exhibitor_id,
+                        'event_visitor_id'          => $createEventVisitor->id,
+                        'status'                    => '0',
+                        'time'                      => $checkAvailable->time,
+                        'date'                      => $checkAvailable->date
+                    ]);
+                }
 
                 return response()->json([
                     'success'   => true,

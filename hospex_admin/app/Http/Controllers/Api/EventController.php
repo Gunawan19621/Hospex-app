@@ -25,7 +25,7 @@ class EventController extends Controller
     public function index()
     {
         $t = Carbon::now();
-        $data = Event::whereDate('events.begin',' <= ',$t)->whereDate('events.end',' >= ',$t)->first();
+        $data = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
         if($data){
             return response()->json([

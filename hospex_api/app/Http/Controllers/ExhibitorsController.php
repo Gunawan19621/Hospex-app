@@ -23,31 +23,35 @@ class ExhibitorsController extends Controller
     public function index()
     {
         $t = Carbon::now();
-        $event = Event::whereDate('events.begin',' <= ',$t)->whereDate('events.end',' >= ',$t)->first();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
         $data = [];
         if($event){
-            $exhibitors = EventExhibitor::where('event_id',$event->id)->get();
-            // $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
-            //         ->select('event_exhibitors.*','events.begin')
-            //         ->whereDate('events.begin',' >= ',$t)
-            //         ->orderBy('events.begin')
-            //         ->get();
+            $schedules = EventSchedule::where('event_id',$event->id)->orderby('date')->get();
 
-            if(!$exhibitors->isEmpty()){
-                foreach ($exhibitors as $key => $exhibitor) {
+            if(!$schedules->isEmpty()){
+                foreach ($schedules as $key => $schedule) {
+                    if($schedule->rundowns){
+                        $rundowns = $schedule->rundowns[0]->location;
+                    }
+                    else{
+                        $rundowns = '';
+                    }
+                    
                     $data[] = [
-                        'id_exhibitor'  => $exhibitor->id, 
-                        'nama'          => $exhibitor->company->company_name,
-                        'alamat'        => $exhibitor->company->users[0]->address,
-                        'website'       => $exhibitor->company->company_web,
-                        'email'         => $exhibitor->company->users[0]->email,
-                        'info'          => $exhibitor->company->company_info,
-                        'event_title'   => $exhibitor->event->event_title,
-                        'logo'          => $exhibitor->company->image,
-                        'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
-                            return $item->category_name;
-                        })->implode(', '),
+                        'id'            => $schedule->id,
+                        'hari'          => Carbon::parse($schedule->date)->format('l'),
+                        'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
+                        'lokasi'        => $rundowns,
+                        'acara'         => $schedule->rundowns()->get()->map(function($item){
+                            return [
+                                "tema"         => $item->task,
+                                "lokasi"       => $item->location,
+                                "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
+                                "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
+                                "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
+                            ];
+                        }),
                     ];
                 }
             }
@@ -61,44 +65,26 @@ class ExhibitorsController extends Controller
         ],200);
     }
 
-    public function show($exhibitor)
+    public function show($id)
     {
-        $exhibitor = EventExhibitor::where('id',$exhibitor)->first();
+        $rundowns = EventSchedule::findorfail($id)->rundowns;
+        $data = [];
 
-        if($exhibitor){
-            $data = [
-                'id_exhibitor'  => $exhibitor->id, 
-                'nama'          => $exhibitor->company->company_name,
-                'alamat'        => $exhibitor->company->users[0]->address,
-                'website'       => $exhibitor->company->company_web,
-                'email'         => $exhibitor->company->users[0]->email,
-                'info'          => $exhibitor->company->company_info,
-                'event_title'   => $exhibitor->event->event_title,
-                'logo'          => '',
-                'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
-                                        return $item->category_name;
-                                    })->implode(', '),
-                'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
-                                        return  $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
-                                            return ($item->area->id ===  $stand->area_id ? $stand->stand_name : false);
-                                        })->filter()->implode(', ').' )' ;
-                                    })->implode(', '),
-            ];
-
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Found',
-                'data'      => $data,
-                'status'    => 200
-            ],200);
+        if(!$rundowns->isEmpty()){
+            foreach ($rundowns as $key => $rundown) {
+                $data[] = [
+                    'time'          => $rundown->time,
+                    'task'          => $rundown->task,
+                    'duration'      => $rundown->duration
+                ];
+            }
         }
-        else{
-            return response()->json([
-                'success'   => false,
-                'message'   => 'Data not Found',
-                'data'      => '',
-                'status'    => 503
-            ],503);
-        }
+        
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Found',
+            'data'      => $data,
+            'status'    => 200
+        ],200);
     }
 }
