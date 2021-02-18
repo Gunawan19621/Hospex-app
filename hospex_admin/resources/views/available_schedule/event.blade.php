@@ -16,13 +16,12 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Exhibitor List
+                            Available Schedule List
                         </h3>
                         </div>
                     </div>
                     <div class="m-portlet__head-tools">
-                        <a href="/exhibitors/create/{{ $event->id }}" class="btn btn-primary my-3">Add</a> &nbsp;
-                        <a href="/import-excel/{{ $event->id }}" class="btn btn-success my-3">Import</a>
+                        <a href="/available-schedule/create/{{ $event->id }}" class="btn btn-primary my-3">Add</a>
                     </div>
                 </div>
                 <div class="m-portlet__body">
@@ -31,11 +30,9 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
-                                <th scope="col">Exhibitor</th>
-                                <th scope="col">Address</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Categories</th>
-                                <th scope="col" width="7%">Action</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -65,18 +62,11 @@
                     searchable: false
                 },
                 {
-                    data : "company.company_name", name : "company_name",
+                    data : "date", name : "date",
                 },
                 {
-                    data : "address", name : "address",
+                    data : "time", name : "time",
                 },
-                {
-                    data : "email", name : "email",
-                },
-                {
-                    data : "categories", name : "categories",
-                },
-                
                 {
                     data:"action",
                     name: "action",
@@ -87,7 +77,7 @@
 
         $('#m_table_1').on('click', '.delete', function () {
           var id = $(this).data("id");
-          var link = 'exhibitors';
+          var link = 'available-schedule';
           confirmDelete(link,id)
           
         }); 

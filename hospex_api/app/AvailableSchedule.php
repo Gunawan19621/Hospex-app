@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AvailableSchedule extends Model
 {
-    protected $fillable= ['event_id','time'];
+    protected $fillable = ['event_id','date','time'];
 
     public function event()
     {

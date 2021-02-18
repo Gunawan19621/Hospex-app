@@ -228,6 +228,16 @@ class EventController extends Controller
             return datatables()->of($query)
                     ->addIndexColumn()
                     ->addColumn(
+                        'email',function($query){ 
+                            return $query->company->users[0]->email;
+                        }
+                    )
+                    ->addColumn(
+                        'address',function($query){ 
+                            return $query->company->users[0]->address;
+                        }
+                    )
+                    ->addColumn(
                         'categories',function($query){ 
                             return $query->company->categories()->get()->map(function($item) {
                                 return $item->category_name;
@@ -274,6 +284,30 @@ class EventController extends Controller
                     ->make(true);
         }
         return view('area.event_area', compact('title','event'));
+    }
+
+    public function availableSchedule(Event $event)
+    {
+        $title = 'Available Schedule';
+        if (request()->ajax()) 
+        {
+            return datatables()->of($event->availableSchedules)
+                    ->addIndexColumn()
+                    ->addColumn('event_title', function($data){  return  $data->event->event_title; })
+                    ->addColumn('action', function($data){
+                            $button = '<span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                                <div class="dropdown-menu dropdown-menu-right">       
+                                    <a class="dropdown-item" href="'.url('available-schedule/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>
+                                    <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a>
+                                </div>
+                            </span>';
+                            return $button;
+                        })
+                    ->rawColumns(['action','event_title'])
+                    ->make(true);
+        }
+        return view('available_schedule.event', compact('title','event'));
     }
 
     public function fileStore(Request $request, Event $event)

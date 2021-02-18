@@ -34,16 +34,6 @@
                         <input type="hidden" readonly class="form-control" name="event_id" id="event_id" value="{{ $events->id }}">
                         @error('date') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                     </div>
-                    {{-- <div class="form-group m-form__group">
-                        <label for="eventitel">Event Title</label>
-                        <select class="form-control @error('event_id') is-invalid @enderror" name="event_id" value="{{ old('event_id') }}">
-                          <option value="">Select Event</option>
-                          @foreach ($events ?? ''s as $events ?? '')
-                          <option value="{{ $events ?? ''->id }}"> {{$events ?? ''->event_title}} </option>
-                          @endforeach
-                        </select>
-                        @error('event_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
-                    </div> --}}
                 </div>
                 <div class="m-portlet__foot m-portlet__foot--fit">
                   <div class="m-form__actions">
