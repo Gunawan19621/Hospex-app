@@ -51,11 +51,11 @@
                         <input type="text" autocomplete="off" class="form-control @error('event_location') is-invalid @enderror" name="event_location" id="eventLocation" placeholder="Event Location Input" value="{{ old('event_location') }}">
                         @error('event_location') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
-                  {{-- <div class="form-group m-form__group">
-                      <label for="eventitel">Site Plan</label>
-                      <input type="text" autocomplete="off" class="form-control @error('site_plan') is-invalid @enderror" name="site_plan" id="eventSitePlan" placeholder="Event Site Plan Input" value="{{ old('site_plan') }}">
-                      @error('site_plan') <div class="invalid-feedback"> {{ $message }} </div> @enderror
-                  </div> --}}
+                  <div class="form-group m-form__group">
+                        <label for="eventitel">Link Buy Event</label>
+                        <input type="text" autocomplete="off" class="form-control @error('link_buy_event') is-invalid @enderror" name="link_buy_event" id="linkBuyEvent" placeholder="Link Buy Event Input" value="{{ old('link_buy_event') }}">
+                        @error('link_buy_event') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
               </div>
               <div class="m-portlet__foot m-portlet__foot--fit">
                   <div class="m-form__actions">

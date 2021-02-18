@@ -22,6 +22,7 @@ class CreateEventsTable extends Migration
             $table->string('event_location');
             $table->date('begin');
             $table->date('end');
+            $table->string('link_buy_event')->default('');
             $table->timestamps();
         });
     }

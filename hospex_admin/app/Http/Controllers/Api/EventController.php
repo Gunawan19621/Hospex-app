@@ -7,6 +7,7 @@ use App\Event;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 
 class EventController extends Controller
@@ -23,17 +24,24 @@ class EventController extends Controller
 
     public function index()
     {
-        $data = Event::all();
+        $t = Carbon::now();
+        $data = Event::whereDate('events.begin',' <= ',$t)->whereDate('events.end',' >= ',$t)->first();
 
-        if($data->isEmpty()){
-            $data = [];
+        if($data){
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Found',
+                'data'      => $data,
+                'status'    => 200
+            ],200);
         }
-
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Found',
-            'data'      => $data,
-            'status'    => 200
-        ],200);
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Data not Found',
+                'data'      => '',
+                'status'    => 503
+            ],503);
+        }
     }
 }

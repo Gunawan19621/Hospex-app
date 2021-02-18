@@ -28,8 +28,8 @@ class EventController extends Controller
     {
         // $this->middleware('auth');
     }
-    public function index()
     
+    public function index()
     {
         $events = Event::all();
         return view('event.index',compact('events'));
@@ -59,7 +59,8 @@ class EventController extends Controller
             'begin'             => 'required|date_format:Y-m-d',
             'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
             'city'              => 'required',
-            'event_location'    => 'required'
+            'event_location'    => 'required',
+            'link_buy_event'    => 'required'
         ]);
 
         $create = Event::create([
@@ -70,6 +71,7 @@ class EventController extends Controller
             'event_location'    => $request->event_location,
             'begin'             => Carbon::parse($request->begin),
             'end'               => Carbon::parse($request->end),
+            'link_buy_event'    => $request->link_buy_event
         ]);
 
         $response = $create ? '1-Event Saved' : '0-Event Failed to Save';
@@ -123,7 +125,8 @@ class EventController extends Controller
             'begin'             => 'required|date_format:Y-m-d',
             'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
             'city'              => 'required',
-            'event_location'    => 'required'
+            'event_location'    => 'required',
+            'link_buy_event'    => 'required'
         ]);
 
         $update =Event::where('id', $event->id)
@@ -133,7 +136,8 @@ class EventController extends Controller
                     'begin'             => Carbon::parse($request->begin),
                     'end'               => Carbon::parse($request->end),
                     'city'              => $request->city,
-                    'event_location'    => $request->event_location
+                    'event_location'    => $request->event_location,
+                    'link_buy_event'    => $request->link_buy_event
                 ]);
         
         $response = $update ? '1-Event Updated' : '0-Event Failed to Update';
