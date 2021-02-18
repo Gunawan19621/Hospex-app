@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Collection;
 use App\EventExhibitor;
+use App\Event;
 use Illuminate\Support\Carbon;
 use App\Helpers\GetEvent as eventId;
 
@@ -22,39 +23,41 @@ class ExhibitorsController extends Controller
     public function index()
     {
         $t = Carbon::now();
-        $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
-                ->select('event_exhibitors.*','events.begin')
-                ->whereDate('events.begin',' >= ',$t)
-                ->orderBy('events.begin')
-                ->get();
-        // $exhibitors = EventExhibitor::all();
-        
-        $data = [];
+        $event = Event::whereDate('events.begin',' <= ',$t)->whereDate('events.end',' >= ',$t)->first();
 
-        foreach ($exhibitors as $key => $exhibitor) {
-            $data[] = [
-                'id_exhibitor'  => $exhibitor->id, 
-                'nama'          => $exhibitor->company->company_name,
-                'alamat'        => $exhibitor->company->users[0]->address,
-                'website'       => $exhibitor->company->company_web,
-                'email'         => $exhibitor->company->users[0]->email,
-                'info'          => $exhibitor->company->company_info,
-                'event_title'   => $exhibitor->event->event_title,
-                'logo'          => $exhibitor->company->image,
-                'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
-                    return $item->category_name;
-                })->implode(', '),
-            ];
-        }
+        if($event){
+            $exhibitors = EventExhibitor::where('event_id',$event->id)->get();
+            // $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
+            //         ->select('event_exhibitors.*','events.begin')
+            //         ->whereDate('events.begin',' >= ',$t)
+            //         ->orderBy('events.begin')
+            //         ->get();
+            
+            $data = [];
 
-        if (!$exhibitors->isEmpty()) {
+            foreach ($exhibitors as $key => $exhibitor) {
+                $data[] = [
+                    'id_exhibitor'  => $exhibitor->id, 
+                    'nama'          => $exhibitor->company->company_name,
+                    'alamat'        => $exhibitor->company->users[0]->address,
+                    'website'       => $exhibitor->company->company_web,
+                    'email'         => $exhibitor->company->users[0]->email,
+                    'info'          => $exhibitor->company->company_info,
+                    'event_title'   => $exhibitor->event->event_title,
+                    'logo'          => $exhibitor->company->image,
+                    'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                        return $item->category_name;
+                    })->implode(', '),
+                ];
+            }
+
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
         }
-        else {
+        else{
             return response()->json([
                 'success'   => False,
                 'message'   => 'Data Not Found',

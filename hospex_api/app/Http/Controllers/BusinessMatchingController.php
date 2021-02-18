@@ -88,20 +88,11 @@ class BusinessMatchingController extends Controller
             $data[] = $m;    
         }
         
-        if (!$matches->isEmpty()) {
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Successfull Found',
-                'data'      => $data
-            ],200);
-        }
-        else {
-            return response()->json([
-                'success'   => False,
-                'message'   => 'Data Not Found',
-                'data'      => ''
-            ],404);
-        }
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data Successfull Found',
+            'data'      => $data
+        ],200);
     }
 
     public function list_matching(Request $request){
@@ -134,7 +125,7 @@ class BusinessMatchingController extends Controller
             'success'   => true,
             'message'   => 'Data Successfull founded',
             'data'      => $data
-        ],201);
+        ],200);
     }
 
     public function show($id)
@@ -160,9 +151,9 @@ class BusinessMatchingController extends Controller
         try {
             if($request->input('time') == null || $request->input('time') == ""){
                 return response()->json([
-                    'success'   => true,
+                    'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => ''
+                    'data'      => []
                 ],503);
             }
 
@@ -191,22 +182,22 @@ class BusinessMatchingController extends Controller
                 return response()->json([
                     'success'   => true,
                     'message'   => 'Data Succesfull Created',
-                    'data'      => collect($match)->except(['created_at','updated_at'])
+                    'data'      => $match
                 ],201);
             }
             else{
                 return response()->json([
-                    'success'   => true,
+                    'success'   => false,
                     'message'   => 'Data Failed to Create',
-                    'data'      => ''
+                    'data'      => []
                 ],503);
             }
         }
         catch (Exception $e) {
             return response()->json([
-                'success'   => true,
+                'success'   => false,
                 'message'   => 'Data Failed to Create',
-                'data'      => ''
+                'data'      => []
             ],503);
         }
     }
@@ -233,9 +224,9 @@ class BusinessMatchingController extends Controller
         catch (\Exception $e){
             $response = $e->getMessage();
             return response()->json([
-                'success'   => true,
+                'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => $e->getMessage()
+                'data'      => []
             ],503);
         }
     }
@@ -262,9 +253,9 @@ class BusinessMatchingController extends Controller
         catch (\Exception $e){
             $response = $e->getMessage();
             return response()->json([
-                'success'   => true,
+                'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => $e->getMessage()
+                'data'      => ''
             ],503);
         }
     }
@@ -286,18 +277,18 @@ class BusinessMatchingController extends Controller
             }
             else{
                 return response()->json([
-                    'success'   => true,
+                    'success'   => false,
                     'message'   => 'Data Failed to Save',
-                    'data'      => ''
+                    'data'      => []
                 ],503);
             }
         }
         catch (\Exception $e) {
             $response = $e->getMessage();
             return response()->json([
-                'success'   => true,
+                'success'   => false,
                 'message'   => 'Data Failed to Save',
-                'data'      => $e->getMessage()
+                'data'      => []
             ],503);
         }
     }

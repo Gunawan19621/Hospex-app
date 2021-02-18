@@ -83,12 +83,6 @@ class AuthController extends Controller
         $password   = $request->input('password');
         $type       = $request->input('type');
 
-        $respon = [
-            'success'   => false,
-            'message'   => 'Login Fail',
-            'data'      => ''
-        ];
-
         $user = User::where('email', $email)->first();
         if ($user) {
             if (Hash::check($password, $user->password)) {
@@ -111,10 +105,20 @@ class AuthController extends Controller
                     ]
                 ], 200);
             }
-            return response()->json($respon, 400);
+            else{
+                return response()->json([
+                    'success'   => false,
+                    'message'   => 'Login Fail',
+                    'data'      => []
+                ], 400);
+            }
         }
         else{
-            return response()->json($respon, 400);
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Login Fail',
+                'data'      => []
+            ], 400);
         }
     }
 
@@ -123,12 +127,6 @@ class AuthController extends Controller
         $id         = $request->input('id');
         $password   = $request->input('password');
         $type       = $request->input('type');
-
-        $respon = [
-            'success'   => false,
-            'message'   => 'Change Password Fail',
-            'data'      => ''
-        ];
 
         $user = User::where('id', $id)->first();
         if ($user) {
@@ -143,7 +141,11 @@ class AuthController extends Controller
             ], 200);
         }
         else{
-            return response()->json($respon, 400);
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Change Password Fail',
+                'data'      => ''
+            ], 400);
         }
     }
 }

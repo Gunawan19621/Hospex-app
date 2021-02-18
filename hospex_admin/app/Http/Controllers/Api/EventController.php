@@ -30,11 +30,12 @@ class EventController extends Controller
                 'message'   => 'Data Found',
                 'data'      => $data
             ],200);
-        } else {
+        }
+        else {
             return response()->json([
-                'success'   => False,
+                'success'   => false,
                 'message'   => 'Data Not Found',
-                'data'      => ''
+                'data'      => []
             ],404);
         }
     }
