@@ -27,31 +27,27 @@ class ExhibitorsController extends Controller
 
         $data = [];
         if($event){
-            $schedules = EventSchedule::where('event_id',$event->id)->orderby('date')->get();
+            $exhibitors = EventExhibitor::where('event_id',$event->id)->get();
+            // $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
+            //         ->select('event_exhibitors.*','events.begin')
+            //         ->whereDate('events.begin',' >= ',$t)
+            //         ->orderBy('events.begin')
+            //         ->get();
 
-            if(!$schedules->isEmpty()){
-                foreach ($schedules as $key => $schedule) {
-                    if($schedule->rundowns){
-                        $rundowns = $schedule->rundowns[0]->location;
-                    }
-                    else{
-                        $rundowns = '';
-                    }
-                    
+            if(!$exhibitors->isEmpty()){
+                foreach ($exhibitors as $key => $exhibitor) {
                     $data[] = [
-                        'id'            => $schedule->id,
-                        'hari'          => Carbon::parse($schedule->date)->format('l'),
-                        'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
-                        'lokasi'        => $rundowns,
-                        'acara'         => $schedule->rundowns()->get()->map(function($item){
-                            return [
-                                "tema"         => $item->task,
-                                "lokasi"       => $item->location,
-                                "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
-                                "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
-                                "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
-                            ];
-                        }),
+                        'id_exhibitor'  => $exhibitor->id, 
+                        'nama'          => $exhibitor->company->company_name,
+                        'alamat'        => $exhibitor->company->users[0]->address,
+                        'website'       => $exhibitor->company->company_web,
+                        'email'         => $exhibitor->company->users[0]->email,
+                        'info'          => $exhibitor->company->company_info,
+                        'event_title'   => $exhibitor->event->event_title,
+                        'logo'          => $exhibitor->company->image,
+                        'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                            return $item->category_name;
+                        })->implode(', '),
                     ];
                 }
             }
@@ -65,26 +61,44 @@ class ExhibitorsController extends Controller
         ],200);
     }
 
-    public function show($id)
+    public function show($exhibitor)
     {
-        $rundowns = EventSchedule::findorfail($id)->rundowns;
-        $data = [];
+        $exhibitor = EventExhibitor::where('id',$exhibitor)->first();
 
-        if(!$rundowns->isEmpty()){
-            foreach ($rundowns as $key => $rundown) {
-                $data[] = [
-                    'time'          => $rundown->time,
-                    'task'          => $rundown->task,
-                    'duration'      => $rundown->duration
-                ];
-            }
+        if($exhibitor){
+            $data = [
+                'id_exhibitor'  => $exhibitor->id, 
+                'nama'          => $exhibitor->company->company_name,
+                'alamat'        => $exhibitor->company->users[0]->address,
+                'website'       => $exhibitor->company->company_web,
+                'email'         => $exhibitor->company->users[0]->email,
+                'info'          => $exhibitor->company->company_info,
+                'event_title'   => $exhibitor->event->event_title,
+                'logo'          => '',
+                'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                                        return $item->category_name;
+                                    })->implode(', '),
+                'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
+                                        return  $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
+                                            return ($item->area->id ===  $stand->area_id ? $stand->stand_name : false);
+                                        })->filter()->implode(', ').' )' ;
+                                    })->implode(', '),
+            ];
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Found',
+                'data'      => $data,
+                'status'    => 200
+            ],200);
         }
-        
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Found',
-            'data'      => $data,
-            'status'    => 200
-        ],200);
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Data not Found',
+                'data'      => '',
+                'status'    => 403
+            ],403);
+        }
     }
 }

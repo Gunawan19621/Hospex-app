@@ -44,8 +44,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Register Fail. Email has been taken',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
 
         $companyCreate = Company::create([
@@ -77,8 +77,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Register Fail',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
     }
 
@@ -135,8 +135,8 @@ class AuthController extends Controller
                     'success'   => false,
                     'message'   => 'Login Fail',
                     'data'      => '',
-                    'status'    => 503
-                ], 503);
+                    'status'    => 403
+                ], 403);
             }
         }
         else{
@@ -144,8 +144,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Login Fail',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
     }
 
@@ -175,8 +175,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Get User Fail',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
     }
 
@@ -210,8 +210,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Change Profile Fail',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
     }
 
@@ -239,8 +239,8 @@ class AuthController extends Controller
                 'success'   => false,
                 'message'   => 'Change Password Fail',
                 'data'      => '',
-                'status'    => 503
-            ], 503);
+                'status'    => 403
+            ], 403);
         }
     }
 }

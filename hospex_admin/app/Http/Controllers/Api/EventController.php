@@ -40,8 +40,8 @@ class EventController extends Controller
                 'success'   => false,
                 'message'   => 'Data not Found',
                 'data'      => '',
-                'status'    => 503
-            ],503);
+                'status'    => 403
+            ],403);
         }
     }
 }
