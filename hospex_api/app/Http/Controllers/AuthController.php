@@ -181,13 +181,13 @@ class AuthController extends Controller
 
     public function changeProfile(Request $request)
     {
+        $id         = $request->input('id');
         $name       = $request->input('name');
-        $email      = $request->input('email');
         $company    = $request->input('company');
         $address    = $request->input('address');
         $phone      = $request->input('phone');
 
-        $checkUser = User::where('email',$email)->first();
+        $checkUser = User::where('id',$id)->first();
         if($checkUser){
             $checkUser->name    = $name;
             $checkUser->address = $address;
