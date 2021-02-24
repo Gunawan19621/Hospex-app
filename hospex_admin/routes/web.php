@@ -113,10 +113,6 @@ Route::get('/connection', function () {
 
 
 
-//API
-$router->get('/api/', function () use ($router) {
-    return $router->app->version();
-});
 
 // Generate Application Key
 $router->get('/api/key', function ()
