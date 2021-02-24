@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('company_name');
             $table->string('company_web')->default('');
-            $table->text('company_info')->default('');
+            $table->text('company_info')->nullable();
             $table->string('image')->default('');
             $table->timestamps();
         });
