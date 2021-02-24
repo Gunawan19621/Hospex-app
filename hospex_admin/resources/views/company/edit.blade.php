@@ -60,7 +60,6 @@
                   <div class="form-group m-form__group">
                     <label for="companyAddress">Categories</label>
                     <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple">
-                        <option value="">Categories</option>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @if (gettype(array_search($category->id, $array)) == 'integer') selected @endif > {{ $category->category_name }}  </option>
                         @endforeach
