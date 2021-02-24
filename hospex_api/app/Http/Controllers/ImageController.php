@@ -23,7 +23,7 @@ class ImageController extends BaseController
                 $filename = time().'.'.request()->image->getClientOriginalExtension();
                 request()->image->move(public_path('images'), $filename);
 
-                $user->company->image = public_path('images').'/'.$filename;
+                $user->company->image = 'images/'.$filename;
                 $user->company->save();
 
                 return response()->json([
