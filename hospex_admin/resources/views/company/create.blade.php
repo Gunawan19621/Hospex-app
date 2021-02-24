@@ -59,8 +59,7 @@
                   </div>
                   <div class="form-group m-form__group">
                     <label for="companyAddress">Categories</label>
-                    <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple" data-select2-tag="true" autocomplete="off">
-                        <option value="">Categories</option>
+                    <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple" data-select2-tag="true" autocomplete="off" placeholder="" >
                         @foreach ($categories as $category)
                         <option  value=" {{ $category->id }} " > {{ $category->category_name }} </option>
                         @endforeach
