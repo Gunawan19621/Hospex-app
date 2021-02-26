@@ -187,6 +187,7 @@ class AuthController extends Controller
         $company    = $request->input('company');
         $address    = $request->input('address');
         $phone      = $request->input('phone');
+        $password   = $request->input('password');
 
         $checkUser = User::where('id',$id)->first();
         if($checkUser){
@@ -197,6 +198,11 @@ class AuthController extends Controller
 
             $checkUser->company->company_name = $company;
             $checkUser->company->save();
+
+            if($password != null && $password != ''){
+                $checkUser->password = Hash::make($password);
+                $checkUser->save();
+            }
 
             return response()->json([
                 'success'   => true,
