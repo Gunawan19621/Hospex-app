@@ -273,7 +273,7 @@ class BusinessMatchingController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Data Success to Save',
-                'data'      => $approve,
+                'data'      => '',
                 'status'    => 200
             ],200);
         }
