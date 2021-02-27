@@ -176,8 +176,8 @@ class BusinessMatchingController extends Controller
 
                 if($checkEventVisitor){
                     $match = MatchRequest::create([
-                        'available_schedule_id'     => $time,
-                        'event_exhibitor_id'        => $exhibitor_id,
+                        'available_schedule_id'     => (int) $time,
+                        'event_exhibitor_id'        => (int) $exhibitor_id,
                         'event_visitor_id'          => $checkEventVisitor->id,
                         'status'                    => '0',
                         'time'                      => $checkAvailable->time,
@@ -191,8 +191,8 @@ class BusinessMatchingController extends Controller
                     ]);
 
                     $match = MatchRequest::create([
-                        'available_schedule_id'     => $time,
-                        'event_exhibitor_id'        => $exhibitor_id,
+                        'available_schedule_id'     => (int) $time,
+                        'event_exhibitor_id'        => (int) $exhibitor_id,
                         'event_visitor_id'          => $createEventVisitor->id,
                         'status'                    => '0',
                         'time'                      => $checkAvailable->time,
