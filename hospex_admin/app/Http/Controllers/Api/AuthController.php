@@ -87,48 +87,59 @@ class AuthController extends Controller
         $t = Carbon::now();
         $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
-        $email      = $request->input('email');
-        $password   = $request->input('password');
-        $type       = $request->input('type');
+        $email        = $request->input('email');
+        $password     = $request->input('password');
+        $type         = $request->input('type');
+        // $device_token = $request->input('device_token');
 
         $user = User::where('email', $email)->first();
         if ($user) {
-            if (Hash::check($password, $user->password)) {
-                $apiToken = base64_encode(Str::random(40));
-                $user->update(['api_token' => $apiToken ]);
-                
-                $data['id']         = $user->id;
-                $data['foto']       = $user->company->image;
-                $data['nama']       = $user->name;
-                $data['user_name']  = 'user_name';
-                $data['email']      = $email;
-                $data['type']       = $type;
-                $data['phone']      = $user->phone;
-                $data['address']    = $user->address;
-                $data['company']    = $user->company->name;
+            if($user->type == $type){
+                if (Hash::check($password, $user->password)) {
+                    $apiToken = base64_encode(Str::random(40));
+                    $user->update(['api_token' => $apiToken ]);
+                    
+                    $data['id']         = $user->id;
+                    $data['foto']       = $user->company->image;
+                    $data['nama']       = $user->name;
+                    $data['user_name']  = 'user_name';
+                    $data['email']      = $email;
+                    $data['type']       = $type;
+                    $data['phone']      = $user->phone;
+                    $data['address']    = $user->address;
+                    $data['company']    = $user->company->name;
 
-                if($event){
-                    $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
-                    if($checkData){
+                    if($event){
+                        $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
+                        if($checkData){
 
+                        }
+                        else{
+                            $create = EventVisitor::create([
+                                'company_id' => $user->company_id,
+                                'event_id'   => $event->id
+                            ]);
+                        }
                     }
-                    else{
-                        $create = EventVisitor::create([
-                            'company_id' => $user->company_id,
-                            'event_id'   => $event->id
-                        ]);
-                    }
+
+                    return response()->json([
+                        'success'   => true,
+                        'message'   => 'Login Success',
+                        'data'      => [
+                            'user'      => $data,
+                            'api_token' => $apiToken
+                        ],
+                        'status'    => 200
+                    ], 200);
                 }
-
-                return response()->json([
-                    'success'   => true,
-                    'message'   => 'Login Success',
-                    'data'      => [
-                        'user'      => $data,
-                        'api_token' => $apiToken
-                    ],
-                    'status'    => 200
-                ], 200);
+                else{
+                    return response()->json([
+                        'success'   => false,
+                        'message'   => 'Login Fail',
+                        'data'      => '',
+                        'status'    => 403
+                    ], 403);
+                }
             }
             else{
                 return response()->json([
