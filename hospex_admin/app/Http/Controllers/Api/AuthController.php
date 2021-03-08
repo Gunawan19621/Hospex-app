@@ -135,7 +135,7 @@ class AuthController extends Controller
                 else{
                     return response()->json([
                         'success'   => false,
-                        'message'   => 'Login Fail',
+                        'message'   => 'Login Fail. Password is wrong',
                         'data'      => '',
                         'status'    => 403
                     ], 403);
@@ -144,7 +144,7 @@ class AuthController extends Controller
             else{
                 return response()->json([
                     'success'   => false,
-                    'message'   => 'Login Fail',
+                    'message'   => 'Login Fail. Type is wrong',
                     'data'      => '',
                     'status'    => 403
                 ], 403);
@@ -153,7 +153,7 @@ class AuthController extends Controller
         else{
             return response()->json([
                 'success'   => false,
-                'message'   => 'Login Fail',
+                'message'   => 'Login Fail. Email not found',
                 'data'      => '',
                 'status'    => 403
             ], 403);
