@@ -95,52 +95,12 @@ class AuthController extends Controller
         $user = User::where('email', $email)->first();
         if ($user) {
             if($type == null || $type == ''){
-                if (Hash::check($password, $user->password)) {
-                    $apiToken = base64_encode(Str::random(40));
-                    $user->update([
-                        'api_token' => $apiToken
-                    ]);
-                    
-                    $data['id']         = $user->id;
-                    $data['foto']       = $user->company->image;
-                    $data['nama']       = $user->name;
-                    $data['email']      = $user->email;
-                    $data['type']       = $user->type;
-                    $data['phone']      = $user->phone;
-                    $data['address']    = $user->address;
-                    $data['company']    = $user->company->company_name;
-
-                    if($event){
-                        $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
-                        if($checkData){
-
-                        }
-                        else{
-                            $create = EventVisitor::create([
-                                'company_id' => $user->company_id,
-                                'event_id'   => $event->id
-                            ]);
-                        }
-                    }
-
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'Login Success',
-                        'data'      => [
-                            'user'      => $data,
-                            'api_token' => $apiToken
-                        ],
-                        'status'    => 200
-                    ], 200);
-                }
-                else{
-                    return response()->json([
-                        'success'   => false,
-                        'message'   => 'Login Fail. Password is wrong',
-                        'data'      => '',
-                        'status'    => 403
-                    ], 403);
-                }
+                return response()->json([
+                    'success'   => false,
+                    'message'   => 'Login Fail. Type is wrong',
+                    'data'      => '',
+                    'status'    => 403
+                ], 403);
             }
             else{
                 if($user->type == $type){
