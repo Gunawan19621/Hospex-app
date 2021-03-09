@@ -99,16 +99,14 @@ class AuthController extends Controller
                     $apiToken = base64_encode(Str::random(40));
                     
                     if($device_token == null || $device_token == ''){
-                        $user->update([
-                            'api_token'    => $apiToken,
-                            'device_token' => ''
-                        ]);
+                        $user->api_token    = $apiToken;
+                        $user->device_token = null;
+                        $user->save();
                     }
                     else{
-                        $user->update([
-                            'api_token'    => $apiToken,
-                            'device_token' => $device_token
-                        ]);
+                        $user->api_token    = $apiToken;
+                        $user->device_token = $device_token;
+                        $user->save();
                     }
                     
                     $data['id']         = $user->id;
@@ -156,9 +154,17 @@ class AuthController extends Controller
                 if($user->type == $type){
                     if (Hash::check($password, $user->password)) {
                         $apiToken = base64_encode(Str::random(40));
-                        $user->update([
-                            'api_token' => $apiToken
-                        ]);
+                        
+                        if($device_token == null || $device_token == ''){
+                            $user->api_token    = $apiToken;
+                            $user->device_token = null;
+                            $user->save();
+                        }
+                        else{
+                            $user->api_token    = $apiToken;
+                            $user->device_token = $device_token;
+                            $user->save();
+                        }
                         
                         $data['id']         = $user->id;
                         $data['foto']       = $user->company->image;
@@ -300,9 +306,8 @@ class AuthController extends Controller
 
         $user = User::where('id', $id)->first();
         if ($user) {
-            $user->update([
-                'password' => Hash::make($password)
-            ]);
+            $user->password = Hash::make($password);
+            $user->save();
 
             return response()->json([
                 'success'   => true,
