@@ -108,7 +108,7 @@ class AuthController extends Controller
                     $data['type']       = $user->type;
                     $data['phone']      = $user->phone;
                     $data['address']    = $user->address;
-                    $data['company']    = $user->company->name;
+                    $data['company']    = $user->company->company_name;
 
                     if($event){
                         $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
