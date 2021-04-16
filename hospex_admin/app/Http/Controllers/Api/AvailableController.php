@@ -32,10 +32,7 @@ class AvailableController extends Controller
             $exclude[] = $matchRequestEach->available_schedule_id;
         }
 
-        $data = AvailableSchedule::
-                    ->whereNotIn('id', $exclude)
-                    ->orderBy('date')
-                    ->get();
+        $data = AvailableSchedule::whereNotIn('id', $exclude)->orderBy('date')->get();
 
         if($data->isEmpty()){
             $data = [];
