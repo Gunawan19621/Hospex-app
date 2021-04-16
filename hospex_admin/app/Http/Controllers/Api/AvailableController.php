@@ -32,11 +32,9 @@ class AvailableController extends Controller
             $exclude[] = $matchRequestEach->available_schedule_id;
         }
 
-        $data = AvailableSchedule::join('events', 'available_schedules.event_id', '=', 'events.id')
-                    ->join('event_exhibitors','events.id','=','event_exhibitors.event_id')
-                    ->select('available_schedules.*')
-                    ->whereNotIn('available_schedules.id', $exclude)
-                    ->orderBy('available_schedules.date')
+        $data = AvailableSchedule::
+                    ->whereNotIn('id', $exclude)
+                    ->orderBy('date')
                     ->get();
 
         if($data->isEmpty()){
