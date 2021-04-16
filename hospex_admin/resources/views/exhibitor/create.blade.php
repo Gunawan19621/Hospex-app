@@ -38,9 +38,9 @@
                   <div class="invalid-feedback d-block"> {{ $errors->first('event_id') }} </div>
                 </div>
                 <div class="form-group m-form__group">
-                    <label for="eventitel">Company</label>
+                    <label for="eventitel">Company Exhibitor</label>
                     <select class="form-control @error('company_id') is-invalid @enderror m-select2" id="m_select2_3" name="company_id[]" multiple="multiple" required>
-                      <option value="" > Company </option>
+                      <option value="" > Company Exhibitor</option>
                       @foreach ($companies as $company)
                       <option value=" {{ $company->id }} " @if (!empty(old('company_id'))){{ in_array($company->id, old('company_id'))  ? 'selected' : '' }}@endif  > {{ $company->company_name }} </option>
                       @endforeach

@@ -39,9 +39,9 @@
                   @error('event_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
-                    <label for="eventitel">Company</label>
+                    <label for="eventitel">Company Exhibitor</label>
                     <select class="form-control @error('company_id') is-invalid @enderror " name="company_id" id="companyID" value="{{ old('company_id') }}" required>
-                      <option value="" > Company </option>
+                      <option value="" > Company Exhibitor</option>
                       @foreach ($companies as $company)
                       <option value=" {{ $company->id }} " @if ( $company->id == $exhibitor->company_id) {{'selected'}} @endif > {{ $company->company_name }} </option>
                       @endforeach
