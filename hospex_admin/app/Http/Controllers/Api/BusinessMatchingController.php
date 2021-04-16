@@ -42,6 +42,7 @@ class BusinessMatchingController extends Controller
                 ->select('match_requests.*','event_visitors.event_id','event_visitors.company_id','available_schedules.time','available_schedules.date')
                 ->where('event_visitors.company_id',$user->company->id)
                 ->where('match_requests.status', $status)
+                ->orderBy('match_requests.id','desc')
                 ->get();
         }
         else{
@@ -50,6 +51,7 @@ class BusinessMatchingController extends Controller
                 ->select('match_requests.*','event_exhibitors.event_id','event_exhibitors.company_id','available_schedules.time','available_schedules.date')
                 ->where('event_exhibitors.company_id',$user->company->id)
                 ->where('match_requests.status', $status)
+                ->orderBy('match_requests.id','desc')
                 ->get();
         }
 
@@ -101,10 +103,10 @@ class BusinessMatchingController extends Controller
 
     public function list_matching(Request $request){
         if ($request->is('matchExhibitor')) {
-            $matches = MatchRequest::where('event_exhibitor_id', $request->id_user)->get();
+            $matches = MatchRequest::where('event_exhibitor_id', $request->id_user)->orderBy('id','desc')->get();
         }
         else{
-             $matches = MatchRequest::where('visitor_id', $request->id_user)->get();
+            $matches = MatchRequest::where('visitor_id', $request->id_user)->orderBy('id','desc')->get();
         }
         
         $data = [];
