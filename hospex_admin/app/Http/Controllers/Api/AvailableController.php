@@ -25,15 +25,17 @@ class AvailableController extends Controller
 
     public function index($exhibitor)
     {
-        $g         = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
-        $flattened = $g->map(function($item){
-            return $item->available_schedule_id;
-        });
+        $matchRequest = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
+        $exclude = [];
+
+        foreach ($matchRequest as $matchRequestEach) {
+            $exclude[] = $matchRequestEach->available_schedule_id;
+        }
 
         $data = AvailableSchedule::join('events', 'available_schedules.event_id', '=', 'events.id')
                     ->join('event_exhibitors','events.id','=','event_exhibitors.event_id')
                     ->select('available_schedules.*')
-                    ->whereNotIn('available_schedules.id', $flattened)
+                    ->whereNotIn('available_schedules.id', $exclude)
                     ->orderBy('available_schedules.date')
                     ->get();
 
