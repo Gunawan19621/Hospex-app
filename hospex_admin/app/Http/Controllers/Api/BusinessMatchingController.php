@@ -185,14 +185,18 @@ class BusinessMatchingController extends Controller
                 $checkEventVisitor = EventVisitor::where('company_id',$userVisitor->company_id)->where('event_id',$checkAvailable->event->id)->first();
 
                 if($checkEventVisitor){
-                    $match = MatchRequest::create([
-                        'available_schedule_id'     => (int) $time,
-                        'event_exhibitor_id'        => (int) $exhibitor_id,
-                        'event_visitor_id'          => $checkEventVisitor->id,
-                        'status'                    => '0',
-                        'time'                      => $checkAvailable->time,
-                        'date'                      => $checkAvailable->date
-                    ]);
+                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $checkEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->first();
+
+                    if($checkMatchRequest == null){
+                        $match = MatchRequest::create([
+                            'available_schedule_id'     => (int) $time,
+                            'event_exhibitor_id'        => (int) $exhibitor_id,
+                            'event_visitor_id'          => $checkEventVisitor->id,
+                            'status'                    => '0',
+                            'time'                      => $checkAvailable->time,
+                            'date'                      => $checkAvailable->date
+                        ]);
+                    }
                 }
                 else{
                     $createEventVisitor = EventVisitor::create([
@@ -200,14 +204,18 @@ class BusinessMatchingController extends Controller
                         'event_id'   => $checkAvailable->event->id
                     ]);
 
-                    $match = MatchRequest::create([
-                        'available_schedule_id'     => (int) $time,
-                        'event_exhibitor_id'        => (int) $exhibitor_id,
-                        'event_visitor_id'          => $createEventVisitor->id,
-                        'status'                    => '0',
-                        'time'                      => $checkAvailable->time,
-                        'date'                      => $checkAvailable->date
-                    ]);
+                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $createEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->first();
+
+                    if($checkMatchRequest == null){
+                        $match = MatchRequest::create([
+                            'available_schedule_id'     => (int) $time,
+                            'event_exhibitor_id'        => (int) $exhibitor_id,
+                            'event_visitor_id'          => $createEventVisitor->id,
+                            'status'                    => '0',
+                            'time'                      => $checkAvailable->time,
+                            'date'                      => $checkAvailable->date
+                        ]);
+                    }
                 }
 
                 return response()->json([
