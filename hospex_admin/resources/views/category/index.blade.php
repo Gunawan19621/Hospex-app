@@ -16,7 +16,7 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Category Lists
+                            Category Company Lists
                         </h3>
                         </div>
                     </div>
