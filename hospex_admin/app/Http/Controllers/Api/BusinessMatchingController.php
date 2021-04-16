@@ -8,6 +8,7 @@ use App\AvailableSchedule;
 use App\User;
 use App\EventVisitor;
 use App\EventExhibitor;
+use App\Event;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\MockObject\Builder\Match;
@@ -28,68 +29,75 @@ class BusinessMatchingController extends Controller
 
     public function index($type, $id, $status)
     {
-        $user = User::where('id',$id)->first();
-        if($status == 'confirm'){
-            $status = '1';
-        }
-        else{
-            $status = '0';
-        }
-
-        if($type == 'visitor'){
-            $matches = MatchRequest::join('event_visitors', 'event_visitors.id', '=', 'match_requests.event_visitor_id')
-                ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
-                ->select('match_requests.*','event_visitors.event_id','event_visitors.company_id','available_schedules.time','available_schedules.date')
-                ->where('event_visitors.company_id',$user->company->id)
-                ->where('match_requests.status', $status)
-                ->orderBy('match_requests.id','desc')
-                ->get();
-        }
-        else{
-            $matches = MatchRequest::join('event_exhibitors', 'event_exhibitors.id', '=', 'match_requests.event_exhibitor_id')
-                ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
-                ->select('match_requests.*','event_exhibitors.event_id','event_exhibitors.company_id','available_schedules.time','available_schedules.date')
-                ->where('event_exhibitors.company_id',$user->company->id)
-                ->where('match_requests.status', $status)
-                ->orderBy('match_requests.id','desc')
-                ->get();
-        }
+        $t = Carbon::now();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
         $data = [];
-        if(!$matches->isEmpty()){
-            $tanggal = $matches->reverse()->unique('date')->reverse();
- 
-            foreach ($tanggal as $key => $value) {
-                $m['tanggal'] = Carbon::createFromDate($value->date)->format('d M, Y ');
-                $m['hari']    = Carbon::parse($value->date)->format('l');
-                
-                $n = array();
-                foreach($matches as $match){
-                    if($value->date == $match->date){
-                        $o = array(
-                            'id'            => $match->id,
-                            'logo_PT'       => 'logo1.jpg',
-                            'nama_PT'       => $match->exhibitor->company->company_name,
-                            'visitor_name'  => $match->visitor->company->users[0]->name,
-                            'visitor_email' => $match->visitor->company->users[0]->email,
-                            'time'          => $match->availableSchedule->time,
-                        );
+        if($event){
+            $user = User::where('id',$id)->first();
+            if($status == 'confirm'){
+                $status = '1';
+            }
+            else{
+                $status = '0';
+            }
 
-                        if ($match->status == '1') {
-                            $o['status'] = 'Approved';
+            if($type == 'visitor'){
+                $matches = MatchRequest::join('event_visitors', 'event_visitors.id', '=', 'match_requests.event_visitor_id')
+                    ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
+                    ->select('match_requests.*','event_visitors.event_id','event_visitors.company_id','available_schedules.time','available_schedules.date')
+                    ->where('event_visitors.company_id',$user->company->id)
+                    ->where('match_requests.status', $status)
+                    ->where('available_schedules.event_id', $event->id)
+                    ->orderBy('match_requests.id','desc')
+                    ->get();
+            }
+            else{
+                $matches = MatchRequest::join('event_exhibitors', 'event_exhibitors.id', '=', 'match_requests.event_exhibitor_id')
+                    ->join('available_schedules', 'available_schedules.id', '=', 'match_requests.available_schedule_id')
+                    ->select('match_requests.*','event_exhibitors.event_id','event_exhibitors.company_id','available_schedules.time','available_schedules.date')
+                    ->where('event_exhibitors.company_id',$user->company->id)
+                    ->where('match_requests.status', $status)
+                    ->where('available_schedules.event_id', $event->id)
+                    ->orderBy('match_requests.id','desc')
+                    ->get();
+            }
+
+            if(!$matches->isEmpty()){
+                $tanggal = $matches->reverse()->unique('date')->reverse();
+     
+                foreach ($tanggal as $key => $value) {
+                    $m['tanggal'] = Carbon::createFromDate($value->date)->format('d M, Y ');
+                    $m['hari']    = Carbon::parse($value->date)->format('l');
+                    
+                    $n = array();
+                    foreach($matches as $match){
+                        if($value->date == $match->date){
+                            $o = array(
+                                'id'            => $match->id,
+                                'logo_PT'       => 'logo1.jpg',
+                                'nama_PT'       => $match->exhibitor->company->company_name,
+                                'visitor_name'  => $match->visitor->company->users[0]->name,
+                                'visitor_email' => $match->visitor->company->users[0]->email,
+                                'time'          => $match->availableSchedule->time,
+                            );
+
+                            if ($match->status == '1') {
+                                $o['status'] = 'Approved';
+                            }
+                            else if($match->status == '2') {
+                                $o['status'] = 'Decline';
+                            }
+                            else{
+                                $o['status'] = 'Pending';
+                            }
+                            
+                            $n[]= $o;
                         }
-                        else if($match->status == '2') {
-                            $o['status'] = 'Decline';
-                        }
-                        else{
-                            $o['status'] = 'Pending';
-                        }
-                        
-                        $n[]= $o;
                     }
+                    $m['business_match'] = $n;
+                    $data[] = $m;    
                 }
-                $m['business_match'] = $n;
-                $data[] = $m;    
             }
         }
 
