@@ -40,7 +40,7 @@ class AvailableController extends Controller
         $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
         if($event){
-            $data = AvailableSchedule::where('event_id', $event->id)->orderBy('date')->get();
+            $data = AvailableSchedule::where('event_id', $event->id)->whereDate('date',' >= ',$t)->orderBy('date')->get();
 
             if($data->isEmpty()){
                 $data = [];
