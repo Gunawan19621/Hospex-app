@@ -35,8 +35,9 @@ class ExhibitorsController extends Controller
             //         ->orderBy('events.begin')
             //         ->get();
 
+            $exclude = [];
             if(!$exhibitors->isEmpty()){
-                foreach ($exhibitors as $key => $exhibitor) {
+                foreach ($exhibitors as $exhibitor) {
                     $data[] = [
                         'id_exhibitor'  => $exhibitor->id, 
                         'nama'          => $exhibitor->company->company_name,
@@ -46,6 +47,50 @@ class ExhibitorsController extends Controller
                         'info'          => $exhibitor->company->company_info,
                         'event_title'   => $exhibitor->event->event_title,
                         'logo'          => $exhibitor->company->image,
+                        'sponsor'       => true,
+                        'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                            return $item->category_name;
+                        })->implode(', '),
+                    ];
+
+                    $exclude[] = $exhibitor->id;
+                }
+            }
+
+            $exhibitorsExclude = EventExhibitor::whereNotIn('id',$exclude)->get();
+            if(!$exhibitorsExclude->isEmpty()){
+                foreach ($exhibitorsExclude as $exhibitorExclude) {
+                    $data[] = [
+                        'id_exhibitor'  => $exhibitorExclude->id, 
+                        'nama'          => $exhibitorExclude->company->company_name,
+                        'alamat'        => $exhibitorExclude->company->users[0]->address,
+                        'website'       => $exhibitorExclude->company->company_web,
+                        'email'         => $exhibitorExclude->company->users[0]->email,
+                        'info'          => $exhibitorExclude->company->company_info,
+                        'event_title'   => $exhibitorExclude->event->event_title,
+                        'logo'          => $exhibitorExclude->company->image,
+                        'sponsor'       => false,
+                        'categories'    => $exhibitorExclude->company->categories()->get()->map(function($item) {
+                            return $item->category_name;
+                        })->implode(', '),
+                    ];
+                }
+            }
+        }
+        else{
+            $exhibitors = EventExhibitor::get();
+            if(!$exhibitors->isEmpty()){
+                foreach ($exhibitors as $exhibitor) {
+                    $data[] = [
+                        'id_exhibitor'  => $exhibitor->id, 
+                        'nama'          => $exhibitor->company->company_name,
+                        'alamat'        => $exhibitor->company->users[0]->address,
+                        'website'       => $exhibitor->company->company_web,
+                        'email'         => $exhibitor->company->users[0]->email,
+                        'info'          => $exhibitor->company->company_info,
+                        'event_title'   => $exhibitor->event->event_title,
+                        'logo'          => $exhibitor->company->image,
+                        'sponsor'       => false,
                         'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                             return $item->category_name;
                         })->implode(', '),
