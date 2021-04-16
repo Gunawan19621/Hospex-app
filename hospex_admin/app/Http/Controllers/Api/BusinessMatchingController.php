@@ -197,6 +197,9 @@ class BusinessMatchingController extends Controller
                             'date'                      => $checkAvailable->date
                         ]);
                     }
+                    else{
+                        $match = '';
+                    }
                 }
                 else{
                     $createEventVisitor = EventVisitor::create([
@@ -215,6 +218,9 @@ class BusinessMatchingController extends Controller
                             'time'                      => $checkAvailable->time,
                             'date'                      => $checkAvailable->date
                         ]);
+                    }
+                    else{
+                        $match = '';
                     }
                 }
 
