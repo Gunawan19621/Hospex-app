@@ -2,8 +2,13 @@
 <script>
     $(document).ready(function(){
         var table =$('#m_table_1').DataTable({
+            dom: 'Bfrtip',
             processing : true,
             serverSide  : true,
+            order: [[0, 'desc']],
+            buttons: [
+                'csv', 'excel', 'pdf', 'print'
+            ],
             ajax : {
                 url : "{{ route('visitors.index') }}",
             },
