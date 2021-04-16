@@ -119,15 +119,14 @@ class AuthController extends Controller
                     $data['company']    = $user->company->company_name;
 
                     if($event){
-                        $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
-                        if($checkData){
-
-                        }
-                        else{
-                            $create = EventVisitor::create([
-                                'company_id' => $user->company_id,
-                                'event_id'   => $event->id
-                            ]);
+                        if($user->type == 'visitor'){
+                            $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
+                            if($checkData == null){
+                                $create = EventVisitor::create([
+                                    'company_id' => $user->company_id,
+                                    'event_id'   => $event->id
+                                ]);
+                            }
                         }
                     }
 
