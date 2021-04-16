@@ -16,7 +16,7 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Add Available Schedule
+                      Form Add Schedule Match Request
                   </h3>
                   </div>
               </div>

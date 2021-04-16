@@ -173,16 +173,13 @@ License: You must have a valid license purchased only from themeforest(the above
 								<a href="{{ url('/categories') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Category</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('/companies') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Company</span></a>
+								<a href="{{ url('/companies') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Company Exhibitors</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('events') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Events</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors</span></a>
-							</li>
-							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('available-schedule') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Available Schedule</span></a>
+								<a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors (Sponsor)</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('/areas') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Areas</span></a>
@@ -190,14 +187,17 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('/stands') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Stands</span></a>
 							</li>
-							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+							<!-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a>
-							</li>
+							</li> -->
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a>
+								<a href="{{ url('available-schedule') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Schedule Match Request</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('matches') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Match Requests</span></a>
+							</li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+								<a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a>
 							</li>
 						</ul>
 					</div>

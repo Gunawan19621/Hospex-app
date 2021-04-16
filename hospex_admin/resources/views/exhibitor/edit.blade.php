@@ -16,7 +16,7 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Edit Exhibitor
+                      Form Edit Exhibitor (Sponsor)
                   </h3>
                   </div>
               </div>
