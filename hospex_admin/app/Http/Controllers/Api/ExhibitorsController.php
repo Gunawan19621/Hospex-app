@@ -28,7 +28,8 @@ class ExhibitorsController extends Controller
 
         $data = [];
         if($event){
-            $exhibitors = EventExhibitor::join('company', 'company.id', '=', 'event_exhibitors.company_id')->where('event_id',$event->id)->orderBy('company.company_name','asc')->get();
+            $exhibitors = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->where('event_id',$event->id)->orderBy('companies.company_name','asc')->get();
+
             // $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
             //         ->select('event_exhibitors.*','events.begin')
             //         ->whereDate('events.begin',' >= ',$t)
@@ -57,7 +58,7 @@ class ExhibitorsController extends Controller
                 }
             }
 
-            $exhibitorsExclude = EventExhibitor::whereNotIn('company_id',$exclude)->get();
+            $exhibitorsExclude = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->whereNotIn('event_exhibitors.company_id',$exclude)->orderBy('companies.company_name','asc')->get();
             if(!$exhibitorsExclude->isEmpty()){
                 foreach ($exhibitorsExclude as $exhibitorExclude) {
                     $data[] = [
@@ -78,7 +79,7 @@ class ExhibitorsController extends Controller
             }
         }
         else{
-            $exhibitors = EventExhibitor::get();
+            $exhibitors = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->orderBy('companies.company_name','asc')->get();
             if(!$exhibitors->isEmpty()){
                 foreach ($exhibitors as $exhibitor) {
                     $data[] = [
