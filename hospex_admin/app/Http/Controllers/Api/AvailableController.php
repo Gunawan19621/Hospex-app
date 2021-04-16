@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\AvailableSchedule;
 use App\EventExhibitor;
 use App\MatchRequest;
+use App\Event;
+use Illuminate\Support\Carbon;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -34,9 +36,17 @@ class AvailableController extends Controller
 
         // $data = AvailableSchedule::whereNotIn('id', $exclude)->orderBy('date')->get();
 
-        $data = AvailableSchedule::orderBy('date')->get();
+        $t = Carbon::now();
+        $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
-        if($data->isEmpty()){
+        if($event){
+            $data = AvailableSchedule::where('event_id', $event->id)->orderBy('date')->get();
+
+            if($data->isEmpty()){
+                $data = [];
+            }
+        }
+        else{
             $data = [];
         }
 
