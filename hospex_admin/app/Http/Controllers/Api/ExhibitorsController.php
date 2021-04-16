@@ -39,7 +39,7 @@ class ExhibitorsController extends Controller
             if(!$exhibitors->isEmpty()){
                 foreach ($exhibitors as $exhibitor) {
                     $data[] = [
-                        'id_exhibitor'  => $exhibitor->id, 
+                        'id_exhibitor'  => $exhibitor->id,
                         'nama'          => $exhibitor->company->company_name,
                         'alamat'        => $exhibitor->company->users[0]->address,
                         'website'       => $exhibitor->company->company_web,
@@ -53,11 +53,11 @@ class ExhibitorsController extends Controller
                         })->implode(', '),
                     ];
 
-                    $exclude[] = $exhibitor->id;
+                    $exclude[] = $exhibitor->company->id;
                 }
             }
 
-            $exhibitorsExclude = EventExhibitor::whereNotIn('id',$exclude)->get();
+            $exhibitorsExclude = EventExhibitor::whereNotIn('company_id',$exclude)->get();
             if(!$exhibitorsExclude->isEmpty()){
                 foreach ($exhibitorsExclude as $exhibitorExclude) {
                     $data[] = [
