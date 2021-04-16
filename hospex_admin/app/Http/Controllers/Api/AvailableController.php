@@ -25,14 +25,16 @@ class AvailableController extends Controller
 
     public function index($exhibitor)
     {
-        $matchRequest = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
-        $exclude = [];
+        // $matchRequest = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
+        // $exclude = [];
 
-        foreach ($matchRequest as $matchRequestEach) {
-            $exclude[] = $matchRequestEach->available_schedule_id;
-        }
+        // foreach ($matchRequest as $matchRequestEach) {
+        //     $exclude[] = $matchRequestEach->available_schedule_id;
+        // }
 
-        $data = AvailableSchedule::whereNotIn('id', $exclude)->orderBy('date')->get();
+        // $data = AvailableSchedule::whereNotIn('id', $exclude)->orderBy('date')->get();
+
+        $data = AvailableSchedule::orderBy('date')->get();
 
         if($data->isEmpty()){
             $data = [];
