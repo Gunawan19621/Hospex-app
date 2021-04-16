@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Collection;
 use App\EventExhibitor;
 use App\Event;
+use App\Company;
 use Illuminate\Support\Carbon;
 use App\Helpers\GetEvent as eventId;
 use App\Http\Controllers\Controller;
@@ -58,20 +59,23 @@ class ExhibitorsController extends Controller
                 }
             }
 
-            $exhibitorsExclude = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('event_exhibitors.*')->whereNotIn('event_exhibitors.company_id',$exclude)->orderBy('companies.company_name','asc')->get();
+            $exhibitorsExclude = Company::whereHas('users', function ($query) {
+                    $query->where('type','exhibitor');            
+                })->whereNotIn('id',$exclude)->orderBy('company_name','asc')->get();
+
             if(!$exhibitorsExclude->isEmpty()){
                 foreach ($exhibitorsExclude as $exhibitorExclude) {
                     $data[] = [
-                        'id_exhibitor'  => $exhibitorExclude->id, 
-                        'nama'          => $exhibitorExclude->company->company_name,
-                        'alamat'        => $exhibitorExclude->company->users[0]->address,
-                        'website'       => $exhibitorExclude->company->company_web,
-                        'email'         => $exhibitorExclude->company->users[0]->email,
-                        'info'          => $exhibitorExclude->company->company_info,
-                        'event_title'   => $exhibitorExclude->event->event_title,
-                        'logo'          => $exhibitorExclude->company->image,
+                        'id_exhibitor'  => 0,
+                        'nama'          => $exhibitorExclude->company_name,
+                        'alamat'        => $exhibitorExclude->users[0]->address,
+                        'website'       => $exhibitorExclude->company_web,
+                        'email'         => $exhibitorExclude->users[0]->email,
+                        'info'          => $exhibitorExclude->company_info,
+                        'event_title'   => '',
+                        'logo'          => $exhibitorExclude->image,
                         'sponsor'       => false,
-                        'categories'    => $exhibitorExclude->company->categories()->get()->map(function($item) {
+                        'categories'    => $exhibitorExclude->categories()->get()->map(function($item) {
                             return $item->category_name;
                         })->implode(', '),
                     ];
@@ -79,20 +83,23 @@ class ExhibitorsController extends Controller
             }
         }
         else{
-            $exhibitors = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('event_exhibitors.*')->orderBy('companies.company_name','asc')->get();
+            $exhibitors = Company::whereHas('users', function ($query) {
+                    $query->where('type','exhibitor');            
+                })->orderBy('company_name','asc')->get();
+
             if(!$exhibitors->isEmpty()){
                 foreach ($exhibitors as $exhibitor) {
                     $data[] = [
-                        'id_exhibitor'  => $exhibitor->id, 
-                        'nama'          => $exhibitor->company->company_name,
-                        'alamat'        => $exhibitor->company->users[0]->address,
-                        'website'       => $exhibitor->company->company_web,
-                        'email'         => $exhibitor->company->users[0]->email,
-                        'info'          => $exhibitor->company->company_info,
-                        'event_title'   => $exhibitor->event->event_title,
-                        'logo'          => $exhibitor->company->image,
+                        'id_exhibitor'  => 0,
+                        'nama'          => $exhibitor->company_name,
+                        'alamat'        => $exhibitor->users[0]->address,
+                        'website'       => $exhibitor->company_web,
+                        'email'         => $exhibitor->users[0]->email,
+                        'info'          => $exhibitor->company_info,
+                        'event_title'   => '',
+                        'logo'          => $exhibitor->image,
                         'sponsor'       => false,
-                        'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                        'categories'    => $exhibitor->categories()->get()->map(function($item) {
                             return $item->category_name;
                         })->implode(', '),
                     ];
