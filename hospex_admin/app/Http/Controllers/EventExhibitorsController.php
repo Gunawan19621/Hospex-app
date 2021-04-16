@@ -66,7 +66,7 @@ class EventExhibitorsController extends Controller
         $title = 'Add Exhibitor';
         $companies = Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
-                });
+                })->get();
         $events     = $event == null ? Event::all() : Event::whereId($event)->get();
         // dd($events);
         return view('exhibitor.create', compact('title','companies','events'));
@@ -133,7 +133,7 @@ class EventExhibitorsController extends Controller
         $title  = 'Edit Exhibitor';
         $companies  = Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
-                });
+                })->get();
         $events     = Event::all();
         return view('exhibitor.edit',compact('title','exhibitor','companies','events'));
     }
