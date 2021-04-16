@@ -27,27 +27,20 @@ class AvailableController extends Controller
 
     public function index($exhibitor)
     {
-        // $matchRequest = MatchRequest::select('available_schedule_id')->where('event_exhibitor_id',$exhibitor)->get();
-        // $exclude = [];
-
-        // foreach ($matchRequest as $matchRequestEach) {
-        //     $exclude[] = $matchRequestEach->available_schedule_id;
-        // }
-
-        // $data = AvailableSchedule::whereNotIn('id', $exclude)->orderBy('date')->get();
-
         $t = Carbon::now();
         $event = Event::whereDate('begin',' <= ',$t)->whereDate('end',' >= ',$t)->orderBy('begin')->first();
 
+        $data = [];
         if($event){
-            $data = AvailableSchedule::where('event_id', $event->id)->whereDate('date',' >= ',$t)->orderBy('date')->get();
+            $exhibitor = EventExhibitor::where('event_id',$event->id)->where('id',$exhibitor)->first();
+            
+            if($exhibitor){
+                $data = AvailableSchedule::where('event_id', $event->id)->whereDate('date',' >= ',$t)->orderBy('date')->get();
 
-            if($data->isEmpty()){
-                $data = [];
+                if($data->isEmpty()){
+                    $data = [];
+                }
             }
-        }
-        else{
-            $data = [];
         }
 
         return response()->json([
