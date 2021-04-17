@@ -31,12 +31,6 @@ class ExhibitorsController extends Controller
         if($event){
             $exhibitors = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('event_exhibitors.*')->where('event_id',$event->id)->orderBy('companies.company_name','asc')->get();
 
-            // $exhibitors = EventExhibitor::join('events', 'events.id', '=', 'event_exhibitors.event_id')
-            //         ->select('event_exhibitors.*','events.begin')
-            //         ->whereDate('events.begin',' >= ',$t)
-            //         ->orderBy('events.begin')
-            //         ->get();
-
             if(!$exhibitors->isEmpty()){
                 $exhibitorSponsor = $exhibitors->where('sponsor',true);
 
