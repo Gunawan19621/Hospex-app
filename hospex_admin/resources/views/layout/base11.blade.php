@@ -179,7 +179,10 @@ License: You must have a valid license purchased only from themeforest(the above
 								<a href="{{ url('/companies') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Company Exhibitors</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Exhibitors (Sponsor)</span></a>
+								<a href="{{ url('exhibitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Event Exhibitors</span></a>
+							</li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+								<a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Event Sponsors</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('/areas') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Areas</span></a>
@@ -187,9 +190,6 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('/stands') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Stands</span></a>
 							</li>
-							<!-- <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
-								<a href="{{ url('sponsors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Sponsors</span></a>
-							</li> -->
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('available-schedule') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Schedule Match Request</span></a>
 							</li>

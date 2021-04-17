@@ -16,7 +16,7 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Exhibitor (Sponsor) List
+                            Event Exhibitor List
                         </h3>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" width="5%">No</th>
-                                <th scope="col">Exhibitor (Sponsor)</th>
+                                <th scope="col">Exhibitor</th>
                                 <th scope="col">Address</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Categories</th>

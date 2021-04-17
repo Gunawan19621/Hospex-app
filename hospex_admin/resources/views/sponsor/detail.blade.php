@@ -15,7 +15,7 @@
                             <i class="la la-gear"></i>
                         </span>
                         <h3 class="m-portlet__head-text">
-                            Sponsor Detail
+                            Event Sponsor Detail
                         </h3>
                         </div>
                     </div>
@@ -26,7 +26,6 @@
                     <div class="m-portlet__body">
                         <div class="form-group m-form__group m--margin-top-10 m--hide">
                             <div class="alert m-alert m-alert--default" role="alert">
-                                The example form below demonstrates common HTML form elements that receive updated styles from Bootstrap with additional classes.
                             </div>
                         </div>
                         <!--<div class="form-group m-form__group row">-->

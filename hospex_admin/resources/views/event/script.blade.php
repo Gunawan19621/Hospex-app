@@ -42,10 +42,6 @@ $(document).ready(function(){
                             <a class="dropdown-item" href="{{ url('events/${t.id}/edit') }}"><i class="la la-edit"></i> Edit</a>
                             <a class="dropdown-item delete" href="javascript:void(0);" data-id="${ t.id }" ><i class="la la-trash"></i> Hapus</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}') }}"><i class="la la-edit"></i> Schedule</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/area') }}"><i class="la la-edit"></i> Area</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/exhibitor') }}"><i class="la la-edit"></i> Exhibitor (Sponsor)</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/available-schedule') }}"><i class="la la-edit"></i> Schedule Match Request</a>
-                            <a class="dropdown-item" href="{{ url('events/${t.id}/stand') }}"><i class="la la-edit"></i> Stand</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}/site-plan') }}"><i class="la la-edit"></i> Siteplan</a>
                             <a class="dropdown-item" href="{{ url('events/${t.id}/upload-site-plan') }}"><i class="la la-edit"></i> Upload Siteplan</a>
                         </div>

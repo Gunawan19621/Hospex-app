@@ -15,7 +15,7 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Add Sponsor
+                      Form Add Event Sponsor
                   </h3>
                   </div>
               </div>
