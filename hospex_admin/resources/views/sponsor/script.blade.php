@@ -18,10 +18,10 @@
                     data : "event_title", name : "event_title",
                 },
                 {
-                    data : "sponsor_name", name : "sponsor_name",
+                    data : "company_name", name : "company_name",
                 },
                 {
-                    data : "company_name", name : "company_name",
+                    data : "sponsor_name", name : "sponsor_name",
                 },
                 {
                     data:"action",

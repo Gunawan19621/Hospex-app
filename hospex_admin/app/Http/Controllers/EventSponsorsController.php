@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Event;
 use App\Company;
 use App\EventSponsor;
+use App\EventExhibitor;
+use Illuminate\Pagination\Paginator;
 
 class EventSponsorsController extends Controller
 {
@@ -72,11 +74,14 @@ class EventSponsorsController extends Controller
         $request->validate( [ 'event_id' => 'required|numeric', 'sponsor_name' => 'required' ] );
         $data= [];
         foreach ($request->company_id as $key => $value) {
-            $data[] = [
-                'company_id'    => $value, 
-                'event_id'      => $request->event_id, 
-                'sponsor_name'  => $request->sponsor_name
-            ];
+            $checkData = EventSponsor::where('event_id',$request->event_id)->where('company_id',$value)->first();
+            if($checkData == null){
+                $data[] = [
+                    'company_id'    => $value, 
+                    'event_id'      => $request->event_id, 
+                    'sponsor_name'  => $request->sponsor_name
+                ];
+            }
         }
         $create = EventSponsor::insert($data);
         $response = $create ? '1-Sponsor Saved!' : '0-Sponsor Failed to Save!';
@@ -142,5 +147,28 @@ class EventSponsorsController extends Controller
         $response = $delete ? '1-Sponsor Deleted' : '0-Sponsor Failed to Delete';
         return response()->json('1-Sponsor Deleted', 200);
         // return redirect('/sponsors')->with('status',$response);
+    }
+
+    public function select2(Request $request)
+    {
+        try {
+            $perPage = 10;
+            $page    = $request->page ?? 1;
+            $term = $request->term;
+
+            Paginator::currentPageResolver(
+                function () use ($page) {
+                    return $page;
+                }
+            );
+
+            $dataDb = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('companies.id','companies.company_name as text')->where('event_exhibitors.event_id', $request->event_id)->where('companies.company_name', 'LIKE', '%'.$request->term.'%')->paginate($perPage);
+
+            return $dataDb;
+        }
+        catch (\Exception $exception) {
+            // dd($exception->getMessage());
+            return $exception->getCode();
+        }
     }
 }

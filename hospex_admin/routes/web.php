@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Sponsors
     Route::resource('sponsors', 'EventSponsorsController');
+    Route::get('/exhibitor-sponsor/ajax/select2', 'EventSponsorsController@select2')->name('exhibitor_sponsor.ajax.select2');
 
     // Areas
     Route::get('/areas/create/{event?}','AreasController@create');

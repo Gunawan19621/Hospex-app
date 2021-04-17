@@ -29,7 +29,7 @@
                   <div class="form-group m-form__group">
                       <label for="eventitel">Event</label>
                       <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ old('event_id') }}" required>
-                        <option value="" > Event </option>
+                        <option value="">Asset</option>
                         @foreach ($events as $event)
                         <option value=" {{ $event->id }} " > {{ $event->event_title }} </option>
                         @endforeach
@@ -37,19 +37,15 @@
                     @error('event_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
                 <div class="form-group m-form__group">
+                    <label for="eventitel">Company</label>
+                    <select class="form-control " id="companyID" name="company_id[]" placeholder="Select Sponsor Company" required>
+                  </select>
+                </div>
+                <div class="form-group m-form__group">
                     <label for="sponsorName">Sponsor Name</label>
                     <input type="text" autocomplete="off" class="form-control @error('sponsor_name') is-invalid @enderror " name="sponsor_name" id="SponsorName" placeholder="Sponsor Name Input" value="{{ old('sponsor_name') }}" required>
                     @error('sponsor_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
-                  <div class="form-group m-form__group">
-                      <label for="eventitel">Companies</label>
-                      <select class="form-control " name="company_id[]" placeholder="Select Sponsor Companies" required>
-                        @foreach ($companies as $company)
-                        <option value=" {{ $company->id }} " > {{ $company->company_name }} </option>
-                        @endforeach
-                    </select>
-                  </div>
-                  
               </div>
               <div class="m-portlet__foot m-portlet__foot--fit">
                   <div class="m-form__actions">
@@ -63,3 +59,45 @@
 	</div>
 </div>
 @endsection
+@push('css')
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2-bootstrap.css')}}">
+@endpush
+@push('scripts')
+    <script src="{{url('plugins/select2/js/select2.full.js')}}"></script>
+    
+    <script type="text/javascript">
+        $('#companyID').select2({
+            theme: "bootstrap",
+            placeholder: "Select",
+            multiple: true,
+            width: '100%',
+            containerCssClass: ':all:',
+            ajax: {
+                url: '{{route('exhibitor_sponsor.ajax.select2')}}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page,
+                        event_id: $('#eventID').val()
+                    };
+                },
+                processResults: function (data, params) {
+
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: (params.page * data.per_page) < data.total
+                        }
+                    };
+                },
+                cache: true,
+            }
+        });
+    </script>
+@endpush

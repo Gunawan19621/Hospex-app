@@ -55,6 +55,8 @@ License: You must have a valid license purchased only from themeforest(the above
 
 		<!--end::Page Vendors Styles -->
 		<link rel="shortcut icon" href="{{ asset('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
+
+		@stack('css')
 	</head>
 
 	<!-- end::Head -->
@@ -271,8 +273,11 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/bootstrap-timepicker.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('assets11/demo/demo11/custom/crud/forms/widgets/dropzone.js') }}" type="text/javascript"></script>
 
+		<script src="{{url('plugins/select2/js/select2.full.js')}}"></script>
+
 		<!--end::Page Scripts -->
 	@include('script-global')
+	@stack('scripts')
 	</body>
 
 	<!-- end::Body -->

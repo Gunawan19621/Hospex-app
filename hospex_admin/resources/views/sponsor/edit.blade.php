@@ -30,27 +30,21 @@
                   <div class="form-group m-form__group">
                       <label for="eventitel">Event</label>
                       <select class="form-control @error('event_id') is-invalid @enderror " name="event_id" id="eventID" value="{{ $sponsor->event_id }}" required>
-                        <option value="" > Event </option>
-                        @foreach ($events as $event)
-                            <option value=" {{ $event->id }} " @if ($event->id == $sponsor->event_id) selected @endif > {{ $event->event_title }} </option>
-                        @endforeach
+                        <option value=" {{ $sponsor->event_id}}" selected > {{ $sponsor->event->event_title }} </option>
                     </select>
                     @error('event_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                </div>
+                <div class="form-group m-form__group">
+                    <label for="eventitel">Company</label>
+                    <select class="form-control " name="company_id" id="companyID" placeholder="Select Sponsor Company" required>
+                      <option value=" {{ $sponsor->company_id}}" selected > {{ $sponsor->company->company_name }} </option>
+                  </select>
                 </div>
                 <div class="form-group m-form__group">
                     <label for="sponsorName">Sponsor Name</label>
                     <input type="text" autocomplete="off" class="form-control @error('sponsor_name') is-invalid @enderror " name="sponsor_name" id="SponsorName" placeholder="Sponsor Name Input" value="{{ $sponsor->sponsor_name }}" required>
                     @error('sponsor_name') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
-                  <div class="form-group m-form__group">
-                      <label for="eventitel">Companies</label>
-                      <select class="form-control " name="company_id" placeholder="Select Sponsor Companies" required>
-                        @foreach ($companies as $company)
-                        <option value=" {{ $company->id }} " @if ($company->id == $sponsor->company_id) selected @endif > {{ $company->company_name }} </option>
-                        @endforeach
-                    </select>
-                  </div>
-                  
               </div>
               <div class="m-portlet__foot m-portlet__foot--fit">
                   <div class="m-form__actions">
@@ -64,3 +58,44 @@
 	</div>
 </div>
 @endsection
+@push('css')
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2-bootstrap.css')}}">
+@endpush
+@push('scripts')
+    <script src="{{url('plugins/select2/js/select2.full.js')}}"></script>
+    
+    <script type="text/javascript">
+        $('#companyID').select2({
+            theme: "bootstrap",
+            placeholder: "Select",
+            width: '100%',
+            containerCssClass: ':all:',
+            ajax: {
+                url: '{{route('exhibitor_sponsor.ajax.select2')}}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page,
+                        event_id: $('#eventID').val()
+                    };
+                },
+                processResults: function (data, params) {
+
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: (params.page * data.per_page) < data.total
+                        }
+                    };
+                },
+                cache: true,
+            }
+        });
+    </script>
+@endpush

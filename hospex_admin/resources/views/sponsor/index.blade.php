@@ -31,8 +31,8 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Event Title</th>
+                                <th scope="col">Company Exhibitor Name</th>
                                 <th scope="col">Sponsor Name</th>
-                                <th scope="col">Company Name</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>

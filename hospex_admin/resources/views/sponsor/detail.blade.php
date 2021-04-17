@@ -28,13 +28,8 @@
                             <div class="alert m-alert m-alert--default" role="alert">
                             </div>
                         </div>
-                        <!--<div class="form-group m-form__group row">-->
-                        <!--    <div class="col-10 ml-auto">-->
-                        <!--        <h3 class="m-form__section">1. Personal Details</h3>-->
-                        <!--    </div>-->
-                        <!--</div>-->
                          <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Visitor Name</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Sponsor Name</label>
                             <div class="col-7">
                                 <input class="form-control m-input" disabled type="text" value="{{ $sponsor->sponsor_name }}">
                             </div>
@@ -47,7 +42,7 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
-                            <label for="example-text-input" class="col-2 col-form-label">Company Name</label>
+                            <label for="example-text-input" class="col-2 col-form-label">Company Exhibitor Name</label>
                             <div class="col-7">
                                 <input class="form-control m-input" disabled type="text" value="{{ $sponsor->company->company_name }}">
                             </div>
@@ -56,7 +51,6 @@
                             <label for="example-text-input" class="col-2 col-form-label">Email</label>
                             <div class="col-7">
                                 <input class="form-control m-input" disabled type="text" value="{{ $sponsor->company->company_email }}">
-                                <!--<span class="m-form__help">If you want your invoices addressed to a company. Leave blank to use your full name.</span>-->
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
@@ -65,7 +59,6 @@
                                 <input class="form-control m-input" disabled type="text" value="{{ $sponsor->company->categories()->get()->map(function($item) {
                                     return $item->category_name;
                                 })->implode(', ') }}">
-                                <!--<span class="m-form__help">If you want your invoices addressed to a company. Leave blank to use your full name.</span>-->
                             </div>
                         </div>
                         
