@@ -42,5 +42,17 @@ class EventExhibitor extends Model
         }
     }
 
-    protected $appends = ['sponsor'];
+    public function getSponsorNameAttribute()
+    {
+        $sponsor = EventSponsor::where('event_id', $this->event_id)->where('company_id', $this->company_id)->first();
+
+        if($sponsor){
+            return $sponsor->sponsor_name;
+        }
+        else{
+            return '';
+        }
+    }
+
+    protected $appends = ['sponsor','sponsor_name'];
 }

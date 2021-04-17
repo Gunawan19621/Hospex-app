@@ -52,6 +52,7 @@ class ExhibitorsController extends Controller
                             'event_title'   => $exhibitor->event->event_title,
                             'logo'          => $exhibitor->company->image,
                             'sponsor'       => $exhibitor->sponsor,
+                            'sponsor_name'  => $exhibitor->sponsor_name,
                             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                 return $item->category_name;
                             })->implode(', '),
@@ -73,6 +74,7 @@ class ExhibitorsController extends Controller
                             'event_title'   => $exhibitor->event->event_title,
                             'logo'          => $exhibitor->company->image,
                             'sponsor'       => $exhibitor->sponsor,
+                            'sponsor_name'  => $exhibitor->sponsor_name,
                             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                 return $item->category_name;
                             })->implode(', '),
@@ -103,7 +105,9 @@ class ExhibitorsController extends Controller
                 'email'         => $exhibitor->company->users[0]->email,
                 'info'          => $exhibitor->company->company_info,
                 'event_title'   => $exhibitor->event->event_title,
-                'logo'          => '',
+                'logo'          => $exhibitor->company->image,
+                'sponsor'       => $exhibitor->sponsor,
+                'sponsor_name'  => $exhibitor->sponsor_name,
                 'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                         return $item->category_name;
                                     })->implode(', '),
