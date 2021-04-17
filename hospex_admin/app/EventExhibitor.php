@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\EventSponsor;
+
 class EventExhibitor extends Model
 {
     protected $fillable = ['event_id', 'company_id'];
@@ -27,4 +29,18 @@ class EventExhibitor extends Model
     {
         return $this->hasMany(MatchRequest::class,'event_exhibitor_id','id');
     }
+
+    public function getSponsorAttribute()
+    {
+        $sponsor = EventSponsor::where('event_id', $this->event_id)->where('company_id', $this->company_id)->first();
+
+        if($sponsor){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    protected $appends = ['sponsor'];
 }

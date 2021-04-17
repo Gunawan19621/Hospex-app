@@ -37,72 +37,47 @@ class ExhibitorsController extends Controller
             //         ->orderBy('events.begin')
             //         ->get();
 
-            $exclude = [];
             if(!$exhibitors->isEmpty()){
-                foreach ($exhibitors as $exhibitor) {
-                    $data[] = [
-                        'id_exhibitor'  => $exhibitor->id,
-                        'nama'          => $exhibitor->company->company_name,
-                        'alamat'        => $exhibitor->company->users[0]->address,
-                        'website'       => $exhibitor->company->company_web,
-                        'email'         => $exhibitor->company->users[0]->email,
-                        'info'          => $exhibitor->company->company_info,
-                        'event_title'   => $exhibitor->event->event_title,
-                        'logo'          => $exhibitor->company->image,
-                        'sponsor'       => true,
-                        'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
-                            return $item->category_name;
-                        })->implode(', '),
-                    ];
+                $exhibitorSponsor = $exhibitors->where('sponsor',true);
 
-                    $exclude[] = $exhibitor->company->id;
+                if(!$exhibitorSponsor->isEmpty()){
+                    foreach ($exhibitorSponsor as $exhibitor) {
+                        $data[] = [
+                            'id_exhibitor'  => $exhibitor->id,
+                            'nama'          => $exhibitor->company->company_name,
+                            'alamat'        => $exhibitor->company->users[0]->address,
+                            'website'       => $exhibitor->company->company_web,
+                            'email'         => $exhibitor->company->users[0]->email,
+                            'info'          => $exhibitor->company->company_info,
+                            'event_title'   => $exhibitor->event->event_title,
+                            'logo'          => $exhibitor->company->image,
+                            'sponsor'       => $exhibitor->sponsor,
+                            'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                                return $item->category_name;
+                            })->implode(', '),
+                        ];
+                    }
                 }
-            }
 
-            $exhibitorsExclude = Company::whereHas('users', function ($query) {
-                    $query->where('type','exhibitor');            
-                })->whereNotIn('id',$exclude)->orderBy('company_name','asc')->get();
+                $exhibitorNonSponsor = $exhibitors->where('sponsor',false);
 
-            if(!$exhibitorsExclude->isEmpty()){
-                foreach ($exhibitorsExclude as $exhibitorExclude) {
-                    $data[] = [
-                        'id_exhibitor'  => 0,
-                        'nama'          => $exhibitorExclude->company_name,
-                        'alamat'        => $exhibitorExclude->users[0]->address,
-                        'website'       => $exhibitorExclude->company_web,
-                        'email'         => $exhibitorExclude->users[0]->email,
-                        'info'          => $exhibitorExclude->company_info,
-                        'event_title'   => '',
-                        'logo'          => $exhibitorExclude->image,
-                        'sponsor'       => false,
-                        'categories'    => $exhibitorExclude->categories()->get()->map(function($item) {
-                            return $item->category_name;
-                        })->implode(', '),
-                    ];
-                }
-            }
-        }
-        else{
-            $exhibitors = Company::whereHas('users', function ($query) {
-                    $query->where('type','exhibitor');            
-                })->orderBy('company_name','asc')->get();
-
-            if(!$exhibitors->isEmpty()){
-                foreach ($exhibitors as $exhibitor) {
-                    $data[] = [
-                        'id_exhibitor'  => 0,
-                        'nama'          => $exhibitor->company_name,
-                        'alamat'        => $exhibitor->users[0]->address,
-                        'website'       => $exhibitor->company_web,
-                        'email'         => $exhibitor->users[0]->email,
-                        'info'          => $exhibitor->company_info,
-                        'event_title'   => '',
-                        'logo'          => $exhibitor->image,
-                        'sponsor'       => false,
-                        'categories'    => $exhibitor->categories()->get()->map(function($item) {
-                            return $item->category_name;
-                        })->implode(', '),
-                    ];
+                if(!$exhibitorNonSponsor->isEmpty()){
+                    foreach ($exhibitorNonSponsor as $exhibitor) {
+                        $data[] = [
+                            'id_exhibitor'  => $exhibitor->id,
+                            'nama'          => $exhibitor->company->company_name,
+                            'alamat'        => $exhibitor->company->users[0]->address,
+                            'website'       => $exhibitor->company->company_web,
+                            'email'         => $exhibitor->company->users[0]->email,
+                            'info'          => $exhibitor->company->company_info,
+                            'event_title'   => $exhibitor->event->event_title,
+                            'logo'          => $exhibitor->company->image,
+                            'sponsor'       => $exhibitor->sponsor,
+                            'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
+                                return $item->category_name;
+                            })->implode(', '),
+                        ];
+                    }
                 }
             }
         }
