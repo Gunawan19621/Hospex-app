@@ -127,14 +127,17 @@ class ExhibitorsController extends Controller
                 'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                     return $item->category_name;
                 })->implode(', '),
-                'area'          => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
+                'area_name'     => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
                     return $item->area->area_name;
                 })->implode(', '),
-                'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
+                'stand_name'    => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
                     return $exhibitor->stands()->get()->map(function($stand) use( $item ) {
-                        return ($item->area->id == $stand->area_id ? $item->area->area_name.' '.$stand->stand_name : '');
+                        return ($item->area->id == $stand->area_id ? $stand->stand_name.' ('.$item->area->area_name.')' : '');
                     })->filter()->implode(', ');
                 })->implode(', '),
+                // 'categories'   => $exhibitor->company->categories,
+                'stand'        => $exhibitor->stands,
+                'area'         => $exhibitor->area
             ];
 
             return response()->json([
