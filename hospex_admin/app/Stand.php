@@ -22,7 +22,7 @@ class Stand extends Model
 
     public function getAreaNameAttribute()
     {
-        $area = Area::where('area_id', $this->area_id)->first();
+        $area = Area::where('id', $this->area_id)->first();
 
         if($area){
             return $area->area_name;
