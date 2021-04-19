@@ -50,6 +50,11 @@ class ExhibitorsController extends Controller
                             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                 return $item->category_name;
                             })->implode(', '),
+                            'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
+                                return $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
+                                    return ($item->area->id == $stand->area_id ? $stand->stand_name : '');
+                                })->filter()->implode(', ').' )' ;
+                            })->implode(', '),
                         ];
                     }
                 }
@@ -71,6 +76,11 @@ class ExhibitorsController extends Controller
                             'sponsor_name'  => $exhibitor->sponsor_name,
                             'categories'    => $exhibitor->company->categories()->get()->map(function($item) {
                                 return $item->category_name;
+                            })->implode(', '),
+                            'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
+                                return $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
+                                    return ($item->area->id == $stand->area_id ? $stand->stand_name : '');
+                                })->filter()->implode(', ').' )' ;
                             })->implode(', '),
                         ];
                     }
@@ -106,8 +116,8 @@ class ExhibitorsController extends Controller
                                         return $item->category_name;
                                     })->implode(', '),
                 'stand'         => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
-                                        return  $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
-                                            return ($item->area->id ===  $stand->area_id ? $stand->stand_name : false);
+                                        return $item->area->area_name .' ( '. $exhibitor->stands()->get()->map(function($stand) use( $item ) {
+                                            return ($item->area->id == $stand->area_id ? $stand->stand_name : '');
                                         })->filter()->implode(', ').' )' ;
                                     })->implode(', '),
             ];
