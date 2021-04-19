@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -36,5 +37,15 @@ class Event extends Model
     public function availableSchedules()
     {
         return $this->hasMany(AvailableSchedule::class);
+    }
+
+    public function getSitePlanAttribute()
+    {
+        if($this->attributes['site_plan'] != null && $this->attributes['site_plan'] != ''){
+            return Storage::disk('public')->path($this->attributes['site_plan']);
+        }
+        else{
+            return '';
+        }
     }
 }
