@@ -29,10 +29,10 @@ class CompaniesController extends Controller
                 }))
                 ->addIndexColumn()
                 ->addColumn('event', function($data){
-                    if($data->company->exhibitors){
+                    if($data->exhibitors){
                         $event_all = '';
 
-                        foreach ($data->company->exhibitors as $event_exhibitor) {
+                        foreach ($data->exhibitors as $event_exhibitor) {
                             if($event_all == ''){
                                 $event_all = $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
                             }

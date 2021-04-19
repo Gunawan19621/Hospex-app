@@ -32,9 +32,9 @@
                                 <th scope="col">No</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Address</th>
+                                <!-- <th scope="col">Address</th>
                                 <th scope="col">Web</th>
-                                <th scope="col">Info</th>
+                                <th scope="col">Info</th> -->
                                 <th scope="col">Categories</th>
                                 <th scope="col">Event</th>
                                 <th scope="col">Action</th>
