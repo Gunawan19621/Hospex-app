@@ -28,6 +28,25 @@ class CompaniesController extends Controller
                     $query->where('type','exhibitor');            
                 }))
                 ->addIndexColumn()
+                ->addColumn('event', function($data){
+                    if($data->company->exhibitors){
+                        $event_all = '';
+
+                        foreach ($data->company->exhibitors as $event_exhibitor) {
+                            if($event_all == ''){
+                                $event_all = $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
+                            }
+                            else{
+                                $event_all = $event_all. ', ' . $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
+                            }
+                        }
+
+                        return $event_all;
+                    }
+                    else{
+                        return '';
+                    }
+                })
                 ->addColumn('categories', function($data){
                     $categories = $data->categories()->select('category_name')->get();
                     $items = '';
@@ -57,7 +76,7 @@ class CompaniesController extends Controller
                         </span>';
                         return $button;
                     })
-                ->rawColumns(['action'])
+                ->rawColumns(['action','event'])
                 ->make(true);
         }
 

@@ -38,6 +38,9 @@
                         data : "categories", name : "categories",
                     },
                     {
+                        data : "event", name : "event",
+                    },
+                    {
                         data:"action",
                         name: "action",
                         orderable: false
