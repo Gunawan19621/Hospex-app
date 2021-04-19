@@ -8,6 +8,7 @@ use App\Area;
 use App\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Pagination\Paginator;
 
 class StandsController extends Controller
 {
@@ -153,5 +154,30 @@ class StandsController extends Controller
         $response = $delete ? '1-Stand Deleted' : '0-Stand Failed to Delete';
         return response()->json('1-Stand Deleted', 200);
         // return redirect('/Stands')->with('status',$response);
+    }
+
+    public function select2(Request $request)
+    {
+        try {
+            $perPage = 10;
+            $page    = $request->page ?? 1;
+            $term = $request->term;
+
+            Paginator::currentPageResolver(
+                function () use ($page) {
+                    return $page;
+                }
+            );
+
+            $area = Area::where('id',$request->area_id)->first();
+
+            $dataDb = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('companies.id','companies.company_name as text')->where('event_exhibitors.event_id', $area->event_id)->where('companies.company_name', 'LIKE', '%'.$request->term.'%')->paginate($perPage);
+
+            return $dataDb;
+        }
+        catch (\Exception $exception) {
+            // dd($exception->getMessage());
+            return $exception->getCode();
+        }
     }
 }

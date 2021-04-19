@@ -37,7 +37,7 @@
                     <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ old('area_id') }}" required>
                       <option value="" > Area </option>
                       @foreach ($areas as $area)
-                      <option value=" {{ $area->id }} " > {{ $area->area_name }} </option>
+                      <option value=" {{ $area->id }} " > {{ $area->area_name.' ('.$area->event->event_title.')'}} </option>
                       @endforeach
                   </select>
                   @error('area_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
@@ -45,10 +45,6 @@
                 <div class="form-group m-form__group">
                     <label for="eventitel">Exhibitor</label>
                     <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ old('exhibitor_id') }}" required>
-                      <option value="" > Exhibitor </option>
-                      @foreach ($exhibitors as $exhibitor)
-                      <option value=" {{ $exhibitor->id }} " > {{ $exhibitor->company->company_name }} </option>
-                      @endforeach
                   </select>
                   @error('exhibitor_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                 </div>
@@ -144,3 +140,45 @@
             
      </script>
  @endsection
+
+ @push('css')
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2-bootstrap.css')}}">
+@endpush
+@push('scripts')
+    <script src="{{url('plugins/select2/js/select2.full.js')}}"></script>
+    
+    <script type="text/javascript">
+        $('#exhibitorID').select2({
+            theme: "bootstrap",
+            placeholder: "Select",
+            width: '100%',
+            containerCssClass: ':all:',
+            ajax: {
+                url: '{{route('exhibitor_stand.ajax.select2')}}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page,
+                        area_id: $('#areaID').val()
+                    };
+                },
+                processResults: function (data, params) {
+
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: (params.page * data.per_page) < data.total
+                        }
+                    };
+                },
+                cache: true,
+            }
+        });
+    </script>
+@endpush

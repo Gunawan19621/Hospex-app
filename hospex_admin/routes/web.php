@@ -93,6 +93,7 @@ Route::group(['middleware' => ['auth']], function () {
     // Stand
     Route::get('/stands/create/{event?}','StandsController@create');
     Route::resource('stands', 'StandsController')->except(['create']);
+    Route::get('/exhibitor-stand/ajax/select2', 'StandsController@select2')->name('exhibitor_stand.ajax.select2');
 
     // Visitors
     Route::resource('visitors', 'EventVisitorsController');
