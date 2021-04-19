@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use App\Helpers\GetEvent as eventId;
 use App\Http\Controllers\Controller;
+use App\Mail\forgotPasswordEmail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -323,5 +325,44 @@ class AuthController extends Controller
                 'status'    => 403
             ], 403);
         }
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $email = $request->input('email');
+
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            $code = $this->generateRandomString();
+            $user->code = $code;
+            $user->save();
+
+            Mail::to($user->email)->send(new forgotPasswordEmail($user, $code));
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Link reset password sudah kami kirim, silahkan cek email Anda',
+                'data'      => '',
+                'status'    => 200
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Email not found',
+                'data'      => '',
+                'status'    => 403
+            ], 403);
+        }
+    }
+
+    public function generateRandomString($length = 32) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

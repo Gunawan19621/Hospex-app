@@ -117,6 +117,11 @@ Route::get('export/{event?}', 'ExhibitorExcelController@export')->name('export')
 Route::get('import-excel/{event?}', 'ExhibitorExcelController@importExportView');
 Route::post('import', 'ExhibitorExcelController@import')->name('import');
 
+Route::get('forgot-password', 'ForgotPasswordController@showForgotForm')->name("front.forgotPassword");
+Route::post('forgot-password', 'ForgotPasswordController@forgotPassword')->name("front.forgotPasswordPost");
+Route::get('set-password/{id?}/{code?}', 'ResetPasswordController@showResetForm')->name("front.setPassword");
+Route::post('set-password/{id?}/{code?}', 'ResetPasswordController@reset')->name("front.setPasswordPost");
+
 Route::get('/connection', function () {
     try {
         DB::connection()->getPdo();
