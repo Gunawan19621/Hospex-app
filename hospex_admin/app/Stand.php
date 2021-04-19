@@ -32,5 +32,17 @@ class Stand extends Model
         }
     }
 
-    protected $appends = ['area_name'];
+    public function getAreaAttribute()
+    {
+        $area = Area::where('id', $this->area_id)->first();
+
+        if($area){
+            return $area;
+        }
+        else{
+            return '';
+        }
+    }
+
+    protected $appends = ['area_name','area'];
 }
