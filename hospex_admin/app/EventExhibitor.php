@@ -54,5 +54,20 @@ class EventExhibitor extends Model
         }
     }
 
-    protected $appends = ['sponsor','sponsor_name'];
+    public function getAreaAttribute()
+    {
+        $area = [];
+        if($this->stands->unique('area_id')->isEmpty()){
+            return $area;
+        }
+        else{
+            foreach ($this->stands->unique('area_id') as $standEach) {
+                $area[] = $standEach->area;
+            }
+
+            return $area;
+        }
+    }
+
+    protected $appends = ['sponsor','sponsor_name','area'];
 }
