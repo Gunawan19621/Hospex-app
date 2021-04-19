@@ -36,6 +36,7 @@
                                 <th scope="col">Web</th>
                                 <th scope="col">Info</th>
                                 <th scope="col">Categories</th>
+                                <th scope="col">Event</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
