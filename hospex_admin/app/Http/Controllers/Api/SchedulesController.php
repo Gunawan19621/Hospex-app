@@ -75,6 +75,13 @@ class SchedulesController extends Controller
         $data = '';
 
         if($schedule){
+            if(!$schedule->rundowns->isEmpty()){
+                $location = $schedule->rundowns[0]->location;
+            }
+            else{
+                $location = '';
+            }
+
             $data = [
                 'id'            => $schedule->id,
                 'hari'          => Carbon::parse($schedule->date)->format('l'),
