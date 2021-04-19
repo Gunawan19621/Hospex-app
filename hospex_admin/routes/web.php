@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('storage/{filename}', function ($filename)
 {
-    $path = storage_path('public/' . $filename);
+    $path = storage_path('app/event/' . $filename);
 
     if (!File::exists($path)) {
         abort(404);
