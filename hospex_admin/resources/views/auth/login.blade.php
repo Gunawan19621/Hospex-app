@@ -63,7 +63,7 @@
                                     </label>
                                 </div>
                                 <div class="col m--align-right">
-                                    <a href="{{route('front.forgotPassword')}}" class="m-link">Forget Password ?</a>
+                                    <!-- <a href="{{route('front.forgotPassword')}}" class="m-link">Forget Password ?</a> -->
                                 </div>
                             </div>
                             <div class="m-login__form-action mb-0">
