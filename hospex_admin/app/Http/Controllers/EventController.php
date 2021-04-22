@@ -317,17 +317,6 @@ class EventController extends Controller
     public function fileStore(Request $request, Event $event)
     {
         if($request->hasFile('file')) {
-            
-            // Upload path
-            // $destinationPath = public_path('images/');
-            
-            // Create directory if not exists
-            // if (!$directories = Storage::directories($destinationPath)) {
-            //     // return $destinationPath;
-            //     Storage::makeDirectory($destinationPath, 0755, true, true);
-            // }
-            
-            // Get file extension
             $extension = $request->file('file')->getClientOriginalExtension();
             
             // Valid extensions
@@ -338,6 +327,7 @@ class EventController extends Controller
                 
                 // Rename file 
                 $fileName = Str::slug($event->event_title.' '.$event->year.' '.$event->location).'.' . $extension;
+                $up = $request->file('file')->move(public_path('event'), $fileName);
                 
                 // Delete File if exists
                 // if (Storage::disk('logs')->exists($fileName)) {
@@ -352,18 +342,16 @@ class EventController extends Controller
                 //    return $fileName;
                
                 //   $up =  Storage::disk('logs')->storeAs('eventss/', $request->file('file'), $fileName);
-              $up = $request->file('file')->storeAs('event/', $fileName);
+                // $up = $request->file('file')->storeAs('event/', $fileName);
             
                 if ($up == true) {
-                    
-                    $update =Event::where('id', $event->id)->update(['site_plan' => $fileName]);
+                    $update = Event::where('id', $event->id)->update(['site_plan' => $fileName]);
                       # code...
                     return response()->json(['success' => '1']);
                 }
                 else{
-                    return  response()->json(['success'=> '0']);
+                    return response()->json(['success'=> '0']);
                 }
-     
             }
             
         }
@@ -372,7 +360,7 @@ class EventController extends Controller
     function fetch(Event $event)
     {
         $fileName = $event->siteplan;
-        $file = Storage::get('event/'.$fileName);
+        // $file = Storage::get('event/'.$fileName);
         
         // $destinationPath = public_path('images/'.$fileName);
       
@@ -384,9 +372,9 @@ class EventController extends Controller
         //         'Content-Disposition' => 'inline; filename="'.$fileName.'"'
                 
         //     ]);
-        $exists = Storage::exists('event/'.$fileName);
+        // $exists = Storage::exists('event/'.$fileName);
         if ($exists) {
-            $images =  Storage::get('event/'.$fileName);
+            // $images =  Storage::get('event/'.$fileName);
             // $images = {{ Storage::path('screenshots/1.jpg') }};
             // $output = '<div class="row">';
             // // foreach($images as $image){
@@ -420,25 +408,10 @@ class EventController extends Controller
     public function siteplan(Event $event)
     {
         $title = 'Site Plan';
-        $slice = Arr::only($event->toArray(), ['event_title', 'site_plan']);
         
         $fileName = $event->site_plan;
-        // $destinationPath = public_path('images/');
 
-        if ( Storage::exists('event/'.$fileName)) {
-            $file = Storage::get('event/'.$fileName);
-           
-            $response = Response::make($file,200);
-            $response->header('Content-Type', 'application/pdf');
-            return $response;
- 
-        }else{
-            $response = '<p>Belum Ada Data Tersedia</p>';
-            return $response;
-        }
-        
-        //return view('event.form_upload', compact('slice','title','event','content'));
-
+        return redirect()->to(url('event/'.$fileName));
     }
 
     function dropzoneDelete(Request $request)
