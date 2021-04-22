@@ -42,7 +42,7 @@ class Event extends Model
     public function getSitePlanAttribute()
     {
         if($this->attributes['site_plan'] != null && $this->attributes['site_plan'] != ''){
-            return url('event/'.$this->attributes['site_plan']);
+            return 'event/'.$this->attributes['site_plan'];
         }
         else{
             return '';

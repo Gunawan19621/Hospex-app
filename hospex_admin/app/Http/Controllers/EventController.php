@@ -411,7 +411,7 @@ class EventController extends Controller
         
         $fileName = $event->site_plan;
 
-        return redirect()->away($fileName));
+        return redirect()->to($fileName));
     }
 
     function dropzoneDelete(Request $request)
