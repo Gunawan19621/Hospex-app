@@ -38,14 +38,4 @@ class Event extends Model
     {
         return $this->hasMany(AvailableSchedule::class);
     }
-
-    public function getSitePlanAttribute()
-    {
-        if($this->attributes['site_plan'] != null && $this->attributes['site_plan'] != ''){
-            return 'event/'.$this->attributes['site_plan'];
-        }
-        else{
-            return '';
-        }
-    }
 }

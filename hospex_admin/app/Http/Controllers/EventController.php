@@ -341,12 +341,14 @@ class EventController extends Controller
                    // $request->file('file')->move($destinationPath, $fileName); 
                 //    return $fileName;
                
-                //   $up =  Storage::disk('logs')->storeAs('eventss/', $request->file('file'), $fileName);
+                //   $up =  Storage::disk('logs')->storeAs('event/', $request->file('file'), $fileName);
                 // $up = $request->file('file')->storeAs('event/', $fileName);
             
                 if ($up == true) {
-                    $update = Event::where('id', $event->id)->update(['site_plan' => $fileName]);
-                      # code...
+                    $update = Event::where('id', $event->id)->update([
+                        'site_plan' => 'event/'.$fileName
+                    ]);
+                    
                     return response()->json(['success' => '1']);
                 }
                 else{
