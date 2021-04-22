@@ -411,7 +411,13 @@ class EventController extends Controller
         
         $fileName = $event->site_plan;
 
-        return redirect()->to($fileName);
+        if($fileName == ''){
+            $response = '<p>Belum Ada Data Tersedia</p>';
+            return $response;
+        }
+        else{
+            return redirect()->to($fileName);
+        }
     }
 
     function dropzoneDelete(Request $request)
