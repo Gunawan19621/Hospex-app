@@ -82,7 +82,7 @@ class SchedulesController extends Controller
         $data = '';
 
         if($rundowns){
-            $acara[] = [
+            $acara = [
                 "id_acara"     => $rundowns->id,
                 "tema"         => $rundowns->task,
                 "lokasi"       => $rundowns->location,
