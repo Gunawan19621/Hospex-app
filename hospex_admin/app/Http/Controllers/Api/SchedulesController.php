@@ -53,10 +53,12 @@ class SchedulesController extends Controller
                                 "lokasi"       => $item->location,
                                 "duration"     => $item->duration,
                                 "time"         => $item->time,
-                                "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
-                                "pengisi_email" => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
-                                "pengisi_phone" => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
-                                "pengisi_info"  => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
+                                "pengisi"      => $item->performers()->get()->map(function($performer){ return [
+                                    'nama' => $performer->name,
+                                    'email' => $performer->email,
+                                    'phone' => $performer->phone,
+                                    'info' => $performer->info
+                                ]; }),
                                 "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
                                 "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
                             ];
@@ -86,10 +88,12 @@ class SchedulesController extends Controller
                 "lokasi"       => $rundowns->location,
                 "duration"     => $rundowns->duration,
                 "time"         => $rundowns->time,
-                "pengisi"      => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
-                "pengisi_email" => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
-                "pengisi_phone" => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
-                "pengisi_info"  => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
+                "pengisi"      => $rundowns->performers()->get()->map(function($performer){ return [
+                    'nama' => $performer->name,
+                    'email' => $performer->email,
+                    'phone' => $performer->phone,
+                    'info' => $performer->info
+                ]; }),
                 "jam_mulai"    => Carbon::createFromTimeString($rundowns->time, 'Asia/Jakarta')->format('H:i'),
                 "jam_selesai"  => Carbon::createFromTimeString($rundowns->time, 'Asia/Jakarta')->addMinutes($rundowns->duration)->format('H:i')
             ];
