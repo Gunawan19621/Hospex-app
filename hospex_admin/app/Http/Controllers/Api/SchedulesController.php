@@ -47,6 +47,7 @@ class SchedulesController extends Controller
                         'lokasi'        => $location,
                         'acara'         => $schedule->rundowns()->get()->map(function($item){
                             return [
+                                "id_acara"     => $item->id,
                                 "tema"         => $item->task,
                                 "lokasi"       => $item->location,
                                 "duration"     => $item->duration,
@@ -92,6 +93,7 @@ class SchedulesController extends Controller
                 'lokasi'        => $location,
                 'acara'         => $schedule->rundowns()->get()->map(function($item){
                     return [
+                        "id_acara"     => $item->id,
                         "tema"         => $item->task,
                         "lokasi"       => $item->location,
                         "duration"     => $item->duration,
