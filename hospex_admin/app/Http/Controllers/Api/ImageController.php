@@ -28,7 +28,7 @@ class ImageController extends BaseController
 
                 return response()->json([
                     'success'   => true,
-                    'message'   => 'success',
+                    'message'   => 'Change Image Success',
                     'data'      => $user->company,
                     'status'    => 200
                 ],200);
