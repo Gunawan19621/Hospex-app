@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Support\Collection;
 use App\EventSchedule;
 use App\Event;
+use App\EventRundown;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -75,37 +76,30 @@ class SchedulesController extends Controller
 
     public function show($id)
     {
-        $schedule = EventSchedule::findorfail($id);
+        $rundowns = EventRundown::findorfail($id);
         $data = '';
 
-        if($schedule){
-            if(!$schedule->rundowns->isEmpty()){
-                $location = $schedule->rundowns[0]->location;
-            }
-            else{
-                $location = '';
-            }
+        if($rundowns){
+            $acara[] = [
+                "id_acara"     => $rundowns->id,
+                "tema"         => $rundowns->task,
+                "lokasi"       => $rundowns->location,
+                "duration"     => $rundowns->duration,
+                "time"         => $rundowns->time,
+                "pengisi"      => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
+                "pengisi_email" => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
+                "pengisi_phone" => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
+                "pengisi_info"  => $rundowns->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
+                "jam_mulai"    => Carbon::createFromTimeString($rundowns->time, 'Asia/Jakarta')->format('H:i'),
+                "jam_selesai"  => Carbon::createFromTimeString($rundowns->time, 'Asia/Jakarta')->addMinutes($rundowns->duration)->format('H:i')
+            ];
 
             $data = [
-                'id'            => $schedule->id,
-                'hari'          => Carbon::parse($schedule->date)->format('l'),
-                'tanggal'       => Carbon::createFromDate($schedule->date)->format('d M, Y '),
-                'lokasi'        => $location,
-                'acara'         => $schedule->rundowns()->get()->map(function($item){
-                    return [
-                        "id_acara"     => $item->id,
-                        "tema"         => $item->task,
-                        "lokasi"       => $item->location,
-                        "duration"     => $item->duration,
-                        "time"         => $item->time,
-                        "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
-                        "pengisi_email"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
-                        "pengisi_phone"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
-                        "pengisi_info"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
-                        "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
-                        "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
-                    ];
-                }),
+                'id'            => $rundowns->schedule->id,
+                'hari'          => Carbon::parse($rundowns->schedule->date)->format('l'),
+                'tanggal'       => Carbon::createFromDate($rundowns->schedule->date)->format('d M, Y '),
+                'lokasi'        => $rundowns->location,
+                'acara'         => $acara
             ];
         }
         

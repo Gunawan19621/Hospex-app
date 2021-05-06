@@ -12,4 +12,9 @@ class EventRundown extends Model
     {
         return $this->hasMany(Performer::class, 'event_rundown_id', 'id');
     }
+
+    public function schedule()
+    {
+        return $this->belongsTo(EventSchedule::class, 'event_schedule_id', 'id');
+    }
 }
