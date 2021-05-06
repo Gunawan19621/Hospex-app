@@ -40,7 +40,7 @@ class ImageController extends BaseController
             catch (Exception $e) {
                 return response()->json([
                     'success'   => false,
-                    'message'   => 'Data Failed to Save',
+                    'message'   => $e->getMessage(),
                     'data'      => '',
                     'status'    => 403
                 ],403);
