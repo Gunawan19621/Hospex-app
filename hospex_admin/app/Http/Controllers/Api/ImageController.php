@@ -14,12 +14,6 @@ class ImageController extends BaseController
 {
     public function uploadImage(Request $request)
     {
-        return response()->json([
-            'success'   => false,
-            'message'   => 'Data Failed to Save',
-            'data'      => $request->all(),
-            'status'    => 403
-        ],403);
         $exhibitor = $request->input('exhibitor');
 
         if ($request->hasFile('image')) {
