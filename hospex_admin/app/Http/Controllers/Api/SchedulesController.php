@@ -52,6 +52,9 @@ class SchedulesController extends Controller
                                 "duration"     => $item->duration,
                                 "time"         => $item->time,
                                 "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
+                                "pengisi_email" => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
+                                "pengisi_phone" => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
+                                "pengisi_info"  => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
                                 "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
                                 "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
                             ];
@@ -94,6 +97,9 @@ class SchedulesController extends Controller
                         "duration"     => $item->duration,
                         "time"         => $item->time,
                         "pengisi"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->name]; }),
+                        "pengisi_email"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->email]; }),
+                        "pengisi_phone"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->phone]; }),
+                        "pengisi_info"      => $item->performers()->get()->map(function($performer){ return ['nama' => $performer->info]; }),
                         "jam_mulai"    => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->format('H:i'),
                         "jam_selesai"  => Carbon::createFromTimeString($item->time, 'Asia/Jakarta')->addMinutes($item->duration)->format('H:i'),
                     ];
