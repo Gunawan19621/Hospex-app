@@ -14,6 +14,7 @@ class ImageController extends BaseController
 {
     public function uploadImage(Request $request)
     {
+        dd($request->all());
         $exhibitor = $request->input('exhibitor');
 
         if ($request->hasFile('image')) {
