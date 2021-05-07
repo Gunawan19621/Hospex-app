@@ -113,8 +113,8 @@ class StandsController extends Controller
     public function edit(Stand $stand)
     {
         $title = 'Edit Stand';
-        $exhibitors = EventExhibitor::all();
-        $areas      = Area::all();
+        $exhibitors = EventExhibitor::where('event_id',$stand->area->event->id)->get();
+        $areas      = Area::where('event_id',$stand->area->event->id)->get();
         return view('stand.edit',compact('title','areas','exhibitors','stand'));
     }
 
