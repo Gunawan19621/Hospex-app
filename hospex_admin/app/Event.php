@@ -39,7 +39,7 @@ class Event extends Model
         return $this->hasMany(AvailableSchedule::class);
     }
 
-    public function getEventDate()
+    public function getEventDateAttribute()
     {
         $event_date = date("d M Y", strtotime($this->begin)).' - '.date("d M Y", strtotime($this->end));
 
