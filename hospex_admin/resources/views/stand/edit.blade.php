@@ -16,7 +16,7 @@
                       <i class="la la-gear"></i>
                   </span>
                   <h3 class="m-portlet__head-text">
-                      Form Add Stand
+                      Form Edit Stand
                   </h3>
                   </div>
               </div>
@@ -38,7 +38,7 @@
                     <select class="form-control @error('area_id') is-invalid @enderror " name="area_id" id="areaID" value="{{ $stand->area_id }}" required>
                       <option value="" > Area </option>
                       @foreach ($areas as $area)
-                      <option value=" {{ $area->id }} " @if($area->id == $stand->area_id ) {{'selected'}} @endif > {{ $area->area_name }} </option>
+                      <option value="{{ $area->id }}" @if($area->id == $stand->area_id) selected @endif> {{ $area->area_name.' ('.$area->event->event_title.')'}} </option>
                       @endforeach
                   </select>
                   @error('area_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
@@ -48,7 +48,7 @@
                     <select class="form-control @error('exhibitor_id') is-invalid @enderror " name="exhibitor_id" id="exhibitorID" value="{{ $stand->exhibitor_id }}" required>
                       <option value="" > Exhibitor </option>
                       @foreach ($exhibitors as $exhibitor)
-                      <option value=" {{ $exhibitor->id }} " @if($exhibitor->id == $stand->event_exhibitor_id ) {{'selected'}} @endif > {{ $exhibitor->company->company_name }} </option>
+                      <option value=" {{ $exhibitor->id }}" @if($exhibitor->id == $stand->event_exhibitor_id) selected @endif > {{ $exhibitor->company->company_name }} </option>
                       @endforeach
                   </select>
                   @error('exhibitor_id') <div class="invalid-feedback"> {{ $message }} </div> @enderror
@@ -67,28 +67,44 @@
 	</div>
 </div>
 @endsection
-@section('require')
-     <script>
-         $(document).ready(function(){
+@push('css')
+    <!-- Select 2 -->
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2.css')}}">
+    <link rel="stylesheet" href="{{url('plugins/select2/css/select2-bootstrap.css')}}">
+@endpush
+@push('scripts')
+    <script src="{{url('plugins/select2/js/select2.full.js')}}"></script>
+    
+    <script type="text/javascript">
+        $('#exhibitorID').select2({
+            theme: "bootstrap",
+            placeholder: "Select",
+            width: '100%',
+            containerCssClass: ':all:',
+            ajax: {
+                url: '{{route('exhibitor_stand.ajax.select2')}}',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        term: params.term,
+                        page: params.page,
+                        area_id: $('#areaID').val()
+                    };
+                },
+                processResults: function (data, params) {
 
-          let  areas      =  {!! $areas !!},
-            exhibitors =  {!! $exhibitors !!};
-            if (areas.length >= 0) {
-                    $('button[type=submit]').prop('disabled', true);
-                    $('#areaID').prop('disabled', true);
-                    $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                                <strong>Warning!</strong> Areas Not Available Yet.
-                                            </div>`);
-                }
-                if (exhibitors.length >= 0) {
-                    $('button[type=submit]').prop('disabled', true);
-                    $('#exhibitorID').prop('disabled', true);
-                    $('.alertform').append(`<div class="alert alert-warning" role="alert">
-                                                <strong>Warning!</strong> Exhibitors Not Available Yet.
-                                            </div>`);
-                }
+                    params.page = params.page || 1;
 
-         })
-
-     </script>
- @endsection
+                    return {
+                        results: data.data,
+                        pagination: {
+                            more: (params.page * data.per_page) < data.total
+                        }
+                    };
+                },
+                cache: true,
+            }
+        });
+    </script>
+@endpush
