@@ -129,8 +129,7 @@ class EventController extends Controller
             'link_buy_event'    => 'required'
         ]);
 
-        $update =Event::where('id', $event->id)
-                ->update([
+        $update = Event::where('id', $event->id)->update([
                     'event_title'       => $request->event_title,
                     'year'              => Carbon::createFromFormat('Y-m-d', $request->begin)->year,
                     'begin'             => Carbon::parse($request->begin),
@@ -190,6 +189,10 @@ class EventController extends Controller
             });
             return datatables()->of($data->collapse())
                     ->addIndexColumn()
+                    ->addColumn('event_date', function($data){
+                        $event_date = date("d M Y", strtotime($data['begin'])).' - '.date("d M Y", strtotime($data['end']));
+                        return $event_date;
+                    })
                     ->addColumn('action', function($data){
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
@@ -200,8 +203,8 @@ class EventController extends Controller
                         </span>';
                         return $button;
                     })
-                ->rawColumns(['action'])
-                ->make(true);
+                    ->rawColumns(['action','event_date'])
+                    ->make(true);
         }
         return view('stand.stand_event', compact('title','event'));
     }

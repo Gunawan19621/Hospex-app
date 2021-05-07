@@ -19,7 +19,7 @@ $(document).ready(function(){
                         data: "end"
                     },
                     {
-                        data: "city"
+                        data: "event_date"
                     },
                     {
                         data: "event_location"
