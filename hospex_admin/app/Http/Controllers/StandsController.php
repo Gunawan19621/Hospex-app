@@ -171,7 +171,7 @@ class StandsController extends Controller
 
             $area = Area::where('id',$request->area_id)->first();
 
-            $dataDb = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('companies.id','companies.company_name as text')->where('event_exhibitors.event_id', $area->event_id)->where('companies.company_name', 'LIKE', '%'.$request->term.'%')->paginate($perPage);
+            $dataDb = EventExhibitor::join('companies', 'companies.id', '=', 'event_exhibitors.company_id')->select('event_exhibitors.id','companies.company_name as text')->where('event_exhibitors.event_id', $area->event_id)->where('companies.company_name', 'LIKE', '%'.$request->term.'%')->paginate($perPage);
 
             return $dataDb;
         }
