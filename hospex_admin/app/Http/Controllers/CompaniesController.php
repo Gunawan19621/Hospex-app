@@ -106,7 +106,7 @@ class CompaniesController extends Controller
         $request->validate([
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email',
-            'exhibitor_password' => 'required|confirmed|min:6',
+            'exhibitor_password' => 'required|min:6|confirmed',
             'exhibitor_password_confirmation' => 'required|min:6',
             'company_web'        => 'required',
             'exhibitor_address'  => 'required'
@@ -197,7 +197,7 @@ class CompaniesController extends Controller
         }
         else{
             $request->validate([
-                'exhibitor_password' => 'confirmed|min:6',
+                'exhibitor_password' => 'min:6|confirmed',
                 'exhibitor_password_confirmation' => 'min:6'
             ]);
         }
