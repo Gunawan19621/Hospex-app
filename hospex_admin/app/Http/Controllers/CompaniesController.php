@@ -189,9 +189,18 @@ class CompaniesController extends Controller
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
-            'exhibitor_address'  => 'required',
-            'exhibitor_password' => 'confirmed'
+            'exhibitor_address'  => 'required'
         ]);
+
+        if($request->exhibitor_password == null || $request->exhibitor_password == ''){
+
+        }
+        else{
+            $request->validate([
+                'exhibitor_password' => 'confirmed|min:6',
+                'exhibitor_password_confirmation' => 'min:6'
+            ]);
+        }
         
         try{
             DB::transaction(function() use ($company, $request) {
@@ -216,11 +225,6 @@ class CompaniesController extends Controller
                     ]);
                 }
                 else{
-                    $request->validate([
-                        'exhibitor_password' => 'confirmed|min:6',
-                        'exhibitor_password_confirmation' => 'min:6'
-                    ]);
-
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
