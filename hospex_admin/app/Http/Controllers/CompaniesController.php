@@ -187,7 +187,7 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'company_name'       => 'required',
-            'exhibitor_email'    => 'required|email|unique:users,email,'$company->id,
+            'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
             'exhibitor_address'  => 'required',
             'exhibitor_password' => 'confirmed|min:6',
