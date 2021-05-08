@@ -106,7 +106,8 @@ class CompaniesController extends Controller
         $request->validate([
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email',
-            'exhibitor_password' => 'required',
+            'exhibitor_password' => 'required|confirmed|min:6',
+            'exhibitor_password_confirmation' => 'required|min:6',
             'company_web'        => 'required',
             'exhibitor_address'  => 'required'
         ]);
@@ -186,8 +187,11 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'company_name'       => 'required',
+            'exhibitor_email'    => 'required|email|unique:users,email,'$company->id,
             'company_web'        => 'required',
-            'exhibitor_address'  => 'required'
+            'exhibitor_address'  => 'required',
+            'exhibitor_password' => 'confirmed|min:6',
+            'exhibitor_password_confirmation' => 'min:6'
         ]);
         
         try{
@@ -195,12 +199,12 @@ class CompaniesController extends Controller
                 if($request->company_info == null){
                     $request->company_info = "";
                 }
-                Company::whereId($company->id)
-                    ->update([
-                        'company_name'       => $request->company_name,
-                        'company_web'        => $request->company_web,
-                        'company_info'       => $request->company_info
-                    ]);
+
+                Company::whereId($company->id)->update([
+                    'company_name'       => $request->company_name,
+                    'company_web'        => $request->company_web,
+                    'company_info'       => $request->company_info
+                ]);
     
                 $company = Company::find($company->id);
                 $company->categories()->sync($request->categories);

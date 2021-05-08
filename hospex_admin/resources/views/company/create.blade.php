@@ -43,6 +43,11 @@
                       @error('exhibitor_password') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
+                      <label for="exhibitorPassword">Password Confirmation</label>
+                      <input type="password" autocomplete="off" class="form-control @error('exhibitor_password_confirmation') is-invalid @enderror " name="exhibitor_password_confirmation" id="exhibitorPasswordConfirmation" placeholder="Password Confirmation Input" required>
+                      @error('exhibitor_password_confirmation') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
                         <label for="exhibitorAddress">Address</label>
                         <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ old('exhibitor_address') }}" required>
                         @error('exhibitor_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror

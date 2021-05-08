@@ -34,7 +34,7 @@
                   </div>
                   <div class="form-group m-form__group">
                       <label for="exhibitorEmail">Email</label>
-                      <input type="email" autocomplete="off" class="form-control @error('exhibitor_email') is-invalid @enderror " name="exhibitor_email" id="exhibitorEmail" placeholder="Email Input" value="{{ $company->users[0]->email }}" readonly required>
+                      <input type="email" autocomplete="off" class="form-control @error('exhibitor_email') is-invalid @enderror " name="exhibitor_email" id="exhibitorEmail" placeholder="Email Input" value="{{ $company->users[0]->email }}" required>
                       @error('exhibitor_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
@@ -43,7 +43,12 @@
                       @error('exhibitor_password') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                  <label for="companyWeb">Company Web </label>
+                      <label for="exhibitorPassword">Password Confirmation</label>
+                      <input type="password" autocomplete="off" class="form-control @error('exhibitor_password_confirmation') is-invalid @enderror " name="exhibitor_password_confirmation" id="exhibitorPasswordConfirmation" placeholder="Password Confirmation Input">
+                      @error('exhibitor_password_confirmation') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
+                      <label for="companyWeb">Company Web </label>
                       <input type="text" autocomplete="off" class="form-control @error('company_web') is-invalid @enderror" name="company_web" id="companyWeb" placeholder="Company Web Input" value="{{ $company->company_web }}" required>
                       @error('company_web') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
