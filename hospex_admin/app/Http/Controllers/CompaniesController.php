@@ -189,8 +189,7 @@ class CompaniesController extends Controller
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
-            'exhibitor_address'  => 'required',
-            'exhibitor_password' => 'confirmed'
+            'exhibitor_address'  => 'required'
         ]);
         
         try{
