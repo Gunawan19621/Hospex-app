@@ -189,7 +189,8 @@ class CompaniesController extends Controller
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
-            'exhibitor_address'  => 'required'
+            'exhibitor_address'  => 'required',
+            'exhibitor_password' => 'confirmed'
         ]);
         
         try{
@@ -234,7 +235,6 @@ class CompaniesController extends Controller
             DB::rollBack();
             $response = '0-Company Failed to Update';
         }
-         
         
         return redirect('/companies')->with('status', $response);
     }
