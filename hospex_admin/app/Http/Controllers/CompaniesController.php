@@ -190,8 +190,7 @@ class CompaniesController extends Controller
             'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
             'exhibitor_address'  => 'required',
-            'exhibitor_password' => 'confirmed|min:6',
-            'exhibitor_password_confirmation' => 'min:6'
+            'exhibitor_password' => 'confirmed'
         ]);
         
         try{
@@ -209,7 +208,7 @@ class CompaniesController extends Controller
                 $company = Company::find($company->id);
                 $company->categories()->sync($request->categories);
 
-                if($request->exhibitor_password == null){
+                if($request->exhibitor_password == null || $request->exhibitor_password == ''){
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
@@ -217,6 +216,11 @@ class CompaniesController extends Controller
                     ]);
                 }
                 else{
+                    $request->validate([
+                        'exhibitor_password' => 'confirmed|min:6',
+                        'exhibitor_password_confirmation' => 'min:6'
+                    ]);
+
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
