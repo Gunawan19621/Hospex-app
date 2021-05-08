@@ -32,6 +32,9 @@
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link" data-toggle="tab" href="#pending" role="tab" onclick="pending()">Pending</a>
                             </li>
+                            <li class="nav-item m-tabs__item">
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#reject" role="tab" onclick="reject()">Reject</a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="approve" role="tabpanel">
@@ -56,6 +59,25 @@
                             <div class="tab-pane " id="pending" role="tabpanel">
                                 <!--begin: Datatable -->
                                 <table class="table table-striped- table-bordered table-hover table-checkable" id="pendingTable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No</th>
+                                            <th scope="col">Event</th>
+                                            <th scope="col">Visitor Name</th>
+                                            <th scope="col">Visitor Company</th>
+                                            <th scope="col">Visitor Email</th>
+                                            <th scope="col">Exhibitor Name</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Time</th>
+                                            <th scope="col">Status Request</th>
+                                            {{-- <th scope="col">Action</th> --}}
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tab-pane " id="reject" role="tabpanel">
+                                <!--begin: Datatable -->
+                                <table class="table table-striped- table-bordered table-hover table-checkable" id="rejectTable">
                                     <thead>
                                         <tr>
                                             <th scope="col">No</th>

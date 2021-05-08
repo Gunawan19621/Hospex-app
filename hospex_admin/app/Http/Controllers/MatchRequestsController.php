@@ -24,19 +24,32 @@ class MatchRequestsController extends Controller
     {
         $title = 'Match Requests';
         if(request()->ajax()){
-            return datatables()->of(Match::where(['status' => '1'])->get())
+            return datatables()->of(Match::where('status','1')->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
                     ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
-                        return ( $match->status == 1? 
-                            // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
-                            'Approve'
-                            : 
-                            // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
-                            'Pending'
-                            );
+                        // return ( $match->status == 1? 
+                        //     // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
+                        //     'Approve'
+                        //     : 
+                        //     // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                        //     'Pending'
+                        //     );
+
+                        $status = '';
+                        if($match->status == 0){
+                            $status = 'Pending';
+                        }
+                        else if($match->status == 1){
+                            $status = 'Approve';
+                        }
+                        else if($match->status == 2){
+                            $status = 'Reject';
+                        }
+
+                        return $status;
                     })
                     // ->editColumn('status', function(Match $match) {
                     //     return ( $match->status_meeting == 0? 
@@ -65,22 +78,76 @@ class MatchRequestsController extends Controller
         }
         return view('match.index',compact('title'));
     }
+    
     public function pendingMatch()
     {
         if(request()->ajax()){
-            return datatables()->of(Match::whereIn('status',['0'])->get())
+            return datatables()->of(Match::where('status','0')->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
                     ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
                     ->editColumn('status', function(Match $match) {
-                        return ( $match->status == 1? 
-                            // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
-                            'Approve'
-                            : 
-                            // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
-                            'Pending'
-                            );
+                        // return ( $match->status == 1? 
+                        //     // '<a href="#" class="btn btn-sm btn-success m-btn m-btn--icon m-btn--pill"><span> <i class="fa fa-calendar-check-o"></i><span>Approve</span></span></a>'
+                        //     'Approve'
+                        //     : 
+                        //     // '<a href="'.url('matches/'.$match->id.'/approve').'" class="btn btn-sm btn-outline-success m-btn m-btn--icon m-btn--pill" ><span><i class="fa fa-calendar-check-o"></i><span>Pending</span></span></a>'
+                        //     'Pending'
+                        //     );
+
+                        $status = '';
+                        if($match->status == 0){
+                            $status = 'Pending';
+                        }
+                        else if($match->status == 1){
+                            $status = 'Approve';
+                        }
+                        else if($match->status == 2){
+                            $status = 'Reject';
+                        }
+
+                        return $status;
+                    })
+                    ->addColumn('visitor_name', function($data){
+                        return $data->visitor->company->users[0]->name;
+                    })
+                    ->addColumn('visitor_company', function($data){
+                        return $data->visitor->company->company_name;
+                    })
+                    ->addColumn('visitor_email', function($data){
+                        return $data->visitor->company->users[0]->email;
+                    })
+                    ->addColumn('exhibitor_name', function($data){
+                        return $data->exhibitor->company->company_name;
+                    })
+                ->rawColumns(['visitor_name','visitor_company','visitor_email','exhibitor_name','status'])
+                ->make(true);
+        }
+        
+    }
+
+    public function rejectMatch()
+    {
+        if(request()->ajax()){
+            return datatables()->of(Match::where('status','2')->get())
+                    ->addIndexColumn()
+                    ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
+                    ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
+                    ->addColumn('time', function($data){  return  $data->availableSchedule->time; })
+                    ->editColumn('status', function(Match $match) {
+                        $status = '';
+                        if($match->status == 0){
+                            $status = 'Pending';
+                        }
+                        else if($match->status == 1){
+                            $status = 'Approve';
+                        }
+                        else if($match->status == 2){
+                            $status = 'Reject';
+                        }
+
+                        return $status;
                     })
                     ->addColumn('visitor_name', function($data){
                         return $data->visitor->company->users[0]->name;

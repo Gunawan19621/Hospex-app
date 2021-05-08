@@ -100,6 +100,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Matches
     Route::get('matches/pending', 'MatchRequestsController@pendingMatch')->name('matches.pending');
+    Route::get('matches/reject', 'MatchRequestsController@rejectMatch')->name('matches.reject');
     Route::resource('matches', 'MatchRequestsController');
     Route::get('matches/{match}/approve', 'MatchRequestsController@approve');
 
