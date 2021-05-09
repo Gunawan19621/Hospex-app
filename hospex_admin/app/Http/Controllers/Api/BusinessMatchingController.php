@@ -132,7 +132,7 @@ class BusinessMatchingController extends Controller
                 $checkEventVisitor = EventVisitor::where('company_id',$userVisitor->company_id)->where('event_id',$checkAvailable->event->id)->first();
 
                 if($checkEventVisitor){
-                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $checkEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->first();
+                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $checkEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->whereIn('status',['0','1'])->first();
 
                     if($checkMatchRequest == null){
                         $match = MatchRequest::create([
@@ -154,7 +154,7 @@ class BusinessMatchingController extends Controller
                         'event_id'   => $checkAvailable->event->id
                     ]);
 
-                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $createEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->first();
+                    $checkMatchRequest = MatchRequest::where('event_visitor_id', $createEventVisitor->id)->where('event_exhibitor_id',(int) $exhibitor_id)->where('available_schedule_id', (int) $time)->whereIn('status',['0','1'])->first();
 
                     if($checkMatchRequest == null){
                         $match = MatchRequest::create([
