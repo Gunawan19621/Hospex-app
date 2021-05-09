@@ -75,7 +75,7 @@ class BusinessMatchingController extends Controller
                         if($value->date == $match->date){
                             $o = array(
                                 'id'            => $match->id,
-                                'logo_PT'       => 'logo1.jpg',
+                                'logo_PT'       => $match->exhibitor->company->image,
                                 'nama_PT'       => $match->exhibitor->company->company_name,
                                 'visitor_name'  => $match->visitor->company->users[0]->name,
                                 'visitor_email' => $match->visitor->company->users[0]->email,
@@ -86,7 +86,7 @@ class BusinessMatchingController extends Controller
                                 $o['status'] = 'Approved';
                             }
                             else if($match->status == '2') {
-                                $o['status'] = 'Decline';
+                                $o['status'] = 'Rejected';
                             }
                             else{
                                 $o['status'] = 'Pending';
@@ -286,12 +286,42 @@ class BusinessMatchingController extends Controller
         try{
             $approve = MatchRequest::where([
                 'id' => $match
-            ])->update([ 'status' => '1' ]);
+            ])->update(['status' => '1']);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
-                'event_exhibitor_id'    => $dateExh->event_exhibitor_id, 
-                'available_schedule_id' => $dateExh->available_schedule_id, 
+                'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
+                'available_schedule_id' => $dateExh->available_schedule_id,
                 'status'                => '0',
+            ])->update(['status' => '2']);
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data Success to Save',
+                'data'      => '',
+                'status'    => 200
+            ],200);
+        }
+        catch (\Exception $e){
+            $response = $e->getMessage();
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Data Failed to Save',
+                'data'      => '',
+                'status'    => 403
+            ],403);
+        }
+    }
+
+    public function reject($match)
+    {
+        try{
+            $reject = MatchRequest::where([
+                'id' => $match
+            ])->update(['status' => '2']);
+            $dateExh = MatchRequest::findorfail($match);
+            $data    = MatchRequest::where([
+                'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
+                'available_schedule_id' => $dateExh->available_schedule_id
             ])->update(['status' => '2']);
 
             return response()->json([

@@ -22,6 +22,7 @@ $router->get('exhibitors/{exhibitor}', 'Api\ExhibitorsController@show');
 $router->post('match-request', 'Api\BusinessMatchingController@store');
 $router->put('match-request/{match}/{type}', 'Api\BusinessMatchingController@update');
 $router->post('match-approve/{match}', 'Api\BusinessMatchingController@approve');
+$router->post('match-reject/{match}', 'Api\BusinessMatchingController@reject');
 $router->get('list-business-matching/{type}/{id}/{status}', 'Api\BusinessMatchingController@index');
 $router->get('match-success/{id}', 'Api\BusinessMatchingController@updateStatusMeeting');
 
