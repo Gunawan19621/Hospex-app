@@ -58,8 +58,8 @@ class EventSponsorsController extends Controller
     public function create()
     {
         $title      = 'Add Sponsor';
-        $events   = Event::where('id','desc')->get();
-        $companies  = Company::where('id','desc')->get();
+        $events   = Event::orderBy('id','desc')->get();
+        $companies  = Company::orderBy('id','desc')->get();
         return view('sponsor.create', compact('title','events','companies'));
     }
 
@@ -108,8 +108,8 @@ class EventSponsorsController extends Controller
     public function edit(EventSponsor $sponsor)
     {
         $title = 'Edit Sponsor';
-        $events   = Event::where('id','desc')->get();
-        $companies  = Company::where('id','desc')->get();
+        $events   = Event::orderBy('id','desc')->get();
+        $companies  = Company::orderBy('id','desc')->get();
         return view('sponsor.edit', compact('title', 'sponsor','companies', 'events'));
     }
 

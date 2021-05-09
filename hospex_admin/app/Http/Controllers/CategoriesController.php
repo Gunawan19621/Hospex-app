@@ -119,7 +119,7 @@ class CategoriesController extends Controller
 
     public function getCategories()
     {
-        $categories['data'] = Category::where('id','desc')->get();
+        $categories['data'] = Category::orderBy('id','desc')->get();
         return $categories;
     }
 }

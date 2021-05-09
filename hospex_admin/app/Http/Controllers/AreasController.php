@@ -95,7 +95,7 @@ class AreasController extends Controller
     public function edit(Area $area)
     {
         $title = 'Edit Area';
-        $events = Event::where('id','desc')->get();
+        $events = Event::orderBy('id','desc')->get();
         return view('area.edit', compact('title','area','events'));
     }
 
