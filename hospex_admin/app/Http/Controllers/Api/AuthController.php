@@ -269,7 +269,13 @@ class AuthController extends Controller
 
         $checkUser = User::where('id',$id)->first();
         if($checkUser){
-            $checkUser->name    = $name;
+            if($checkUser->type == 'exhibitor'){
+                $checkUser->name = $company;
+            }
+            else{
+                $checkUser->name = $name;
+            }
+            
             $checkUser->address = $address;
             $checkUser->phone   = $phone;
             $checkUser->save();
