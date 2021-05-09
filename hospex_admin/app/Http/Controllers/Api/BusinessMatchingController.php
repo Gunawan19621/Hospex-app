@@ -109,60 +109,6 @@ class BusinessMatchingController extends Controller
         ],200);
     }
 
-    public function list_matching(Request $request){
-        if ($request->is('matchExhibitor')) {
-            $matches = MatchRequest::where('event_exhibitor_id', $request->id_user)->orderBy('id','desc')->get();
-        }
-        else{
-            $matches = MatchRequest::where('visitor_id', $request->id_user)->orderBy('id','desc')->get();
-        }
-        
-        $data = [];
-        $bm = [];
-
-        if(!$matches->isEmpty()){
-            foreach ($matches as $key => $match) {    
-                $bm[] = [
-                    'company_name' => $match->exhibitor->company->company_name,
-                    'jam'          => $match->date,
-                    'lokasi'       => $match->location,
-                ];
-
-                $data[]  = [
-                    'id'                => $match->id,
-                    'hari'              => $match->date,
-                    'tanggal'           => $match->date,
-                    'bussines_matching' => $bm
-                ]; 
-            }
-        }
-        
-        return response()->json([
-            'success'   => true,
-            'message'   => 'Data Successfull founded',
-            'data'      => $data,
-            'status'    => 200
-        ],200);
-    }
-
-    public function show($id)
-    {
-        // $exhibitor = exhibitor::findorfail($id);
-        // $data = [
-        //     'company_name'      => $exhibitor->company->company_name,
-        //     'company_address'   => $exhibitor->company->company_address,
-        //     'company_web'       => $exhibitor->company->company_web,
-        //     'company_email'     => $exhibitor->company->company_email,
-        //     'event_title'       => $exhibitor->event->event_title
-        // ];
-
-        // return response()->json([
-        //     'success'   => true,
-        //     'message'   => 'Data Found',
-        //     'data'      => $data
-        // ],200);
-    }
-
     public function store(Request $request)
     {
         try {
@@ -250,37 +196,6 @@ class BusinessMatchingController extends Controller
         }
     }
 
-    public function update(Request $request, $match, $type)
-    {
-        $column      = $type == 'visitor' ? 'status_visitor' : 'status';
-        $othercolumn = $type == 'visitor' ? 'status' : 'status_visitor';
-        
-        try{
-            $update = MatchRequest::where(['id'=> $match])->update([
-                'date'       => date('Y-m-d', strtotime($request->input('date'))),
-                'time'       => Carbon::parse(date('H:i:s',strtotime($request->input('time')))),
-                $column      => '1',
-                $othercolumn => '0' 
-            ]);
-            
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data Success to Save',
-                'data'      => $update,
-                'status'    => 200
-            ],200);
-        }
-        catch (\Exception $e){
-            $response = $e->getMessage();
-            return response()->json([
-                'success'   => false,
-                'message'   => 'Data Failed to Save',
-                'data'      => '',
-                'status'    => 403
-            ],403);
-        }
-    }
-
     public function approve($match)
     {
         try{
@@ -318,11 +233,6 @@ class BusinessMatchingController extends Controller
             $reject = MatchRequest::where([
                 'id' => $match
             ])->update(['status' => '2']);
-            $dateExh = MatchRequest::findorfail($match);
-            $data    = MatchRequest::where([
-                'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
-                'available_schedule_id' => $dateExh->available_schedule_id
-            ])->update(['status' => '2']);
 
             return response()->json([
                 'success'   => true,
@@ -332,42 +242,6 @@ class BusinessMatchingController extends Controller
             ],200);
         }
         catch (\Exception $e){
-            $response = $e->getMessage();
-            return response()->json([
-                'success'   => false,
-                'message'   => 'Data Failed to Save',
-                'data'      => '',
-                'status'    => 403
-            ],403);
-        }
-    }
-
-    public function updateStatusMeeting($match)
-    {
-        try {
-            $update = MatchRequest::where('id',$match)->first();
-
-            if($update){
-                $update->status_meeting = '1';
-                $update->save();
-
-                return response()->json([
-                    'success'   => true,
-                    'message'   => 'Data Success to Save',
-                    'data'      => $update,
-                    'status'    => 200
-                ],200);
-            }
-            else{
-                return response()->json([
-                    'success'   => false,
-                    'message'   => 'Data Failed to Save',
-                    'data'      => '',
-                    'status'    => 403
-                ],403);
-            }
-        }
-        catch (\Exception $e) {
             $response = $e->getMessage();
             return response()->json([
                 'success'   => false,
