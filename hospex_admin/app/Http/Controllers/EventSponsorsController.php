@@ -24,7 +24,7 @@ class EventSponsorsController extends Controller
     {
         $title = 'Sponsors';
         if (request()->ajax()) {
-            return datatables()->of(EventSponsor::orderBy('id','desc')->all())
+            return datatables()->of(EventSponsor::orderBy('id','desc')->get())
                 ->addIndexColumn()
                 ->addColumn('event_title', function($data){
                     return $data->event->event_title;
@@ -58,8 +58,8 @@ class EventSponsorsController extends Controller
     public function create()
     {
         $title      = 'Add Sponsor';
-        $events   = Event::all();
-        $companies  = Company::all();
+        $events   = Event::where('id','desc')->get();
+        $companies  = Company::where('id','desc')->get();
         return view('sponsor.create', compact('title','events','companies'));
     }
 
@@ -108,8 +108,8 @@ class EventSponsorsController extends Controller
     public function edit(EventSponsor $sponsor)
     {
         $title = 'Edit Sponsor';
-        $events   = Event::all();
-        $companies  = Company::all();
+        $events   = Event::where('id','desc')->get();
+        $companies  = Company::where('id','desc')->get();
         return view('sponsor.edit', compact('title', 'sponsor','companies', 'events'));
     }
 

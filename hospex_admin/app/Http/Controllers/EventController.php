@@ -31,7 +31,7 @@ class EventController extends Controller
     
     public function index()
     {
-        $events = Event::orderBy('id','desc')->all();
+        $events = Event::orderBy('id','desc')->get();
         return view('event.index',compact('events'));
     }
 
@@ -169,7 +169,7 @@ class EventController extends Controller
 
     public function getevents()
     {
-        $events['data'] = Event::orderBy('id','desc')->all();
+        $events['data'] = Event::orderBy('id','desc')->get();
         return $events;
     }
 

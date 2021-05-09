@@ -73,7 +73,7 @@ class EventVisitorsController extends Controller
     public function create()
     {
         $title = 'Add Visitor';
-        $companies = Company::orderBy('id','desc')->all();
+        $companies = Company::orderBy('id','desc')->get();
         return view('visitor.create',compact('title','companies'));
     }
 
@@ -136,7 +136,7 @@ class EventVisitorsController extends Controller
     public function edit(User $visitor)
     {
         $title = 'Edit Visitor';
-        $companies  = Company::orderBy('id','desc')->all();
+        $companies  = Company::orderBy('id','desc')->get();
         return view('visitor.edit',compact('title','visitor','companies'));
     }
 

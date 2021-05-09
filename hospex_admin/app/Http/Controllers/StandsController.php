@@ -26,7 +26,7 @@ class StandsController extends Controller
         $title = 'Stands';
         if(request()->ajax()){
             $array = [];
-            $stands = Stand::orderBy('id','desc')->all();
+            $stands = Stand::orderBy('id','desc')->get();
             foreach($stands as $stand){
                 $array[] = [
                     'id'                => $stand->id,
@@ -64,9 +64,9 @@ class StandsController extends Controller
     public function create( $event = null)
     {
         $title = 'Add Stand';
-        $exhibitors = $event == null ? EventExhibitor::orderBy('id','desc')->all() : EventExhibitor::where('event_id', $event)->orderBy('id','desc')->get();
-        $areas      = $event == null ? Area::orderBy('id','desc')->all() : Area::where('event_id', $event)->orderBy('id','desc')->get();
-        $events     = $event == null ? Event::orderBy('id','desc')->all() : Event::whereId($event)->orderBy('id','desc')->get();
+        $exhibitors = $event == null ? EventExhibitor::orderBy('id','desc')->get() : EventExhibitor::where('event_id', $event)->orderBy('id','desc')->get();
+        $areas      = $event == null ? Area::orderBy('id','desc')->get() : Area::where('event_id', $event)->orderBy('id','desc')->get();
+        $events     = $event == null ? Event::orderBy('id','desc')->get() : Event::whereId($event)->orderBy('id','desc')->get();
         $event    = $event == null ? '' : $event;
         return view('stand.create',compact('title','areas','exhibitors','events', 'event'));
     }

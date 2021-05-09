@@ -29,7 +29,7 @@ class EventExhibitorsController extends Controller
         $title = 'Exhibitor List';
         if(request()->ajax()){
             $array = [];
-            $exhibitors = EventExhibitor::orderBy('id','desc')->all();
+            $exhibitors = EventExhibitor::orderBy('id','desc')->get();
             foreach($exhibitors as $exhibitor){
                 $array[] = [
                     'id'                => $exhibitor->id,
@@ -67,7 +67,7 @@ class EventExhibitorsController extends Controller
         $companies = Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
                 })->get();
-        $events     = $event == null ? Event::all() : Event::whereId($event)->get();
+        $events     = $event == null ? Event::where('id','desc')->get() : Event::whereId($event)->where('id','desc')->get();
         // dd($events);
         return view('exhibitor.create', compact('title','companies','events'));
     }
@@ -134,7 +134,7 @@ class EventExhibitorsController extends Controller
         $companies  = Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
                 })->get();
-        $events     = Event::all();
+        $events     = Event::where('id','desc')->get();
         return view('exhibitor.edit',compact('title','exhibitor','companies','events'));
     }
 

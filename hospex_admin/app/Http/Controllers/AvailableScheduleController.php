@@ -24,7 +24,7 @@ class AvailableScheduleController extends Controller
         $title = 'Available Schedule';
         if (request()->ajax()) 
         {
-            return datatables()->of(AvailableSchedule::orderBy('id','desc')->all())
+            return datatables()->of(AvailableSchedule::orderBy('id','desc')->get())
                     ->addIndexColumn()
                     ->addColumn('event_title', function($data){  return  $data->event->event_title; })
                     ->addColumn('action', function($data){
@@ -51,7 +51,7 @@ class AvailableScheduleController extends Controller
     public function create($event = null)
     {
         $title = 'Add Available Schedule';
-        $events = $event == null ? Event::orderBy('id','desc')->all() : Event::whereId($event)->orderBy('id','desc')->get();
+        $events = $event == null ? Event::orderBy('id','desc')->get() : Event::whereId($event)->orderBy('id','desc')->get();
         return view('available_schedule.create', compact('title','events'));
     }
 
@@ -94,7 +94,7 @@ class AvailableScheduleController extends Controller
     public function edit(AvailableSchedule $availableSchedule)
     {
         $title = 'Edit Available Schedule';
-        $events = Event::orderBy('id','desc')->all();
+        $events = Event::orderBy('id','desc')->get();
         return view('available_schedule.edit', compact('title','availableSchedule','events'));
     }
 

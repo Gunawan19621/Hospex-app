@@ -94,7 +94,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        $categories = Category::orderBy('id','desc')->all();
+        $categories = Category::orderBy('id','desc')->get();
         $title = 'Add Company';
         return view('company.create', compact('title', 'categories'));
     }
@@ -172,7 +172,7 @@ class CompaniesController extends Controller
     public function edit(Company $company)
     {
         $title = 'Edit Company';
-        $categories = Category::orderBy('id','desc')->all();
+        $categories = Category::orderBy('id','desc')->get();
 
         $category_company = $company->categories;
         

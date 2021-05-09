@@ -20,7 +20,7 @@ class EventSchedulesController extends Controller
     }
     public function index()
     {
-        $eventschedules = EventSchedule::orderBy('id','desc')->all();
+        $eventschedules = EventSchedule::orderBy('id','desc')->get();
         return view('event_schedule.index',compact('eventschedules'));
     }
 

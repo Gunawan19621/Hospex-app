@@ -21,7 +21,7 @@ class CategoriesController extends Controller
         $title = 'Categories';
         if (request()->ajax()) 
         {
-            return datatables()->of(Category::all())
+            return datatables()->of(Category::where('id','desc')->get())
                     ->addIndexColumn()
                     ->addColumn('action', function($data){
                             $button = '<span class="dropdown">
@@ -116,9 +116,10 @@ class CategoriesController extends Controller
         return response()->json('1-Category Deleted', 200);
         // return redirect('/categories')->with('status',$response);
     }
+
     public function getCategories()
     {
-        $categories['data'] = Category::all();
+        $categories['data'] = Category::where('id','desc')->get();
         return $categories;
     }
 }
