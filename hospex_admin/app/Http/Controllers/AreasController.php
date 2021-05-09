@@ -24,7 +24,7 @@ class AreasController extends Controller
         $title = 'Areas';
         if (request()->ajax()) 
         {
-            return datatables()->of(Area::all())
+            return datatables()->of(Area::orderBy('id','desc')->all())
                     ->addIndexColumn()
                     ->addColumn('event_location', function($data){  return  $data->event->event_location; })
                     ->addColumn('note', function($data){  return  $data->event->event_title.'-'.$data->event->year; })
@@ -53,7 +53,7 @@ class AreasController extends Controller
     public function create($event = null)
     {
         $title = 'Add Areas';
-        $events = $event == null ? Event::all() :  Event::whereId($event)->get();
+        $events = $event == null ? Event::orderBy('id','desc')->all() :  Event::whereId($event)->orderBy('id','desc')->get();
         return view('area.create', compact('title','events'));
     }
 

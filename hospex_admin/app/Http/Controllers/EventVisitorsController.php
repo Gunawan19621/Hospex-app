@@ -22,7 +22,7 @@ class EventVisitorsController extends Controller
     {
         $title = 'Visitors';
         if(request()->ajax()){
-            return datatables()->of(User::where('type','visitor'))
+            return datatables()->of(User::where('type','visitor')->orderBy('id','desc'))
                     ->addIndexColumn()
                     ->addColumn('event', function($data){
                         if($data->company->visitors){
@@ -73,7 +73,7 @@ class EventVisitorsController extends Controller
     public function create()
     {
         $title = 'Add Visitor';
-        $companies = Company::all();
+        $companies = Company::orderBy('id','desc')->all();
         return view('visitor.create',compact('title','companies'));
     }
 
@@ -136,7 +136,7 @@ class EventVisitorsController extends Controller
     public function edit(User $visitor)
     {
         $title = 'Edit Visitor';
-        $companies  = Company::all();
+        $companies  = Company::orderBy('id','desc')->all();
         return view('visitor.edit',compact('title','visitor','companies'));
     }
 

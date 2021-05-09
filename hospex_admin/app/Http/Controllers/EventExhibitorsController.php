@@ -29,7 +29,7 @@ class EventExhibitorsController extends Controller
         $title = 'Exhibitor List';
         if(request()->ajax()){
             $array = [];
-            $exhibitors = EventExhibitor::all();
+            $exhibitors = EventExhibitor::orderBy('id','desc')->all();
             foreach($exhibitors as $exhibitor){
                 $array[] = [
                     'id'                => $exhibitor->id,

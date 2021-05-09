@@ -24,7 +24,7 @@ class MatchRequestsController extends Controller
     {
         $title = 'Match Requests';
         if(request()->ajax()){
-            return datatables()->of(Match::where('status','1')->get())
+            return datatables()->of(Match::where('status','1')->orderBy('id','desc')->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
@@ -82,7 +82,7 @@ class MatchRequestsController extends Controller
     public function pendingMatch()
     {
         if(request()->ajax()){
-            return datatables()->of(Match::where('status','0')->get())
+            return datatables()->of(Match::where('status','0')->orderBy('id','desc')->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })
@@ -130,7 +130,7 @@ class MatchRequestsController extends Controller
     public function rejectMatch()
     {
         if(request()->ajax()){
-            return datatables()->of(Match::where('status','2')->get())
+            return datatables()->of(Match::where('status','2')->orderBy('id','desc')->get())
                     ->addIndexColumn()
                     ->addColumn('event', function($data){  return  $data->exhibitor->event->event_title.' - ' . $data->exhibitor->event->year; })
                     ->addColumn('date', function($data){  return  $data->availableSchedule->date; })

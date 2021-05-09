@@ -26,7 +26,7 @@ class CompaniesController extends Controller
         if (request()->ajax()) {
             return datatables()->of(Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
-                }))
+                })->orderBy('id','desc'))
                 ->addIndexColumn()
                 ->addColumn('event', function($data){
                     if($data->exhibitors){
@@ -94,7 +94,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('id','desc')->all();
         $title = 'Add Company';
         return view('company.create', compact('title', 'categories'));
     }
@@ -172,7 +172,7 @@ class CompaniesController extends Controller
     public function edit(Company $company)
     {
         $title = 'Edit Company';
-        $categories = Category::all();
+        $categories = Category::orderBy('id','desc')->all();
 
         $category_company = $company->categories;
         

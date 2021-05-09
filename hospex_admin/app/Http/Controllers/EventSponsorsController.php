@@ -24,7 +24,7 @@ class EventSponsorsController extends Controller
     {
         $title = 'Sponsors';
         if (request()->ajax()) {
-            return datatables()->of(EventSponsor::all())
+            return datatables()->of(EventSponsor::orderBy('id','desc')->all())
                 ->addIndexColumn()
                 ->addColumn('event_title', function($data){
                     return $data->event->event_title;

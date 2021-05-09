@@ -12,6 +12,6 @@ class PagesController extends Controller
     }
     public function about()
     {
-        return view('about', ['nama' => 'Lulu Muhamad']);
+        return view('about', ['nama' => '']);
     }
 }
