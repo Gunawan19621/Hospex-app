@@ -77,6 +77,7 @@ class BusinessMatchingController extends Controller
                                 'id'            => $match->id,
                                 'logo_PT'       => $match->exhibitor->company->image,
                                 'nama_PT'       => $match->exhibitor->company->company_name,
+                                'visitor_logo'  => $match->visitor->company->image,
                                 'visitor_name'  => $match->visitor->company->users[0]->name,
                                 'visitor_email' => $match->visitor->company->users[0]->email,
                                 'time'          => $match->availableSchedule->time,
