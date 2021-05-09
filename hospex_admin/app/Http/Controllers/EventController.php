@@ -177,8 +177,8 @@ class EventController extends Controller
     {
         $title = 'Stand Event';
         if(request()->ajax()){
-            $data = collect($event->areas)->map(function($item, $key){
-                return collect($item->stands)->map(function($stand, $index) use($item){
+            $data = collect($event->areas->orderBy('id','desc'))->map(function($item, $key){
+                return collect($item->stands->orderBy('id','desc'))->map(function($stand, $index) use($item){
                     return [
                         'id'                => $stand->id,
                         'stand_name'        => $stand->stand_name,
@@ -226,7 +226,7 @@ class EventController extends Controller
         }
         $title = 'Exhibitor';
         // dd($event->exhibitors()->with('company'));
-        $query = $event->exhibitors()->with('company');
+        $query = $event->exhibitors()->orderBy('id','desc')->with('company');
         if(request()->ajax()){
             return datatables()->of($query)
                     ->addIndexColumn()
@@ -269,7 +269,7 @@ class EventController extends Controller
         $title = 'Areas';
         if (request()->ajax()) 
         {
-            return datatables()->of($event->areas)
+            return datatables()->of($event->areas->orderBy('id','desc'))
                     ->addIndexColumn()
                     ->addColumn('event_location', function($data){  return  $data->event->event_location; })
                     ->addColumn('note', function($data){  return  $data->event->event_title.'-'.$data->event->year; })
@@ -294,7 +294,7 @@ class EventController extends Controller
         $title = 'Available Schedule';
         if (request()->ajax()) 
         {
-            return datatables()->of($event->availableSchedules)
+            return datatables()->of($event->availableSchedules->orderBy('id','desc'))
                     ->addIndexColumn()
                     ->addColumn('event_title', function($data){  return  $data->event->event_title; })
                     ->addColumn('action', function($data){
