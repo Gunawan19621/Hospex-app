@@ -21,7 +21,7 @@ class CategoriesController extends Controller
         $title = 'Categories';
         if (request()->ajax()) 
         {
-            return datatables()->of(Category::where('id','desc')->get())
+            return datatables()->of(Category::where('id','desc'))
                     ->addIndexColumn()
                     ->addColumn('action', function($data){
                             $button = '<span class="dropdown">
