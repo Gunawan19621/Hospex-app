@@ -62,6 +62,10 @@ class CompaniesController extends Controller
                     $users = $data->users->first();
                     return $users->email;
                 })
+                ->addColumn('phone', function($data){
+                    $users = $data->users->first();
+                    return $users->phone;
+                })
                 ->addColumn('address', function($data){
                     $users = $data->users->first();
                     return $users->address;
@@ -105,14 +109,16 @@ class CompaniesController extends Controller
     {
         $request->validate([
             'company_name'       => 'required',
+            'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email',
+            'exhibitor_phone'    => 'required',
             'exhibitor_password' => 'required|min:6|confirmed',
             'exhibitor_password_confirmation' => 'required|min:6',
             'company_web'        => 'required',
             'exhibitor_address'  => 'required'
         ]);
+
         try{
-            
             DB::transaction(function() use ($request) {
                 if($request->company_info == null){
                     $request->company_info = "";
@@ -129,6 +135,7 @@ class CompaniesController extends Controller
                     'company_id' => $company->id,
                     'name'       => $request->company_name,
                     'email'      => $request->exhibitor_email,
+                    'phone'      => $request->exhibitor_phone,
                     'password'   => Hash::make($request->exhibitor_password),
                     'address'    => $request->exhibitor_address,
                     'type'       => 'exhibitor'
@@ -189,6 +196,7 @@ class CompaniesController extends Controller
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email,'.$company->id,
             'company_web'        => 'required',
+            'exhibitor_phone'    => 'required',
             'exhibitor_address'  => 'required'
         ]);
 
@@ -221,6 +229,7 @@ class CompaniesController extends Controller
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
+                        'phone'     => $request->exhibitor_phone,
                         'address'   => $request->exhibitor_address
                     ]);
                 }
@@ -228,6 +237,7 @@ class CompaniesController extends Controller
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
+                        'phone'     => $request->exhibitor_phone,
                         'password'  => Hash::make($request->exhibitor_password),
                         'address'   => $request->exhibitor_address
                     ]);

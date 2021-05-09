@@ -38,6 +38,11 @@
                       @error('exhibitor_email') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
+                      <label for="exhibitorEmail">Phone</label>
+                      <input type="text" autocomplete="off" class="form-control @error('exhibitor_phone') is-invalid @enderror " name="exhibitor_phone" id="exhibitorPhone" placeholder="Phone Input" value="{{ old('exhibitor_phone') }}" required>
+                      @error('exhibitor_phone') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
                       <label for="exhibitorPassword">Password</label>
                       <input type="password" autocomplete="off" class="form-control @error('exhibitor_password') is-invalid @enderror " name="exhibitor_password" id="exhibitorPassword" placeholder="Password Input" required>
                       @error('exhibitor_password') <div class="invalid-feedback"> {{ $message }} </div> @enderror
@@ -48,9 +53,9 @@
                       @error('exhibitor_password_confirmation') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                        <label for="exhibitorAddress">Address</label>
-                        <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ old('exhibitor_address') }}" required>
-                        @error('exhibitor_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                      <label for="exhibitorAddress">Address</label>
+                      <input type="text" autocomplete="off" class="form-control @error('exhibitor_address') is-invalid @enderror" name="exhibitor_address" id="exhibitorAddress" placeholder="Address Input" value="{{ old('exhibitor_address') }}" required>
+                      @error('exhibitor_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                       <label for="companyWeb">Company Web</label>
@@ -58,19 +63,19 @@
                       @error('company_web') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                        <label for="companyInfo">Company Info</label>
-                        <input type="text" autocomplete="off" class="form-control @error('company_info') is-invalid @enderror" name="company_info" id="companyInfo" placeholder="Company Info Input" value="{{ old('company_info') }}">
-                        @error('company_info') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                      <label for="companyInfo">Company Info</label>
+                      <input type="text" autocomplete="off" class="form-control @error('company_info') is-invalid @enderror" name="company_info" id="companyInfo" placeholder="Company Info Input" value="{{ old('company_info') }}">
+                      @error('company_info') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
-                    <label for="companyAddress">Categories</label>
-                    <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple" data-select2-tag="true" autocomplete="off" placeholder="" >
-                        @foreach ($categories as $category)
-                        <option  value=" {{ $category->id }} " > {{ $category->category_name }} </option>
-                        @endforeach
-                    </select>
-                    @error('company_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
-              </div>
+                      <label for="companyAddress">Categories</label>
+                      <select class="form-control m-select2" id="m_select2_3" name="categories[]" multiple="multiple" data-select2-tag="true" autocomplete="off" placeholder="" >
+                          @foreach ($categories as $category)
+                          <option  value=" {{ $category->id }} " > {{ $category->category_name }} </option>
+                          @endforeach
+                      </select>
+                      @error('company_address') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
               </div>
               <div class="m-portlet__foot m-portlet__foot--fit">
                   <div class="m-form__actions">

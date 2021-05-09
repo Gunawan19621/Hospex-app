@@ -25,6 +25,9 @@
                     {
                         data : "email", name : "email",
                     },
+                    {
+                        data : "phone", name : "phone",
+                    },
                     // {
                     //     data : "address", name : "address",
                     // },
