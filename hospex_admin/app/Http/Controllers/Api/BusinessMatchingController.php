@@ -38,6 +38,9 @@ class BusinessMatchingController extends Controller
             if($status == 'confirm'){
                 $status = '1';
             }
+            else if($status == 'reject'){
+                $status = '2';
+            }
             else{
                 $status = '0';
             }
