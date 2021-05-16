@@ -228,6 +228,63 @@ class AuthController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        $id           = $request->input('id');
+        $device_token = $request->input('device_token');
+
+        $user = User::where('id', $id)->first();
+        if ($user) {
+            $user->api_token    = '';
+            if($user->device_token == $device_token){
+                $user->device_token = '';
+            }
+            $user->save();
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Logout Success',
+                'data'      => '',
+                'status'    => 200
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Logout Fail.',
+                'data'      => '',
+                'status'    => 403
+            ], 403);
+        }
+    }
+
+    public function updateDeviceToken(Request $request)
+    {
+        $id           = $request->input('id');
+        $device_token = $request->input('device_token');
+
+        $user = User::where('id', $id)->first();
+        if ($user) {
+            $user->device_token = $device_token;
+            $user->save();
+
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Update Device Token Success',
+                'data'      => '',
+                'status'    => 200
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'success'   => false,
+                'message'   => 'Update Device Token Fail.',
+                'data'      => '',
+                'status'    => 403
+            ], 403);
+        }
+    }
+
     public function getUser($id)
     {
         $user = User::where('id',$id)->first();
