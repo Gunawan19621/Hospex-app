@@ -14,7 +14,7 @@ class AddColumnEventSubtitleInEventsTable extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->string('subtitle')->default('');
+            $table->string('event_subtitle')->default('');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnEventSubtitleInEventsTable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('subtitle');
+            $table->dropColumn('event_subtitle');
         });
     }
 }

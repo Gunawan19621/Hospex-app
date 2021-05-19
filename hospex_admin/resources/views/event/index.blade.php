@@ -31,10 +31,10 @@
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Event Title</th>
+                                <th scope="col">Event Subtitle</th>
                                 <th scope="col">Year</th>
                                 <th scope="col">Begin Date</th>
                                 <th scope="col">End Date</th>
-                                <th scope="col">Event Subtitle</th>
                                 <th scope="col">Event Location</th>
                                 <th scope="col">Link Buy</th>
                                 <th scope="col">Action</th>

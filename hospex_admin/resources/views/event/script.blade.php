@@ -10,6 +10,9 @@ $(document).ready(function(){
                         data: "event_title"
                     },
                     {
+                        data: "event_subtitle"
+                    },
+                    {
                         data: "year"
                     },
                     {
@@ -17,9 +20,6 @@ $(document).ready(function(){
                     },
                     {
                         data: "end"
-                    },
-                    {
-                        data: "event_subtitle"
                     },
                     {
                         data: "event_location"
