@@ -7,6 +7,7 @@ use App\AvailableSchedule;
 use App\EventExhibitor;
 use App\MatchRequest;
 use App\Event;
+use App\User;
 use Illuminate\Support\Carbon;
 use App\Helpers\GetEvent as eventId;
 use Illuminate\Database\Eloquent\Builder;
