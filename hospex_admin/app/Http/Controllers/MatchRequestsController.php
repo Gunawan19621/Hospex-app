@@ -43,10 +43,10 @@ class MatchRequestsController extends Controller
                             $status = 'Pending';
                         }
                         else if($match->status == 1){
-                            $status = 'Approve';
+                            $status = 'Confirm';
                         }
                         else if($match->status == 2){
-                            $status = 'Reject';
+                            $status = 'Decline';
                         }
 
                         return $status;
@@ -101,10 +101,10 @@ class MatchRequestsController extends Controller
                             $status = 'Pending';
                         }
                         else if($match->status == 1){
-                            $status = 'Approve';
+                            $status = 'Confirm';
                         }
                         else if($match->status == 2){
-                            $status = 'Reject';
+                            $status = 'Decline';
                         }
 
                         return $status;
@@ -141,10 +141,10 @@ class MatchRequestsController extends Controller
                             $status = 'Pending';
                         }
                         else if($match->status == 1){
-                            $status = 'Approve';
+                            $status = 'Confirm';
                         }
                         else if($match->status == 2){
-                            $status = 'Reject';
+                            $status = 'Decline';
                         }
 
                         return $status;

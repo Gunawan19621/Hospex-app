@@ -27,13 +27,13 @@
                     <div class="tabs">
                         <ul class="nav nav-tabs  m-tabs-line m-tabs-line--success" role="tablist">
                             <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#approve" role="tab" onclick="approve()">Approve</a>
+                                <a class="nav-link m-tabs__link active" data-toggle="tab" href="#approve" role="tab" onclick="approve()">Confirm</a>
                             </li>
                             <li class="nav-item m-tabs__item">
                                 <a class="nav-link m-tabs__link" data-toggle="tab" href="#pending" role="tab" onclick="pending()">Pending</a>
                             </li>
                             <li class="nav-item m-tabs__item">
-                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#reject" role="tab" onclick="reject()">Reject</a>
+                                <a class="nav-link m-tabs__link" data-toggle="tab" href="#reject" role="tab" onclick="reject()">Decline</a>
                             </li>
                         </ul>
                         <div class="tab-content">

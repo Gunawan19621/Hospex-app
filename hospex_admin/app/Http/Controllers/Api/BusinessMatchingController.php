@@ -38,7 +38,7 @@ class BusinessMatchingController extends Controller
             if($status == 'confirm'){
                 $status = '1';
             }
-            else if($status == 'reject'){
+            else if($status == 'decline'){
                 $status = '2';
             }
             else{
@@ -87,10 +87,10 @@ class BusinessMatchingController extends Controller
                             );
 
                             if ($match->status == '1') {
-                                $o['status'] = 'Approved';
+                                $o['status'] = 'Confirm';
                             }
                             else if($match->status == '2') {
-                                $o['status'] = 'Rejected';
+                                $o['status'] = 'Decline';
                             }
                             else{
                                 $o['status'] = 'Pending';
