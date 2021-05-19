@@ -36,7 +36,7 @@ class AvailableController extends Controller
             $exhibitor = EventExhibitor::where('event_id',$event->id)->where('id',$exhibitor)->first();
             
             if($exhibitor){
-                $user = User::where('id', $id)->first();
+                $user = User::where('id', $user_id)->first();
                 $visitor = EventVisitor::where('event_id',$event->id)->where('company_id', $user->company_id)->first();
 
                 if($visitor){
