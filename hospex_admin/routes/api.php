@@ -25,6 +25,7 @@ $router->post('match-reject/{match}', 'Api\BusinessMatchingController@reject');
 $router->get('list-business-matching/{type}/{id}/{status}', 'Api\BusinessMatchingController@index');
 
 $router->get('event', 'Api\EventController@index');
+$router->get('information', 'Api\InformationController@index');
 
 // schedule
 $router->get('schedules', 'Api\SchedulesController@index');
@@ -41,4 +42,4 @@ $router->post('user/change-profile','Api\AuthController@changeProfile');
 $router->post('image/upload','Api\ImageController@uploadImage');
 
 // available schedule
-$router->get('available-schedule/{exhibitor}','Api\AvailableController@index');
+$router->get('available-schedule/{exhibitor}/{user_id}','Api\AvailableController@index');

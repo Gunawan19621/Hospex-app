@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/eventrundown/create/{schedule}','EventRundownController@create');
 
     // Categories
+    Route::resource('information', 'InformationController');
+
+    // Categories
     Route::resource('categories', 'CategoriesController');
 
     // Companies

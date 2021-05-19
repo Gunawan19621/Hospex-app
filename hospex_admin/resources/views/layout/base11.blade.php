@@ -172,6 +172,9 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div id="m_ver_menu" class="m-aside-menu  m-aside-menu--skin-light m-aside-menu--submenu-skin-light " m-menu-vertical="1" m-menu-scrollable="0" m-menu-dropdown-timeout="500">
 						<ul class="m-menu__nav  m-menu__nav--dropdown-submenu-arrow ">
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+								<a href="{{ url('information') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Information</span></a>
+							</li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('events') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Events</span></a>
 							</li>
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
