@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\AvailableSchedule;
 use App\EventExhibitor;
+use App\EventVisitor;
 use App\MatchRequest;
 use App\Event;
 use App\User;
