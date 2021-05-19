@@ -27,9 +27,14 @@
           @csrf
               <div class="m-portlet__body">
                   <div class="form-group m-form__group">
-                    <label for="eventitel">Event Title</label>
-                    <input type="text" autocomplete="off" class="form-control @error('event_title') is-invalid @enderror " name="event_title" id="eventTitle" placeholder="Event Title Input" value="{{ old('event_title') }}" required>
-                    @error('event_title') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                      <label for="eventitel">Event Title</label>
+                      <input type="text" autocomplete="off" class="form-control @error('event_title') is-invalid @enderror " name="event_title" id="eventTitle" placeholder="Event Title Input" value="{{ old('event_title') }}" required>
+                      @error('event_title') <div class="invalid-feedback"> {{ $message }} </div> @enderror
+                  </div>
+                  <div class="form-group m-form__group">
+                      <label for="eventitel">Event Subtitle</label>
+                      <input type="text" autocomplete="off" class="form-control @error('event_subtitle') is-invalid @enderror " name="event_subtitle" id="eventSubtitle" placeholder="Event Subtitle Input" value="{{ old('event_subtitle') }}" required>
+                      @error('event_subtitle') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                       <label for="begindate">Begin Date</label>
@@ -40,11 +45,6 @@
                       <label for="enddate">End Date</label>
                       <input type="text" autocomplete="off" class="form-control @error('end') is-invalid @enderror input-date" name="end" id="endDate" placeholder="End Date Input" value="{{ old('end') }}" readonly required>
                       @error('end') <div class="invalid-feedback"> {{ $message }} </div> @enderror
-                  </div>
-                  <div class="form-group m-form__group">
-                      <label for="eventitel">City</label>
-                      <input type="text" onkeyup="this.value=this.value.replace(/[^a-zA-Z, ]/g,'');" autocomplete="off" class="form-control @error('city') is-invalid @enderror" name="city" id="eventCity" placeholder="Event City Input" value="{{ old('city') }}" required>
-                      @error('city') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
                         <label for="eventitel">Event Location</label>

@@ -58,7 +58,7 @@ class EventController extends Controller
             'event_title'       => 'required',
             'begin'             => 'required|date_format:Y-m-d',
             'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
-            'city'              => 'required',
+            'event_subtitle'    => 'required',
             'event_location'    => 'required',
             'link_buy_event'    => 'required'
         ]);
@@ -66,7 +66,7 @@ class EventController extends Controller
         $create = Event::create([
             'event_title'       => $request->event_title,
             'year'              => Carbon::createFromFormat('Y-m-d', $request->begin)->year,
-            'city'              => $request->city,
+            'event_subtitle'    => $request->event_subtitle,
             'site_plan'         => '',
             'event_location'    => $request->event_location,
             'begin'             => Carbon::parse($request->begin),
@@ -124,7 +124,7 @@ class EventController extends Controller
             'event_title'       => 'required',
             'begin'             => 'required|date_format:Y-m-d',
             'end'               => 'required|date_format:Y-m-d|after_or_equal:'.Carbon::createFromFormat('Y-m-d', $request->begin)->format('Y-m-d'),
-            'city'              => 'required',
+            'event_subtitle'    => 'required',
             'event_location'    => 'required',
             'link_buy_event'    => 'required'
         ]);
@@ -134,7 +134,7 @@ class EventController extends Controller
                     'year'              => Carbon::createFromFormat('Y-m-d', $request->begin)->year,
                     'begin'             => Carbon::parse($request->begin),
                     'end'               => Carbon::parse($request->end),
-                    'city'              => $request->city,
+                    'event_subtitle'    => $request->event_subtitle,
                     'event_location'    => $request->event_location,
                     'link_buy_event'    => $request->link_buy_event
                 ]);

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
-    protected $fillable = ['event_title','year','city','event_location','site_plan','begin','end','link_buy_event'];
+    protected $fillable = ['event_title','event_subtitle','year','event_location','site_plan','begin','end','link_buy_event'];
 
     public function schedules()
     {
