@@ -77,13 +77,14 @@ class BusinessMatchingController extends Controller
                     foreach($matches as $match){
                         if($value->date == $match->date){
                             $o = array(
-                                'id'            => $match->id,
-                                'logo_PT'       => $match->exhibitor->company->image,
-                                'nama_PT'       => $match->exhibitor->company->company_name,
-                                'visitor_logo'  => $match->visitor->company->image,
-                                'visitor_name'  => $match->visitor->company->users[0]->name,
-                                'visitor_email' => $match->visitor->company->users[0]->email,
-                                'time'          => $match->availableSchedule->time,
+                                'id'              => $match->id,
+                                'logo_PT'         => $match->exhibitor->company->image,
+                                'nama_PT'         => $match->exhibitor->company->company_name,
+                                'visitor_logo'    => $match->visitor->company->image,
+                                'visitor_company' => $match->visitor->company->company_name,
+                                'visitor_name'    => $match->visitor->company->users[0]->name,
+                                'visitor_email'   => $match->visitor->company->users[0]->email,
+                                'time'            => $match->availableSchedule->time,
                             );
 
                             if ($match->status == '1') {
