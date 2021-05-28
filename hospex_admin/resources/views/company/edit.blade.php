@@ -64,7 +64,7 @@
                   </div>
                   <div class="form-group m-form__group">
                       <label for="companyInfo">Company Info</label>
-                      <input type="text" autocomplete="off" class="form-control @error('company_info') is-invalid @enderror" name="company_info" id="companyInfo" placeholder="Company Info Input" value="{{ $company->company_info }}">
+                      <textarea autocomplete="off" class="form-control @error('company_info') is-invalid @enderror" name="company_info" id="companyInfo" placeholder="Company Info Input">{{ $company->company_info }}</textarea>
                       @error('company_info') <div class="invalid-feedback"> {{ $message }} </div> @enderror
                   </div>
                   <div class="form-group m-form__group">
