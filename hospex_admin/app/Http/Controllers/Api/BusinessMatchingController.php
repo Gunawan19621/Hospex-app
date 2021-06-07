@@ -84,6 +84,8 @@ class BusinessMatchingController extends Controller
                                 'visitor_company' => $match->visitor->company->company_name,
                                 'visitor_name'    => $match->visitor->company->users[0]->name,
                                 'visitor_email'   => $match->visitor->company->users[0]->email,
+                                'visitor_phone'   => $match->visitor->company->users[0]->phone,
+                                'visitor_address' => $match->visitor->company->users[0]->address,
                                 'time'            => $match->availableSchedule->time,
                             );
 
