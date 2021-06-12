@@ -24,63 +24,56 @@ class CompaniesController extends Controller
     {
         $title = 'Companies';
         if (request()->ajax()) {
-            return datatables()->of(Company::whereHas('users', function ($query) {
+            $array = [];
+            $exhibitors = Company::whereHas('users', function ($query) {
                     $query->where('type','exhibitor');            
-                })->orderBy('id','desc'))
+                })->orderBy('id','desc')->get();
+            foreach($exhibitors as $exhibitor){
+                $event_all = '';
+                if($exhibitor->exhibitors){
+                    foreach ($exhibitor->exhibitors as $event_exhibitor) {
+                        if($event_all == ''){
+                            $event_all = $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
+                        }
+                        else{
+                            $event_all = $event_all. ', ' . $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
+                        }
+                    }
+                }
+
+                $categories = $exhibitor->categories()->select('category_name')->get();
+                $items = '';
+                foreach ($categories as $key => $category) {
+                    $items .= ' '.$category->category_name;
+                    if ($key !== $categories->count()-1) {
+                        $items .= ',' ;
+                    }
+                }
+
+                $array[] = [
+                    'id'            => $exhibitor->id,
+                    'company_name'  => $exhibitor->company_name,
+                    'name'          => $exhibitor->users[0]->name,
+                    'email'         => $exhibitor->users[0]->email,
+                    'phone'         => $exhibitor->users[0]->phone,
+                    'address'       => $exhibitor->users[0]->address,
+                    'event'         => $event_all,
+                    'categories'    => $items
+                ];
+            }
+
+            return datatables()->of($array)
                 ->addIndexColumn()
-                ->addColumn('event', function($data){
-                    if($data->exhibitors){
-                        $event_all = '';
-
-                        foreach ($data->exhibitors as $event_exhibitor) {
-                            if($event_all == ''){
-                                $event_all = $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
-                            }
-                            else{
-                                $event_all = $event_all. ', ' . $event_exhibitor->event->event_title. ' - '. $event_exhibitor->event->year;
-                            }
-                        }
-
-                        return $event_all;
-                    }
-                    else{
-                        return '';
-                    }
-                })
-                ->addColumn('categories', function($data){
-                    $categories = $data->categories()->select('category_name')->get();
-                    $items = '';
-                    foreach ($categories as $key => $category) {
-                        $items .= ' '.$category->category_name;
-                        if ($key !== $categories->count()-1) {
-                            $items .= ',' ;
-                        }
-                    }
-                    return $items;
-                })
-                ->addColumn('email', function($data){
-                    $users = $data->users->first();
-                    return $users->email;
-                })
-                ->addColumn('phone', function($data){
-                    $users = $data->users->first();
-                    return $users->phone;
-                })
-                ->addColumn('address', function($data){
-                    $users = $data->users->first();
-                    return $users->address;
-                })
                 ->addColumn('action', function($data){
                         $button = '<span class="dropdown">
                         <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">       
-                                <a class="dropdown-item" href="'.url('companies/'.$data->id.'/edit').'"><i class="la la-edit"></i> Edit</a>
-                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data->id.'" ><i class="la la-trash"></i> Hapus</a>
+                                <a class="dropdown-item" href="'.url('companies/'.$data['id'].'/edit').'"><i class="la la-edit"></i> Edit</a>
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
                             </div>
                         </span>';
                         return $button;
                     })
-                ->rawColumns(['action','event'])
                 ->make(true);
         }
 

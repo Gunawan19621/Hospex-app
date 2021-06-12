@@ -31,12 +31,6 @@
                     // {
                     //     data : "address", name : "address",
                     // },
-                    // {
-                    //     data : "company_web", name : "company_web",
-                    // },
-                    // {
-                    //     data : "company_info", name : "company_info",
-                    // },
                     {
                         data : "categories", name : "categories",
                     },

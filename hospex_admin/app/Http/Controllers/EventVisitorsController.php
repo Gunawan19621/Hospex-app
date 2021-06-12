@@ -22,41 +22,34 @@ class EventVisitorsController extends Controller
     {
         $title = 'Visitors';
         if(request()->ajax()){
-            return datatables()->of(User::where('type','visitor')->orderBy('id','desc'))
-                    ->addIndexColumn()
-                    ->addColumn('event', function($data){
-                        if($data->company->visitors){
-                            $event_all = '';
-
-                            foreach ($data->company->visitors as $event_visitor) {
-                                if($event_all == ''){
-                                    $event_all = $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
-                                }
-                                else{
-                                    $event_all = $event_all. ', ' . $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
-                                }
-                            }
-
-                            return $event_all;
+            $array = [];
+            $visitors = User::where('type','visitor')->orderBy('id','desc')->get();
+            foreach($visitors as $visitor){
+                $event_all = '';
+                if($visitor->company->visitors){
+                    foreach ($visitor->company->visitors as $event_visitor) {
+                        if($event_all == ''){
+                            $event_all = $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
                         }
                         else{
-                            return '';
+                            $event_all = $event_all. ', ' . $event_visitor->event->event_title. ' - '. $event_visitor->event->year;
                         }
-                    })
-                    ->addColumn('company', function($data){
-                        return $data->company->company_name;
-                    })
-                    ->addColumn('visitor_name', function($data){
-                        return $data->name;
-                    })
-                    ->addColumn('visitor_email', function($data){
-                        return $data->email;
-                    })
-                    ->addColumn('phone', function($data){
-                        return $data->phone;
-                    })
+                    }
+                }
+
+                $array[] = [
+                    'id'            => $visitor->id,
+                    'company_name'  => $visitor->company->company_name,
+                    'name'          => $visitor->name,
+                    'email'         => $visitor->email,
+                    'phone'         => $visitor->phone,
+                    'event'         => $event_all
+                ];
+            }
+            return datatables()->of($array)
+                    ->addIndexColumn()
                     ->addColumn('action', function($data){
-                        $button = '<a href="'. url('visitors/'.$data->id).' " class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
+                        $button = '<a href="'. url('visitors/'.$data['id']).' " class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
                         return $button;
                     })
                 ->rawColumns(['action'])
