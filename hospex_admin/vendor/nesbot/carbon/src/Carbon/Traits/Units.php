@@ -16,7 +16,6 @@ use Carbon\CarbonInterval;
 use Carbon\Exceptions\UnitException;
 use Closure;
 use DateInterval;
-use ReturnTypeWillChange;
 
 /**
  * Trait Units.
@@ -194,7 +193,6 @@ trait Units
      *
      * @return static
      */
-    #[ReturnTypeWillChange]
     public function add($unit, $value = 1, $overflow = null)
     {
         if (\is_string($unit) && \func_num_args() === 1) {
@@ -354,7 +352,6 @@ trait Units
      *
      * @return static
      */
-    #[ReturnTypeWillChange]
     public function sub($unit, $value = 1, $overflow = null)
     {
         if (\is_string($unit) && \func_num_args() === 1) {

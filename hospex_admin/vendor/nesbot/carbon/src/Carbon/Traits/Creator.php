@@ -21,7 +21,6 @@ use Closure;
 use DateTimeInterface;
 use DateTimeZone;
 use Exception;
-use ReturnTypeWillChange;
 
 /**
  * Trait Creator.
@@ -49,8 +48,8 @@ trait Creator
      * Please see the testing aids section (specifically static::setTestNow())
      * for more on the possibility of this constructor returning a test instance.
      *
-     * @param DateTimeInterface|string|null $time
-     * @param DateTimeZone|string|null      $tz
+     * @param string|null              $time
+     * @param DateTimeZone|string|null $tz
      *
      * @throws InvalidFormatException
      */
@@ -479,37 +478,6 @@ trait Creator
     }
 
     /**
-     * Create a new Carbon instance from a specific date and time using strict validation.
-     *
-     * @see create()
-     *
-     * @param int|null                 $year
-     * @param int|null                 $month
-     * @param int|null                 $day
-     * @param int|null                 $hour
-     * @param int|null                 $minute
-     * @param int|null                 $second
-     * @param DateTimeZone|string|null $tz
-     *
-     * @throws InvalidFormatException
-     *
-     * @return static
-     */
-    public static function createStrict(?int $year = 0, ?int $month = 1, ?int $day = 1, ?int $hour = 0, ?int $minute = 0, ?int $second = 0, $tz = null): self
-    {
-        $initialStrictMode = static::isStrictModeEnabled();
-        static::useStrictMode(true);
-
-        try {
-            $date = static::create($year, $month, $day, $hour, $minute, $second, $tz);
-        } finally {
-            static::useStrictMode($initialStrictMode);
-        }
-
-        return $date;
-    }
-
-    /**
      * Create a Carbon instance from just a date. The time portion is set to now.
      *
      * @param int|null                 $year
@@ -689,7 +657,6 @@ trait Creator
      *
      * @return static|false
      */
-    #[ReturnTypeWillChange]
     public static function createFromFormat($format, $time, $tz = null)
     {
         $function = static::$createFromFormatFunction;
@@ -906,7 +873,8 @@ trait Creator
         if (\is_string($var)) {
             $var = trim($var);
 
-            if (!preg_match('/^P[0-9T]/', $var) &&
+            if (\is_string($var) &&
+                !preg_match('/^P[0-9T]/', $var) &&
                 !preg_match('/^R[0-9]/', $var) &&
                 preg_match('/[a-z0-9]/i', $var)
             ) {
@@ -932,7 +900,6 @@ trait Creator
     /**
      * {@inheritdoc}
      */
-    #[ReturnTypeWillChange]
     public static function getLastErrors()
     {
         return static::$lastErrors;

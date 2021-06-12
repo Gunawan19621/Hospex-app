@@ -5,7 +5,6 @@ namespace Maatwebsite\Excel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ShouldQueueWithoutChain;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithLimit;
@@ -33,11 +32,9 @@ class ChunkReader
             $reader->beforeImport($import);
         }
 
-        $chunkSize    = $import->chunkSize();
-        $totalRows    = $reader->getTotalRows();
-        $worksheets   = $reader->getWorksheets($import);
-        $queue        = property_exists($import, 'queue') ? $import->queue : null;
-        $delayCleanup = property_exists($import, 'delayCleanup') ? $import->delayCleanup : 600;
+        $chunkSize  = $import->chunkSize();
+        $totalRows  = $reader->getTotalRows();
+        $worksheets = $reader->getWorksheets($import);
 
         if ($import instanceof WithProgressBar) {
             $import->getConsoleOutput()->progressStart(array_sum($totalRows));
@@ -68,17 +65,7 @@ class ChunkReader
             }
         }
 
-        $afterImportJob = new AfterImportJob($import, $reader);
-
-        if ($import instanceof ShouldQueueWithoutChain) {
-            $jobs->push($afterImportJob->delay($delayCleanup));
-
-            return $jobs->each(function ($job) use ($queue) {
-                dispatch($job->onQueue($queue));
-            });
-        }
-
-        $jobs->push($afterImportJob);
+        $jobs->push(new AfterImportJob($import, $reader));
 
         if ($import instanceof ShouldQueue) {
             return new PendingDispatch(

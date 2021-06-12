@@ -13,8 +13,6 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
  */
 abstract class Coordinate
 {
-    public const A1_COORDINATE_REGEX = '/^(?<absolute_col>\$?)(?<col_ref>[A-Z]{1,3})(?<absolute_row>\$?)(?<row_ref>\d{1,7})$/i';
-
     /**
      * Default range variable constant.
      *
@@ -27,12 +25,12 @@ abstract class Coordinate
      *
      * @param string $pCoordinateString eg: 'A1'
      *
-     * @return array{0: string, 1: string} Array containing column and row (indexes 0 and 1)
+     * @return string[] Array containing column and row (indexes 0 and 1)
      */
     public static function coordinateFromString($pCoordinateString)
     {
-        if (preg_match(self::A1_COORDINATE_REGEX, $pCoordinateString, $matches)) {
-            return [$matches['absolute_col'] . $matches['col_ref'], $matches['absolute_row'] . $matches['row_ref']];
+        if (preg_match('/^([$]?[A-Z]{1,3})([$]?\\d{1,7})$/', $pCoordinateString, $matches)) {
+            return [$matches[1], $matches[2]];
         } elseif (self::coordinateIsRange($pCoordinateString)) {
             throw new Exception('Cell coordinate string can not be a range of cells');
         } elseif ($pCoordinateString == '') {
@@ -40,23 +38,6 @@ abstract class Coordinate
         }
 
         throw new Exception('Invalid cell coordinate ' . $pCoordinateString);
-    }
-
-    /**
-     * Get indexes from a string coordinates.
-     *
-     * @param string $coordinates eg: 'A1', '$B$12'
-     *
-     * @return array{0: int, 1: int} Array containing column index and row index (indexes 0 and 1)
-     */
-    public static function indexesFromString(string $coordinates): array
-    {
-        [$col, $row] = self::coordinateFromString($coordinates);
-
-        return [
-            self::columnIndexFromString(ltrim($col, '$')),
-            (int) ltrim($row, '$'),
-        ];
     }
 
     /**
@@ -358,8 +339,7 @@ abstract class Coordinate
 
     private static function processRangeSetOperators(array $operators, array $cells): array
     {
-        $operatorCount = count($operators);
-        for ($offset = 0; $offset < $operatorCount; ++$offset) {
+        for ($offset = 0; $offset < count($operators); ++$offset) {
             $operator = $operators[$offset];
             if ($operator !== ' ') {
                 continue;
@@ -370,7 +350,6 @@ abstract class Coordinate
             $operators = array_values($operators);
             $cells = array_values($cells);
             --$offset;
-            --$operatorCount;
         }
 
         return $cells;

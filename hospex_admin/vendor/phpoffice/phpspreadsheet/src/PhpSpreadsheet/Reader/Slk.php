@@ -169,7 +169,7 @@ class Slk extends BaseReader
                 foreach ($rowData as $rowDatum) {
                     switch ($rowDatum[0]) {
                         case 'X':
-                            $columnIndex = (int) substr($rowDatum, 1) - 1;
+                            $columnIndex = substr($rowDatum, 1) - 1;
 
                             break;
                         case 'Y':
@@ -251,7 +251,7 @@ class Slk extends BaseReader
                     }
                     //    Bracketed R references are relative to the current row
                     if ($rowReference[0] == '[') {
-                        $rowReference = (int) $row + (int) trim($rowReference, '[]');
+                        $rowReference = $row + trim($rowReference, '[]');
                     }
                     $columnReference = $cellReference[4][0];
                     //    Empty C reference is the current column
@@ -260,7 +260,7 @@ class Slk extends BaseReader
                     }
                     //    Bracketed C references are relative to the current column
                     if ($columnReference[0] == '[') {
-                        $columnReference = (int) $column + (int) trim($columnReference, '[]');
+                        $columnReference = $column + trim($columnReference, '[]');
                     }
                     $A1CellReference = Coordinate::stringFromColumnIndex($columnReference) . $rowReference;
 

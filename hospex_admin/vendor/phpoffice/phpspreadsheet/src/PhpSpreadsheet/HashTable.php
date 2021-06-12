@@ -2,15 +2,12 @@
 
 namespace PhpOffice\PhpSpreadsheet;
 
-/**
- * @template T of IComparable
- */
 class HashTable
 {
     /**
      * HashTable elements.
      *
-     * @var T[]
+     * @var IComparable[]
      */
     protected $items = [];
 
@@ -24,7 +21,7 @@ class HashTable
     /**
      * Create a new \PhpOffice\PhpSpreadsheet\HashTable.
      *
-     * @param T[] $pSource Optional source array to create HashTable from
+     * @param IComparable[] $pSource Optional source array to create HashTable from
      */
     public function __construct($pSource = null)
     {
@@ -37,7 +34,7 @@ class HashTable
     /**
      * Add HashTable items from source.
      *
-     * @param T[] $pSource Source array to create HashTable from
+     * @param IComparable[] $pSource Source array to create HashTable from
      */
     public function addFromSource(?array $pSource = null): void
     {
@@ -54,7 +51,7 @@ class HashTable
     /**
      * Add HashTable item.
      *
-     * @param T $pSource Item to add
+     * @param IComparable $pSource Item to add
      */
     public function add(IComparable $pSource): void
     {
@@ -68,7 +65,7 @@ class HashTable
     /**
      * Remove HashTable item.
      *
-     * @param T $pSource Item to remove
+     * @param IComparable $pSource Item to remove
      */
     public function remove(IComparable $pSource): void
     {
@@ -126,7 +123,7 @@ class HashTable
      *
      * @param int $pIndex
      *
-     * @return null|T
+     * @return IComparable
      */
     public function getByIndex($pIndex)
     {
@@ -142,7 +139,7 @@ class HashTable
      *
      * @param string $pHashCode
      *
-     * @return null|T
+     * @return IComparable
      */
     public function getByHashCode($pHashCode)
     {
@@ -156,7 +153,7 @@ class HashTable
     /**
      * HashTable to array.
      *
-     * @return T[]
+     * @return IComparable[]
      */
     public function toArray()
     {
@@ -170,15 +167,8 @@ class HashTable
     {
         $vars = get_object_vars($this);
         foreach ($vars as $key => $value) {
-            // each member of this class is an array
-            if (is_array($value)) {
-                $array1 = $value;
-                foreach ($array1 as $key1 => $value1) {
-                    if (is_object($value1)) {
-                        $array1[$key1] = clone $value1;
-                    }
-                }
-                $this->$key = $array1;
+            if (is_object($value)) {
+                $this->$key = clone $value;
             }
         }
     }

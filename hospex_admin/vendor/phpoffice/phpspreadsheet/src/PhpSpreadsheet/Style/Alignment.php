@@ -35,21 +35,21 @@ class Alignment extends Supervisor
     /**
      * Horizontal alignment.
      *
-     * @var null|string
+     * @var string
      */
     protected $horizontal = self::HORIZONTAL_GENERAL;
 
     /**
      * Vertical alignment.
      *
-     * @var null|string
+     * @var string
      */
     protected $vertical = self::VERTICAL_BOTTOM;
 
     /**
      * Text rotation.
      *
-     * @var null|int
+     * @var int
      */
     protected $textRotation = 0;
 
@@ -179,7 +179,7 @@ class Alignment extends Supervisor
     /**
      * Get Horizontal.
      *
-     * @return null|string
+     * @return string
      */
     public function getHorizontal()
     {
@@ -216,7 +216,7 @@ class Alignment extends Supervisor
     /**
      * Get Vertical.
      *
-     * @return null|string
+     * @return string
      */
     public function getVertical()
     {
@@ -253,7 +253,7 @@ class Alignment extends Supervisor
     /**
      * Get TextRotation.
      *
-     * @return null|int
+     * @return int
      */
     public function getTextRotation()
     {
@@ -392,8 +392,7 @@ class Alignment extends Supervisor
             if (
                 $this->getHorizontal() != self::HORIZONTAL_GENERAL &&
                 $this->getHorizontal() != self::HORIZONTAL_LEFT &&
-                $this->getHorizontal() != self::HORIZONTAL_RIGHT &&
-                $this->getHorizontal() != self::HORIZONTAL_DISTRIBUTED
+                $this->getHorizontal() != self::HORIZONTAL_RIGHT
             ) {
                 $pValue = 0; // indent not supported
             }

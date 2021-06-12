@@ -3,7 +3,6 @@
 namespace PhpOffice\PhpSpreadsheet\Shared;
 
 use InvalidArgumentException;
-use PhpOffice\PhpSpreadsheet\Exception;
 use ZipArchive;
 
 class File
@@ -123,16 +122,6 @@ class File
         }
 
         return realpath(sys_get_temp_dir());
-    }
-
-    public static function temporaryFilename(): string
-    {
-        $filename = tempnam(self::sysGetTempDir(), 'phpspreadsheet');
-        if ($filename === false) {
-            throw new Exception('Could not create temporary file');
-        }
-
-        return $filename;
     }
 
     /**

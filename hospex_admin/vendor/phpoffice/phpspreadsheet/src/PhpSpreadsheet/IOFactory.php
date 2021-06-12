@@ -120,7 +120,7 @@ abstract class IOFactory
             $reader = self::createReader($guessedReader);
 
             // Let's see if we are lucky
-            if ($reader->canRead($filename)) {
+            if (isset($reader) && $reader->canRead($filename)) {
                 return $reader;
             }
         }

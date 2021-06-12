@@ -38,7 +38,7 @@ abstract class BaseReader implements IReader
      * Restrict which sheets should be loaded?
      * This property holds an array of worksheet names to be loaded. If null, then all worksheets will be loaded.
      *
-     * @var null|string[]
+     * @var array of string
      */
     protected $loadSheetsOnly;
 

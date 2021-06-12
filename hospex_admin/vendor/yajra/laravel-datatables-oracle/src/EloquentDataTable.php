@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOneOrMany;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Yajra\DataTables\Exceptions\Exception;
 
@@ -92,15 +91,9 @@ class EloquentDataTable extends QueryDataTable
             return parent::compileQuerySearch($query, $columnName, $keyword, $boolean);
         }
 
-        if ($this->isMorphRelation($relation)) {
-            $query->{$boolean . 'WhereHasMorph'}($relation, '*', function (Builder $query) use ($column, $keyword) {
-                parent::compileQuerySearch($query, $column, $keyword, '');
-            });
-        } else {
-            $query->{$boolean . 'WhereHas'}($relation, function (Builder $query) use ($column, $keyword) {
-                parent::compileQuerySearch($query, $column, $keyword, '');
-            });
-        }
+        $query->{$boolean . 'WhereHas'}($relation, function (Builder $query) use ($column, $keyword) {
+            parent::compileQuerySearch($query, $column, $keyword, '');
+        });
     }
 
     /**
@@ -120,25 +113,6 @@ class EloquentDataTable extends QueryDataTable
         }
 
         return $this->joinEagerLoadedColumn($relation, $columnName);
-    }
-
-    /**
-     * Check if a relation is a morphed one or not.
-     *
-     * @param  string $relation
-     * @return bool
-     */
-    protected function isMorphRelation($relation)
-    {
-        $isMorph = false;
-        if ($relation !== null && $relation !== '') {
-            $relationParts = explode('.', $relation);
-            $firstRelation = array_shift($relationParts);
-            $model         = $this->query->getModel();
-            $isMorph       = method_exists($model, $firstRelation) && $model->$firstRelation() instanceof MorphTo;
-        }
-
-        return $isMorph;
     }
 
     /**

@@ -11,7 +11,6 @@
 namespace Carbon\Traits;
 
 use Carbon\Exceptions\InvalidFormatException;
-use ReturnTypeWillChange;
 
 /**
  * Trait Serialization.
@@ -92,7 +91,6 @@ trait Serialization
      *
      * @return static
      */
-    #[ReturnTypeWillChange]
     public static function __set_state($dump)
     {
         if (\is_string($dump)) {
@@ -127,7 +125,6 @@ trait Serialization
     /**
      * Set locale if specified on unserialize() called.
      */
-    #[ReturnTypeWillChange]
     public function __wakeup()
     {
         if (get_parent_class() && method_exists(parent::class, '__wakeup')) {

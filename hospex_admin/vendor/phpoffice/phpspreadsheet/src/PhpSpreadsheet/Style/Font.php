@@ -14,56 +14,56 @@ class Font extends Supervisor
     /**
      * Font Name.
      *
-     * @var null|string
+     * @var string
      */
     protected $name = 'Calibri';
 
     /**
      * Font Size.
      *
-     * @var null|float
+     * @var float
      */
     protected $size = 11;
 
     /**
      * Bold.
      *
-     * @var null|bool
+     * @var bool
      */
     protected $bold = false;
 
     /**
      * Italic.
      *
-     * @var null|bool
+     * @var bool
      */
     protected $italic = false;
 
     /**
      * Superscript.
      *
-     * @var null|bool
+     * @var bool
      */
     protected $superscript = false;
 
     /**
      * Subscript.
      *
-     * @var null|bool
+     * @var bool
      */
     protected $subscript = false;
 
     /**
      * Underline.
      *
-     * @var null|string
+     * @var string
      */
     protected $underline = self::UNDERLINE_NONE;
 
     /**
      * Strikethrough.
      *
-     * @var null|bool
+     * @var bool
      */
     protected $strikethrough = false;
 
@@ -75,7 +75,7 @@ class Font extends Supervisor
     protected $color;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $colorIndex;
 
@@ -199,7 +199,7 @@ class Font extends Supervisor
     /**
      * Get Name.
      *
-     * @return null|string
+     * @return string
      */
     public function getName()
     {
@@ -213,20 +213,20 @@ class Font extends Supervisor
     /**
      * Set Name.
      *
-     * @param string $fontname
+     * @param string $pValue
      *
      * @return $this
      */
-    public function setName($fontname)
+    public function setName($pValue)
     {
-        if ($fontname == '') {
-            $fontname = 'Calibri';
+        if ($pValue == '') {
+            $pValue = 'Calibri';
         }
         if ($this->isSupervisor) {
-            $styleArray = $this->getStyleArray(['name' => $fontname]);
+            $styleArray = $this->getStyleArray(['name' => $pValue]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
         } else {
-            $this->name = $fontname;
+            $this->name = $pValue;
         }
 
         return $this;
@@ -235,7 +235,7 @@ class Font extends Supervisor
     /**
      * Get Size.
      *
-     * @return null|float
+     * @return float
      */
     public function getSize()
     {
@@ -249,27 +249,20 @@ class Font extends Supervisor
     /**
      * Set Size.
      *
-     * @param mixed $sizeInPoints A float representing the value of a positive measurement in points (1/72 of an inch)
+     * @param float $pValue
      *
      * @return $this
      */
-    public function setSize($sizeInPoints)
+    public function setSize($pValue)
     {
-        if (is_string($sizeInPoints) || is_int($sizeInPoints)) {
-            $sizeInPoints = (float) $sizeInPoints; // $pValue = 0 if given string is not numeric
+        if ($pValue == '') {
+            $pValue = 10;
         }
-
-        // Size must be a positive floating point number
-        // ECMA-376-1:2016, part 1, chapter 18.4.11 sz (Font Size), p. 1536
-        if (!is_float($sizeInPoints) || !($sizeInPoints > 0)) {
-            $sizeInPoints = 10.0;
-        }
-
         if ($this->isSupervisor) {
-            $styleArray = $this->getStyleArray(['size' => $sizeInPoints]);
+            $styleArray = $this->getStyleArray(['size' => $pValue]);
             $this->getActiveSheet()->getStyle($this->getSelectedCells())->applyFromArray($styleArray);
         } else {
-            $this->size = $sizeInPoints;
+            $this->size = $pValue;
         }
 
         return $this;
@@ -278,7 +271,7 @@ class Font extends Supervisor
     /**
      * Get Bold.
      *
-     * @return null|bool
+     * @return bool
      */
     public function getBold()
     {
@@ -314,7 +307,7 @@ class Font extends Supervisor
     /**
      * Get Italic.
      *
-     * @return null|bool
+     * @return bool
      */
     public function getItalic()
     {
@@ -350,7 +343,7 @@ class Font extends Supervisor
     /**
      * Get Superscript.
      *
-     * @return null|bool
+     * @return bool
      */
     public function getSuperscript()
     {
@@ -384,7 +377,7 @@ class Font extends Supervisor
     /**
      * Get Subscript.
      *
-     * @return null|bool
+     * @return bool
      */
     public function getSubscript()
     {
@@ -418,7 +411,7 @@ class Font extends Supervisor
     /**
      * Get Underline.
      *
-     * @return null|string
+     * @return string
      */
     public function getUnderline()
     {
@@ -458,7 +451,7 @@ class Font extends Supervisor
     /**
      * Get Strikethrough.
      *
-     * @return null|bool
+     * @return bool
      */
     public function getStrikethrough()
     {

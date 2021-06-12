@@ -11,7 +11,6 @@
 namespace Carbon\Traits;
 
 use Carbon\CarbonInterface;
-use ReturnTypeWillChange;
 
 /**
  * Trait Modifiers.
@@ -430,7 +429,6 @@ trait Modifiers
      *
      * @see https://php.net/manual/en/datetime.modify.php
      */
-    #[ReturnTypeWillChange]
     public function modify($modify)
     {
         return parent::modify((string) $modify);

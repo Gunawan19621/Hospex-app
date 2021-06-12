@@ -28,19 +28,19 @@ class Fill extends Supervisor
     const FILL_PATTERN_MEDIUMGRAY = 'mediumGray';
 
     /**
-     * @var null|int
+     * @var int
      */
     public $startcolorIndex;
 
     /**
-     * @var null|int
+     * @var int
      */
     public $endcolorIndex;
 
     /**
      * Fill type.
      *
-     * @var null|string
+     * @var string
      */
     protected $fillType = self::FILL_NONE;
 
@@ -168,7 +168,7 @@ class Fill extends Supervisor
     /**
      * Get Fill Type.
      *
-     * @return null|string
+     * @return string
      */
     public function getFillType()
     {

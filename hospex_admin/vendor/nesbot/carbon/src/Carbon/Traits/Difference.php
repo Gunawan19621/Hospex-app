@@ -19,7 +19,6 @@ use Carbon\Translator;
 use Closure;
 use DateInterval;
 use DateTimeInterface;
-use ReturnTypeWillChange;
 
 /**
  * Trait Difference.
@@ -118,7 +117,6 @@ trait Difference
      *
      * @return DateInterval
      */
-    #[ReturnTypeWillChange]
     public function diff($date = null, $absolute = false)
     {
         return parent::diff($this->resolveCarbon($date), (bool) $absolute);
@@ -640,11 +638,9 @@ trait Difference
      */
     public function floatDiffInRealDays($date = null, $absolute = true)
     {
-        $date = $this->resolveUTC($date);
-        $utc = $this->copy()->utc();
-        $hoursDiff = $utc->floatDiffInRealHours($date, $absolute);
+        $hoursDiff = $this->floatDiffInRealHours($date, $absolute);
 
-        return ($hoursDiff < 0 ? -1 : 1) * $utc->diffInDays($date) + fmod($hoursDiff, static::HOURS_PER_DAY) / static::HOURS_PER_DAY;
+        return ($hoursDiff < 0 ? -1 : 1) * $this->diffInDays($date) + fmod($hoursDiff, static::HOURS_PER_DAY) / static::HOURS_PER_DAY;
     }
 
     /**

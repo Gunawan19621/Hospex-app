@@ -55,7 +55,7 @@ class Spreadsheet
     /**
      * Calculation Engine.
      *
-     * @var null|Calculation
+     * @var Calculation
      */
     private $calculationEngine;
 
@@ -69,7 +69,7 @@ class Spreadsheet
     /**
      * Named ranges.
      *
-     * @var DefinedName[]
+     * @var NamedRange[]
      */
     private $definedNames = [];
 
@@ -104,21 +104,21 @@ class Spreadsheet
     /**
      * macrosCode : all macros code as binary data (the vbaProject.bin file, this include form, code,  etc.), null if no macro.
      *
-     * @var null|string
+     * @var string
      */
     private $macrosCode;
 
     /**
      * macrosCertificate : if macros are signed, contains binary data vbaProjectSignature.bin file, null if not signed.
      *
-     * @var null|string
+     * @var string
      */
     private $macrosCertificate;
 
     /**
      * ribbonXMLData : null if workbook is'nt Excel 2007 or not contain a customized UI.
      *
-     * @var null|array{target: string, data: string}
+     * @var null|string
      */
     private $ribbonXMLData;
 
@@ -298,9 +298,11 @@ class Spreadsheet
     /**
      * retrieve ribbon XML Data.
      *
+     * return string|null|array
+     *
      * @param string $what
      *
-     * @return null|array|string
+     * @return string
      */
     public function getRibbonXMLData($what = 'all') //we need some constants here...
     {
@@ -453,7 +455,7 @@ class Spreadsheet
      *
      * @param string $pName Sheet name
      *
-     * @return null|Worksheet
+     * @return Worksheet
      */
     public function getSheetByCodeName($pName)
     {
@@ -503,10 +505,8 @@ class Spreadsheet
      */
     public function __destruct()
     {
-        $this->disconnectWorksheets();
         $this->calculationEngine = null;
-        $this->cellXfCollection = [];
-        $this->cellStyleXfCollection = [];
+        $this->disconnectWorksheets();
     }
 
     /**
@@ -515,17 +515,19 @@ class Spreadsheet
      */
     public function disconnectWorksheets(): void
     {
-        foreach ($this->workSheetCollection as $worksheet) {
+        $worksheet = null;
+        foreach ($this->workSheetCollection as $k => &$worksheet) {
             $worksheet->disconnectCells();
-            unset($worksheet);
+            $this->workSheetCollection[$k] = null;
         }
+        unset($worksheet);
         $this->workSheetCollection = [];
     }
 
     /**
      * Return the calculation engine for this worksheet.
      *
-     * @return null|Calculation
+     * @return Calculation
      */
     public function getCalculationEngine()
     {
@@ -874,7 +876,7 @@ class Spreadsheet
     /**
      * Get an array of all Named Ranges.
      *
-     * @return DefinedName[]
+     * @return NamedRange[]
      */
     public function getNamedRanges(): array
     {
@@ -889,7 +891,7 @@ class Spreadsheet
     /**
      * Get an array of all Named Formulae.
      *
-     * @return DefinedName[]
+     * @return NamedFormula[]
      */
     public function getNamedFormulae(): array
     {
@@ -1122,7 +1124,6 @@ class Spreadsheet
      */
     public function __clone()
     {
-        // @phpstan-ignore-next-line
         foreach ($this as $key => $val) {
             if (is_object($val) || (is_array($val))) {
                 $this->{$key} = unserialize(serialize($val));
@@ -1342,7 +1343,6 @@ class Spreadsheet
         // remove cellXfs without references and create mapping so we can update xfIndex
         // for all cells and columns
         $countNeededCellXfs = 0;
-        $map = [];
         foreach ($this->cellXfCollection as $index => $cellXf) {
             if ($countReferencesCellXf[$index] > 0 || $index == 0) { // we must never remove the first cellXf
                 ++$countNeededCellXfs;
