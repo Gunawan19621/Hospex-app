@@ -5,7 +5,6 @@
             dom: 'Bfrtip',
             processing : true,
             serverSide  : true,
-            order: [[0, 'desc']],
             buttons: [
                 'csv', 'excel', 'pdf', 'print'
             ],
@@ -19,13 +18,13 @@
                     searchable: false
                 },
                 {
-                    data : "company", name : "company",
+                    data : "company_name", name : "company_name",
                 },
                 {
-                    data : "visitor_name", name : "visitor_name",
+                    data : "name", name : "name",
                 },
                 {
-                    data : "visitor_email", name : "visitor_email",
+                    data : "email", name : "email",
                 },
                 {
                     data : "phone", name : "phone",
