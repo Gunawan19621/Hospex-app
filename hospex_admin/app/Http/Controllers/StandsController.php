@@ -86,12 +86,9 @@ class StandsController extends Controller
         ]);
 
         $create = new Stand;
-        $create->stand_name         = '';
+        $create->stand_name         = str_replace(",",";",$request->stand_name);
         $create->event_exhibitor_id = $request->exhibitor_id;
         $create->area_id            = $request->area_id;
-        $create->save();
-
-        $create->stand_name = $request->stand_name;
         $create->save();
 
         $response = $create ? '1-Stand Saved!' : '0-Sponsor Failed to Save!';
