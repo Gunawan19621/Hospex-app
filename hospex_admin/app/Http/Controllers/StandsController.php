@@ -134,12 +134,13 @@ class StandsController extends Controller
             'exhibitor_id'      => 'required|numeric',
             'area_id'           => 'required|numeric'
         ]);
-        $update=Stand::where('id',$stand->id)
-            ->update([
-                'stand_name'        => $request->stand_name,
-                'event_exhibitor_id'=> $request->exhibitor_id,
-                'area_id'           => $request->area_id
-            ]);
+
+        $update = Stand::where('id',$stand->id)->first();
+        $update->stand_name         = str_replace(",",";",$request->stand_name);
+        $update->event_exhibitor_id = $request->exhibitor_id;
+        $update->area_id            = $request->area_id;
+        $update->save();
+        
         $response = $update ? '1-Stand Updated!' : '0-Stand Failed to Update!';
         return redirect('/stands')->with('status',$response);
     }

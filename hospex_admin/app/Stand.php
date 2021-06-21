@@ -44,5 +44,15 @@ class Stand extends Model
         }
     }
 
+    public function getStandNameAttribute($value)
+    {
+        if($value == null){
+            return '';
+        }
+        else{
+            return str_replace(";",",",$value);
+        }
+    }
+
     protected $appends = ['area_name','area'];
 }
