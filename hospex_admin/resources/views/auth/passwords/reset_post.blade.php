@@ -10,10 +10,10 @@
                     <div class="m-login__head" style="text-align: center;">
                         <h3 class="m-login__title">Reset Password</h3><br>
                         <p style="text-align: center;">{{$message}}</p>
+
+                        <h4>Download Aplikasi Hospex di:</h4><br>
+                    	<a href='https://play.google.com/store/apps/details?id=id.indigital.hospex&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
                     </div>
-                    
-                    Download Aplikasi Hospex di:<br>
-                    <a href='https://play.google.com/store/apps/details?id=id.indigital.hospex&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
                 </div>
             </div>
         </div>
