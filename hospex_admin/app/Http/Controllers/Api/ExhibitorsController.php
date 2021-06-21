@@ -90,7 +90,7 @@ class ExhibitorsController extends Controller
                             })->implode(', '),
                             'stand_name'    => $exhibitor->stands->unique('area_id')->map(function($item) use( $exhibitor ) {
                                 return $exhibitor->stands()->get()->map(function($stand) use( $item ) {
-                                    return ($item->area->id == $stand->area_id ? $item->area->area_name.' ('.$stand->stand_name.')' : '');
+                                    return ($item->area->id == $stand->area_id ? $item->area->area_name.' '.$stand->stand_name : '');
                                 })->filter()->implode(', ');
                             })->implode(', '),
                             // 'categories'   => $exhibitor->company->categories,
