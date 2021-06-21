@@ -178,11 +178,11 @@ class BusinessMatchingController extends Controller
                     if($eventExhibitor){
                         if($eventExhibitor->company->users[0]->device_token != null && $eventExhibitor->company->users[0]->device_token != ''){
                             $notification = [
-                                'title' => 'Hospex',
-                                'body'  => $userVisitor->name.' ('.$userVisitor->company->company_name.') meminta request business matching untuk tanggal '.$checkAvailable->date.' jam '.$checkAvailable->time,
+                                'title' => 'Business Matching Request',
+                                'body'  => $userVisitor->name.' ('.$userVisitor->company->company_name.') request business matching ('.$checkAvailable->date.' '.$checkAvailable->time.')',
                             ];
                             $data = [
-                                'type'    => 'Business Matching',
+                                'type'    => 'Business Matching Request',
                                 'item_id' => (string) $match->id
                             ];
                             $url = 'https://fcm.googleapis.com/fcm/send';
@@ -257,11 +257,11 @@ class BusinessMatchingController extends Controller
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
                         $notification = [
-                            'title' => 'Hospex',
+                            'title' => 'Business Matching Confirm',
                             'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
                         ];
                         $data = [
-                            'type'    => 'Business Matching',
+                            'type'    => 'Business Matching Confirm',
                             'item_id' => (string) $dateExh->id
                         ];
                         $url = 'https://fcm.googleapis.com/fcm/send';
@@ -328,11 +328,11 @@ class BusinessMatchingController extends Controller
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
                         $notification = [
-                            'title' => 'Hospex',
+                            'title' => 'Business Matching Decline',
                             'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
                         ];
                         $data = [
-                            'type'    => 'Business Matching',
+                            'type'    => 'Business Matching Decline',
                             'item_id' => (string) $dateExh->id
                         ];
                         $url = 'https://fcm.googleapis.com/fcm/send';
