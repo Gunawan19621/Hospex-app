@@ -145,9 +145,7 @@ class BusinessMatchingController extends Controller
                             'available_schedule_id'     => (int) $time,
                             'event_exhibitor_id'        => (int) $exhibitor_id,
                             'event_visitor_id'          => $checkEventVisitor->id,
-                            'status'                    => '0',
-                            'time'                      => $checkAvailable->time,
-                            'date'                      => $checkAvailable->date
+                            'status'                    => '0'
                         ]);
                     }
                     else{
@@ -167,9 +165,7 @@ class BusinessMatchingController extends Controller
                             'available_schedule_id'     => (int) $time,
                             'event_exhibitor_id'        => (int) $exhibitor_id,
                             'event_visitor_id'          => $createEventVisitor->id,
-                            'status'                    => '0',
-                            'time'                      => $checkAvailable->time,
-                            'date'                      => $checkAvailable->date
+                            'status'                    => '0'
                         ]);
                     }
                     else{
@@ -251,8 +247,48 @@ class BusinessMatchingController extends Controller
             $data    = MatchRequest::where([
                 'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
                 'available_schedule_id' => $dateExh->available_schedule_id,
-                'status'                => '0',
+                'status'                => '0'
             ])->update(['status' => '2']);
+
+            if($approve){
+                $eventVisitor = EventVisitor::where('id',$dateExh->event_visitor_id)->first();
+                $eventExhibitor = EventExhibitor::where('id',$dateExh->event_exhibitor_id)->first();
+                
+                if($eventVisitor){
+                    if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
+                        $notification = [
+                            'title' => 'Hospex',
+                            'body'  => $eventExhibitor->company->company_name.' approve your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                        ];
+                        $data = [
+                            'type'    => 'Business Matching',
+                            'item_id' => (string) $dateExh->id
+                        ];
+                        $url = 'https://fcm.googleapis.com/fcm/send';
+                        $fields = array(
+                            'to'           => $eventVisitor->company->users[0]->device_token,
+                            'notification' => $notification,
+                            'data'         => $data
+                        );
+                        $fields = json_encode($fields);
+                        $headers = array(
+                            'Authorization: key=AAAAy3vr5HI:APA91bErFkQmK3FjL_3DHiwn7qgcwDCZmkMnW-C5_-QqgjqUvnOBL1E2E6wfZyFEG2UZa87TmOA_OsI0fnoAkK9vGb_VOGXXSQBl7gYLAbS8KAmC0hE5IPLIsm-yfF3Z5PkPbfnyKEyX',
+                            'Content-Type: application/json'
+                        );
+
+                        $ch = curl_init ();
+                        curl_setopt ( $ch, CURLOPT_URL, $url );
+                        curl_setopt ( $ch, CURLOPT_POST, true );
+                        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+                        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+                        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+                        $result = curl_exec ( $ch );
+                        // echo $result;
+                        curl_close ( $ch );
+                    }
+                }
+            }
 
             return response()->json([
                 'success'   => true,
