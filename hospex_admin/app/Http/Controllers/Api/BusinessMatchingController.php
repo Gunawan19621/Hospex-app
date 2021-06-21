@@ -258,7 +258,7 @@ class BusinessMatchingController extends Controller
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
                         $notification = [
                             'title' => 'Hospex',
-                            'body'  => $eventExhibitor->company->company_name.' approve your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                            'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
                         ];
                         $data = [
                             'type'    => 'Business Matching',
@@ -329,7 +329,7 @@ class BusinessMatchingController extends Controller
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
                         $notification = [
                             'title' => 'Hospex',
-                            'body'  => $eventExhibitor->company->company_name.' approve your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                            'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
                         ];
                         $data = [
                             'type'    => 'Business Matching',
