@@ -58,8 +58,11 @@ class ResetPasswordController extends Controller
         if($user){
             return view('auth.passwords.reset');
         }
+        else{
+            $message = 'Invalid or expired reset code';
 
-        return 'Invalid or expired reset code.';
+            return view('auth.passwords.reset_post',compact('message'));
+        }
     }
 
     /**
@@ -75,14 +78,18 @@ class ResetPasswordController extends Controller
         $user = User::where('code',$code)->where('id',$id)->first();
 
         if (!$user) {
-            return 'Invalid or expired reset code.';
+            $message = 'Invalid or expired reset code';
+
+            return view('auth.passwords.reset_post',compact('message'));
         }
         else{
             $user->code     = '';
             $user->password = Hash::make($request->password);
             $user->save();
 
-            return 'Reset Password Success';
+            $message = 'Reset Password Success';
+
+            return view('auth.passwords.reset_post',compact('message'));
         }
     }
 }
