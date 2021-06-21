@@ -177,6 +177,44 @@ class BusinessMatchingController extends Controller
                     }
                 }
 
+                if($match != ''){
+                    $eventExhibitor = EventExhibitor::where('id',(int) $exhibitor_id)->first();
+                    if($eventExhibitor){
+                        if($eventExhibitor->company->users[0]->device_token != null && $eventExhibitor->company->users[0]->device_token != ''){
+                            $notification = [
+                                'title' => 'Hospex',
+                                'body'  => $userVisitor->name.' ('.$userVisitor->company->company_name.') meminta request business matching untuk tanggal '.$checkAvailable->date.' jam '.$checkAvailable->time,
+                            ];
+                            $data = [
+                                'type'    => 'Business Matching',
+                                'item_id' => (string) $match->id
+                            ];
+                            $url = 'https://fcm.googleapis.com/fcm/send';
+                            $fields = array(
+                                'to'           => $eventExhibitor->company->users[0]->device_token,
+                                'notification' => $notification,
+                                'data'         => $data
+                            );
+                            $fields = json_encode($fields);
+                            $headers = array(
+                                'Authorization: key=AAAAy3vr5HI:APA91bErFkQmK3FjL_3DHiwn7qgcwDCZmkMnW-C5_-QqgjqUvnOBL1E2E6wfZyFEG2UZa87TmOA_OsI0fnoAkK9vGb_VOGXXSQBl7gYLAbS8KAmC0hE5IPLIsm-yfF3Z5PkPbfnyKEyX',
+                                'Content-Type: application/json'
+                            );
+
+                            $ch = curl_init ();
+                            curl_setopt ( $ch, CURLOPT_URL, $url );
+                            curl_setopt ( $ch, CURLOPT_POST, true );
+                            curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+                            curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+                            curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+                            $result = curl_exec ( $ch );
+                            // echo $result;
+                            curl_close ( $ch );
+                        }
+                    }
+                }
+
                 return response()->json([
                     'success'   => true,
                     'message'   => 'Data Succesfull Created',
