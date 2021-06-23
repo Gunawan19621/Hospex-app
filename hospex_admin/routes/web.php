@@ -75,6 +75,9 @@ Route::group(['middleware' => ['auth']], function () {
     // Categories
     Route::resource('categories', 'CategoriesController');
 
+    // News
+    Route::resource('news', 'NewsController');
+
     // Companies
     Route::resource('companies', 'CompaniesController');
 

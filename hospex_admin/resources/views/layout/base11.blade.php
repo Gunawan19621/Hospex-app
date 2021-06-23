@@ -204,6 +204,9 @@ License: You must have a valid license purchased only from themeforest(the above
 							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
 								<a href="{{ url('visitors') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">Visitors</span></a>
 							</li>
+							<li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
+								<a href="{{ url('/news') }}" class="m-menu__link "><i class="m-menu__link-icon flaticon-suitcase"></i><span class="m-menu__link-text">News</span></a>
+							</li>
 						</ul>
 					</div>
 
