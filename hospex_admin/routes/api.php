@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 $router->get('exhibitors', 'Api\ExhibitorsController@index');
 $router->get('exhibitors/{exhibitor}', 'Api\ExhibitorsController@show');
 
+// news
+$router->get('news', 'Api\NewsController@index');
+$router->get('news/{news}', 'Api\NewsController@show');
+
 // business matching
 $router->post('match-request', 'Api\BusinessMatchingController@store');
 $router->post('match-approve/{match}', 'Api\BusinessMatchingController@approve');
