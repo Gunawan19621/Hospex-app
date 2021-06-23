@@ -607,11 +607,11 @@
       'smtp' => 
       array (
         'transport' => 'smtp',
-        'host' => 'smtp.googlemail.com',
-        'port' => '465',
-        'encryption' => 'ssl',
-        'username' => 'noreply.apps@hospital-expo.com',
-        'password' => 'Q6$4*a2+nQuRdEqtLju?',
+        'host' => 'hospex-apps.com',
+        'port' => '587',
+        'encryption' => 'tls',
+        'username' => 'no-reply@hospex-apps.com',
+        'password' => '362Cw%dj',
         'timeout' => NULL,
         'auth_mode' => NULL,
       ),
@@ -769,8 +769,16 @@
       'grouping_type' => NULL,
       'report_logs' => true,
       'maximum_number_of_collected_logs' => 200,
+      'censor_request_body_fields' => 
+      array (
+        0 => 'password',
+      ),
     ),
     'send_logs_as_events' => true,
+    'censor_request_body_fields' => 
+    array (
+      0 => 'password',
+    ),
   ),
   'ignition' => 
   array (
