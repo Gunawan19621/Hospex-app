@@ -241,11 +241,15 @@ class BusinessMatchingController extends Controller
     public function approve($match)
     {
         try{
+            if($request->reason == null){
+                $request->reason = '';
+            }
+
             $approve = MatchRequest::where([
                 'id' => $match
             ])->update([
                 'status' => '1',
-                'reason' => ''
+                'reason' => $request->reason
             ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
@@ -263,10 +267,19 @@ class BusinessMatchingController extends Controller
 
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
-                        $notification = [
-                            'title' => 'Business Matching Confirm',
-                            'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
-                        ];
+                        if($request->reason == null || $request->reason == ''){
+                            $notification = [
+                                'title' => 'Business Matching Confirm',
+                                'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                            ];
+                        }
+                        else{
+                            $notification = [
+                                'title' => 'Business Matching Confirm',
+                                'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')'.' because '.$request->reason,
+                            ];
+                        }
+                        
                         $data = [
                             'type'    => 'Business Matching Confirm',
                             'item_id' => (string) $dateExh->id

@@ -45,6 +45,9 @@
                             data : "time", name : "time",
                         },
                         {
+                            data : "reason", name : "reason",
+                        },
+                        {
                             data : "status", name : "status",
                         },
                         // {
@@ -96,6 +99,9 @@
                         },
                         {
                             data : "time", name : "time",
+                        },
+                        {
+                            data : "reason", name : "reason",
                         },
                         {
                             data : "status", name : "status",
