@@ -97,6 +97,37 @@ class NewsController extends Controller
         $create->image    = $filename;
         $create->save();
 
+        $notification = [
+            'title' => 'News',
+            'body'  => $create->title,
+        ];
+        $data = [
+            'type'    => 'News',
+            'item_id' => (string) $create->id,
+        ];
+        $url = 'https://fcm.googleapis.com/fcm/send';
+        $fields = array(
+            'to'           => '/topics/News',
+            'notification' => $notification,
+            'data'         => $data
+        );
+        $fields = json_encode($fields);
+        $headers = array(
+            'Authorization: key=AAAAy3vr5HI:APA91bErFkQmK3FjL_3DHiwn7qgcwDCZmkMnW-C5_-QqgjqUvnOBL1E2E6wfZyFEG2UZa87TmOA_OsI0fnoAkK9vGb_VOGXXSQBl7gYLAbS8KAmC0hE5IPLIsm-yfF3Z5PkPbfnyKEyX',
+            'Content-Type: application/json'
+        );
+
+        $ch = curl_init ();
+        curl_setopt ( $ch, CURLOPT_URL, $url );
+        curl_setopt ( $ch, CURLOPT_POST, true );
+        curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+        $result = curl_exec ( $ch );
+        // echo $result;
+        curl_close ( $ch );
+
         $response = $create ? '1-News Saved' : '0-News Failed to Save';
         return redirect('/news')->with('status', $response);
     }
@@ -161,6 +192,37 @@ class NewsController extends Controller
         }
 
         $update->save();
+
+        // $notification = [
+        //     'title' => 'News',
+        //     'body'  => $update->title,
+        // ];
+        // $data = [
+        //     'type'    => 'News',
+        //     'item_id' => (string) $update->id,
+        // ];
+        // $url = 'https://fcm.googleapis.com/fcm/send';
+        // $fields = array(
+        //     'to'           => '/topics/News',
+        //     'notification' => $notification,
+        //     'data'         => $data
+        // );
+        // $fields = json_encode($fields);
+        // $headers = array(
+        //     'Authorization: key=AAAAy3vr5HI:APA91bErFkQmK3FjL_3DHiwn7qgcwDCZmkMnW-C5_-QqgjqUvnOBL1E2E6wfZyFEG2UZa87TmOA_OsI0fnoAkK9vGb_VOGXXSQBl7gYLAbS8KAmC0hE5IPLIsm-yfF3Z5PkPbfnyKEyX',
+        //     'Content-Type: application/json'
+        // );
+
+        // $ch = curl_init ();
+        // curl_setopt ( $ch, CURLOPT_URL, $url );
+        // curl_setopt ( $ch, CURLOPT_POST, true );
+        // curl_setopt ( $ch, CURLOPT_HTTPHEADER, $headers );
+        // curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+        // curl_setopt ( $ch, CURLOPT_POSTFIELDS, $fields );
+
+        // $result = curl_exec ( $ch );
+        // // echo $result;
+        // curl_close ( $ch );
 
         $response = $update ? '1-News Updated' : '0-News Failed to Update';
         return redirect('/news')->with('status', $response);
