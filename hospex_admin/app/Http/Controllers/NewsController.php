@@ -107,7 +107,7 @@ class NewsController extends Controller
         ];
         $url = 'https://fcm.googleapis.com/fcm/send';
         $fields = array(
-            'to'           => '/topics/News',
+            'to'           => '/topics/Hospex',
             'notification' => $notification,
             'data'         => $data
         );
@@ -203,7 +203,7 @@ class NewsController extends Controller
         // ];
         // $url = 'https://fcm.googleapis.com/fcm/send';
         // $fields = array(
-        //     'to'           => '/topics/News',
+        //     'to'           => '/topics/Hospex',
         //     'notification' => $notification,
         //     'data'         => $data
         // );
