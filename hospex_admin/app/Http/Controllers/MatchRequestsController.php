@@ -161,7 +161,10 @@ class MatchRequestsController extends Controller
                     ->addColumn('exhibitor_name', function($data){
                         return $data->exhibitor->company->company_name;
                     })
-                ->rawColumns(['visitor_name','visitor_company','visitor_email','exhibitor_name','status'])
+                    ->addColumn('reason', function($data){
+                        return $data->reason;
+                    })
+                ->rawColumns(['visitor_name','visitor_company','visitor_email','exhibitor_name','status','reason'])
                 ->make(true);
         }
         

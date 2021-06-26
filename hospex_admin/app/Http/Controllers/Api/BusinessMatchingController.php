@@ -87,6 +87,7 @@ class BusinessMatchingController extends Controller
                                 'visitor_phone'   => $match->visitor->company->users[0]->phone,
                                 'visitor_address' => $match->visitor->company->users[0]->address,
                                 'time'            => $match->availableSchedule->time,
+                                'reason'          => $match->reason
                             );
 
                             if ($match->status == '1') {
@@ -242,13 +243,19 @@ class BusinessMatchingController extends Controller
         try{
             $approve = MatchRequest::where([
                 'id' => $match
-            ])->update(['status' => '1']);
+            ])->update([
+                'status' => '1',
+                'reason' => ''
+            ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
                 'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
                 'available_schedule_id' => $dateExh->available_schedule_id,
                 'status'                => '0'
-            ])->update(['status' => '2']);
+            ])->update([
+                'status' => '2',
+                'reason' => 'match request has been already set'
+            ]);
 
             if($approve){
                 $eventVisitor = EventVisitor::where('id',$dateExh->event_visitor_id)->first();
@@ -308,18 +315,28 @@ class BusinessMatchingController extends Controller
         }
     }
 
-    public function reject($match)
+    public function reject($match, Request $request)
     {
         try{
+            if($request->reason == null){
+                $request->reason = '';
+            }
+
             $reject = MatchRequest::where([
                 'id' => $match
-            ])->update(['status' => '2']);
+            ])->update([
+                'status' => '2',
+                'reason' => $request->reason
+            ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
                 'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
                 'available_schedule_id' => $dateExh->available_schedule_id,
                 'status'                => '0'
-            ])->update(['status' => '2']);
+            ])->update([
+                'status' => '2',
+                'reason' => $request->reason
+            ]);
 
             if($reject){
                 $eventVisitor = EventVisitor::where('id',$dateExh->event_visitor_id)->first();
@@ -327,10 +344,19 @@ class BusinessMatchingController extends Controller
                 
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
-                        $notification = [
-                            'title' => 'Business Matching Decline',
-                            'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
-                        ];
+                        if($request->reason == null || $request->reason == ''){
+                            $notification = [
+                                'title' => 'Business Matching Decline',
+                                'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                            ];
+                        }
+                        else{
+                            $notification = [
+                                'title' => 'Business Matching Decline',
+                                'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')'.' because '.$request->reason,
+                            ];
+                        }
+                        
                         $data = [
                             'type'    => 'Business Matching Decline',
                             'item_id' => (string) $dateExh->id

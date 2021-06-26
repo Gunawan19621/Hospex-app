@@ -147,6 +147,9 @@
                             data : "time", name : "time",
                         },
                         {
+                            data : "reason", name : "reason",
+                        },
+                        {
                             data : "status", name : "status",
                         },
                     ],
