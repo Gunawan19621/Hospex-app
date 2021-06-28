@@ -242,14 +242,17 @@ class BusinessMatchingController extends Controller
     {
         try{
             if($request->reason == null){
-                $request->reason = '';
+                $reason = '';
+            }
+            else{
+                $reason = $request->reason;
             }
 
             $approve = MatchRequest::where([
                 'id' => $match
             ])->update([
                 'status' => '1',
-                'reason' => $request->reason
+                'reason' => $reason
             ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
@@ -267,7 +270,7 @@ class BusinessMatchingController extends Controller
 
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
-                        if($request->reason == null || $request->reason == ''){
+                        if($reason == null || $reason == ''){
                             $notification = [
                                 'title' => 'Business Matching Confirm',
                                 'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name
@@ -276,7 +279,7 @@ class BusinessMatchingController extends Controller
                         else{
                             $notification = [
                                 'title' => 'Business Matching Confirm',
-                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name.' because '.$request->reason
+                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name.' because '.$reason
                             ];
                         }
                         
@@ -321,7 +324,7 @@ class BusinessMatchingController extends Controller
             $response = $e->getMessage();
             return response()->json([
                 'success'   => false,
-                'message'   => 'Data Failed to Save',
+                'message'   => $e->getMessage(),
                 'data'      => '',
                 'status'    => 403
             ],403);
