@@ -270,13 +270,13 @@ class BusinessMatchingController extends Controller
                         if($request->reason == null || $request->reason == ''){
                             $notification = [
                                 'title' => 'Business Matching Confirm',
-                                'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name
                             ];
                         }
                         else{
                             $notification = [
                                 'title' => 'Business Matching Confirm',
-                                'body'  => $eventExhibitor->company->company_name.' confirm your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')'.' because '.$request->reason,
+                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name.' because '.$request->reason
                             ];
                         }
                         
@@ -360,13 +360,13 @@ class BusinessMatchingController extends Controller
                         if($request->reason == null || $request->reason == ''){
                             $notification = [
                                 'title' => 'Business Matching Decline',
-                                'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')',
+                                'body'  => 'Your request business matching declined by '.$eventExhibitor->company->company_name,
                             ];
                         }
                         else{
                             $notification = [
                                 'title' => 'Business Matching Decline',
-                                'body'  => $eventExhibitor->company->company_name.' decline your request business matching ('.$dateExh->availableSchedule->date.' '.$dateExh->availableSchedule->time.')'.' because '.$request->reason,
+                                'body'  => 'Your request business matching declined by '.$eventExhibitor->company->company_name.' because '.$request->reason,
                             ];
                         }
                         
