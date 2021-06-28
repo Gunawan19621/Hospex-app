@@ -238,21 +238,18 @@ class BusinessMatchingController extends Controller
         }
     }
 
-    public function approve($match)
+    public function approve($match, Request $request)
     {
         try{
             if($request->reason == null){
-                $reason = '';
-            }
-            else{
-                $reason = $request->reason;
+                $request->reason = '';
             }
 
             $approve = MatchRequest::where([
                 'id' => $match
             ])->update([
                 'status' => '1',
-                'reason' => $reason
+                'reason' => $request->reason
             ]);
             $dateExh = MatchRequest::findorfail($match);
             $data    = MatchRequest::where([
@@ -270,7 +267,7 @@ class BusinessMatchingController extends Controller
 
                 if($eventVisitor){
                     if($eventVisitor->company->users[0]->device_token != null && $eventVisitor->company->users[0]->device_token != ''){
-                        if($reason == null || $reason == ''){
+                        if($request->reason == null || $request->reason == ''){
                             $notification = [
                                 'title' => 'Business Matching Confirm',
                                 'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name
@@ -279,7 +276,7 @@ class BusinessMatchingController extends Controller
                         else{
                             $notification = [
                                 'title' => 'Business Matching Confirm',
-                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name.' because '.$reason
+                                'body'  => 'Your request business matching confirmed by '.$eventExhibitor->company->company_name.' because '.$request->reason
                             ];
                         }
                         
@@ -324,7 +321,7 @@ class BusinessMatchingController extends Controller
             $response = $e->getMessage();
             return response()->json([
                 'success'   => false,
-                'message'   => $e->getMessage(),
+                'message'   => 'Data Failed to Save',
                 'data'      => '',
                 'status'    => 403
             ],403);
