@@ -21,18 +21,7 @@
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
-		      <li class="nav-item active">
-		        <a class="nav-link" href="{{ url('/events') }}">Home <span class="sr-only">(current)</span></a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="{{ url('/eventschedules') }}">Event Schedule</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link" href="{{ url('/employee') }}">Employee</a>
-		      </li>
-		      <li class="nav-item">
-		        <a class="nav-link " href="#">Disabled</a>
-		      </li>
+		    	
 		    </ul>
 		  </div>
 		  </div>

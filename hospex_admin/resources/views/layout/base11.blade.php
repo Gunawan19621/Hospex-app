@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!-- begin::Head -->
 	<head>
 		<meta charset="utf-8" />
-		<title>@yield('title')</title>
+		<title>Hospital Expo</title>
 		<meta name="description" content="Latest updates and statistic charts">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -54,7 +54,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	{{-- <link href="{{ url('assets/vendors/custom/datatables/datatables.bundle.rtl.css') }}" rel="stylesheet" type="text/css" /> --}}
 
 		<!--end::Page Vendors Styles -->
-		<link rel="shortcut icon" href="{{ asset('assets11/demo/demo11/media/img/logo/favicon.ico') }}" />
+		<link rel="shortcut icon" href="{{asset('assets11/hospexlogo.png')}}" />
 
 		@stack('css')
 	</head>
