@@ -6,4 +6,4 @@ Homestead.yaml
 /public
 /storage
 .DS_Store
-composer.lock
+/vendor
