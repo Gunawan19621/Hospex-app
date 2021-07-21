@@ -12,5 +12,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
         server: ftp.hospex-apps.com
+        server-dir: admin.hospex-apps.com/
+        state-name: admin.hospex-apps.com/.sync-state.json
         username: hospexap
         password: ${{ secrets.ftp_password }}
