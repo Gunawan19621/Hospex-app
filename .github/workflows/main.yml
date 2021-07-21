@@ -13,6 +13,5 @@ jobs:
       with:
         server: ftp.hospex-apps.com
         server-dir: admin.hospex-apps.com/
-        state-name: admin.hospex-apps.com/.sync-state.json
         username: hospexap
         password: ${{ secrets.ftp_password }}
