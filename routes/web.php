@@ -72,6 +72,9 @@ Route::group(['middleware' => ['auth']], function () {
     // Categories
     Route::resource('information', 'InformationController');
 
+    // Admin
+    Route::resource('admin', 'AdminController');
+
     // Categories
     Route::resource('categories', 'CategoriesController');
 
