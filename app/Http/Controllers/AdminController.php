@@ -6,6 +6,8 @@ use App\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Mail\activationEmail;
+use Illuminate\Support\Facades\Mail;
 use Auth;
 
 class AdminController extends Controller

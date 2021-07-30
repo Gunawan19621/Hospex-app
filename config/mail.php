@@ -84,7 +84,7 @@ return [
     */
 
     'from' => [
-        'address' => 'noreply@hospex.com',
+        'address' => 'noreply.apps@hospital-expo.com',
         'name' => 'Hospex',
     ],
 

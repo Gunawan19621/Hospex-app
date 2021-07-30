@@ -132,6 +132,8 @@ Route::post('forgot-password', 'ForgotPasswordController@forgotPassword')->name(
 Route::get('set-password/{id?}/{code?}', 'ResetPasswordController@showResetForm')->name("front.setPassword");
 Route::post('set-password/{id?}/{code?}', 'ResetPasswordController@reset')->name("front.setPasswordPost");
 
+Route::get('activation/{id?}/{code?}', 'ActivationController@activation')->name("front.activation");
+
 Route::get('/connection', function () {
     try {
         DB::connection()->getPdo();

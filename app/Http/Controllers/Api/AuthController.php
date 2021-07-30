@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Helpers\GetEvent as eventId;
 use App\Http\Controllers\Controller;
 use App\Mail\forgotPasswordEmail;
+use App\Mail\activationEmail;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
@@ -65,11 +66,17 @@ class AuthController extends Controller
             'phone'      => $phone,
             'type'       => 'visitor'
         ]);
+
+        $api_token = $this->generateRandomString();
+        $register->api_token = $api_token;
+        $register->save();
+
+        Mail::to($register->email)->send(new activationEmail($register, $api_token));
         
         if ($register) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Register Success',
+                'message'   => 'Register Success. Please check your email to activate your account.',
                 'data'      => $register,
                 'status'    => 201
             ], 201);
@@ -98,71 +105,22 @@ class AuthController extends Controller
         if ($user) {
             if($type == null || $type == ''){
                 if (Hash::check($password, $user->password)) {
-                    $apiToken = base64_encode(Str::random(40));
-                    
-                    if($device_token == null || $device_token == ''){
-                        $user->api_token    = $apiToken;
-                        $user->device_token = null;
-                        $user->save();
+                    if($user->email_verified_at == null){
+                        Mail::to($user->email)->send(new activationEmail($user, $user->api_token));
+
+                        return response()->json([
+                            'success'   => false,
+                            'message'   => 'Login Fail. Please check your email to activate your account.',
+                            'data'      => '',
+                            'status'    => 403
+                        ], 403);
                     }
                     else{
-                        $user->api_token    = $apiToken;
-                        $user->device_token = $device_token;
-                        $user->save();
-                    }
-                    
-                    $data['id']         = $user->id;
-                    $data['foto']       = $user->company->image;
-                    $data['nama']       = $user->name;
-                    $data['email']      = $user->email;
-                    $data['type']       = $user->type;
-                    $data['phone']      = $user->phone;
-                    $data['address']    = $user->address;
-                    $data['company']    = $user->company->company_name;
-
-                    if($event){
-                        if($user->type == 'visitor'){
-                            $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
-                            if($checkData == null){
-                                $create = EventVisitor::create([
-                                    'company_id' => $user->company_id,
-                                    'event_id'   => $event->id
-                                ]);
-                            }
-                        }
-                    }
-
-                    return response()->json([
-                        'success'   => true,
-                        'message'   => 'Login Success',
-                        'data'      => [
-                            'user'      => $data,
-                            'api_token' => $apiToken
-                        ],
-                        'status'    => 200
-                    ], 200);
-                }
-                else{
-                    return response()->json([
-                        'success'   => false,
-                        'message'   => 'Login Fail. Password is wrong',
-                        'data'      => '',
-                        'status'    => 403
-                    ], 403);
-                }
-            }
-            else{
-                if($user->type == $type){
-                    if (Hash::check($password, $user->password)) {
-                        $apiToken = base64_encode(Str::random(40));
-                        
                         if($device_token == null || $device_token == ''){
-                            $user->api_token    = $apiToken;
                             $user->device_token = null;
                             $user->save();
                         }
                         else{
-                            $user->api_token    = $apiToken;
                             $user->device_token = $device_token;
                             $user->save();
                         }
@@ -177,15 +135,14 @@ class AuthController extends Controller
                         $data['company']    = $user->company->company_name;
 
                         if($event){
-                            $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
-                            if($checkData){
-
-                            }
-                            else{
-                                $create = EventVisitor::create([
-                                    'company_id' => $user->company_id,
-                                    'event_id'   => $event->id
-                                ]);
+                            if($user->type == 'visitor'){
+                                $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
+                                if($checkData == null){
+                                    $create = EventVisitor::create([
+                                        'company_id' => $user->company_id,
+                                        'event_id'   => $event->id
+                                    ]);
+                                }
                             }
                         }
 
@@ -194,10 +151,76 @@ class AuthController extends Controller
                             'message'   => 'Login Success',
                             'data'      => [
                                 'user'      => $data,
-                                'api_token' => $apiToken
+                                'api_token' => $user->api_token
                             ],
                             'status'    => 200
                         ], 200);
+                    }
+                }
+                else{
+                    return response()->json([
+                        'success'   => false,
+                        'message'   => 'Login Fail. Password is wrong',
+                        'data'      => '',
+                        'status'    => 403
+                    ], 403);
+                }
+            }
+            else{
+                if($user->type == $type){
+                    if (Hash::check($password, $user->password)) {
+                        if($user->email_verified_at == null){
+                            Mail::to($user->email)->send(new activationEmail($user, $user->api_token));
+
+                            return response()->json([
+                                'success'   => false,
+                                'message'   => 'Login Fail. Please check your email to activate your account.',
+                                'data'      => '',
+                                'status'    => 403
+                            ], 403);
+                        }
+                        else{
+                            if($device_token == null || $device_token == ''){
+                                $user->device_token = null;
+                                $user->save();
+                            }
+                            else{
+                                $user->device_token = $device_token;
+                                $user->save();
+                            }
+                            
+                            $data['id']         = $user->id;
+                            $data['foto']       = $user->company->image;
+                            $data['nama']       = $user->name;
+                            $data['email']      = $user->email;
+                            $data['type']       = $user->type;
+                            $data['phone']      = $user->phone;
+                            $data['address']    = $user->address;
+                            $data['company']    = $user->company->company_name;
+
+                            if($event){
+                                $checkData = EventVisitor::where('company_id',$user->company_id)->where('event_id',$event->id)->first();
+                                if($checkData){
+
+                                }
+                                else{
+                                    $create = EventVisitor::create([
+                                        'company_id' => $user->company_id,
+                                        'event_id'   => $event->id
+                                    ]);
+                                }
+                            }
+
+                            return response()->json([
+                                'success'   => true,
+                                'message'   => 'Login Success',
+                                'data'      => [
+                                    'user'      => $data,
+                                    'api_token' => $user->api_token
+                                ],
+                                'status'    => 200
+                            ], 200);
+                        }
                     }
                     else{
                         return response()->json([
@@ -235,7 +258,6 @@ class AuthController extends Controller
 
         $user = User::where('id', $id)->first();
         if ($user) {
-            $user->api_token    = '';
             if($user->device_token == $device_token){
                 $user->device_token = '';
             }
@@ -404,7 +426,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'success'   => true,
-                'message'   => 'Link reset password sudah kami kirim, silahkan cek email Anda',
+                'message'   => "Please check your registered email for reset your password.",
                 'data'      => '',
                 'status'    => 200
             ], 200);

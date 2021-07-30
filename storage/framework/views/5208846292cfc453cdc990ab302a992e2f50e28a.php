@@ -14,7 +14,7 @@
                   <tbody>
                     <tr>
                       <td class="m_4178287543717492059m_8500764122952422996alignmentContainer" style="word-break:break-word;font-size:0px;padding:0px;text-align:center">
-                        <img src="{{asset('assets11/hospexlogo.png')}}" alt="image" width="258" style="font-family:Helvetica,Arial,sans-serif;font-size:20px;width:43%">
+                        <img src="<?php echo e(asset('assets11/hospexlogo.png')); ?>" alt="image" width="258" style="font-family:Helvetica,Arial,sans-serif;font-size:20px;width:43%">
                       </td>
                     </tr>
                   </tbody>
@@ -36,11 +36,9 @@
                     <tr>
                       <td style="font-size:0px;padding:15px;text-align:left">
                         <div>
-                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:0px 0px 13px;line-height:1.6">Hai {{$user->name}}, <br></p>
-                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6">Kami menerima permintaan reset kata sandi untuk akun Hospex anda.</p>
-                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6">Untuk melakukan reset kata sandi, tolong mengklik tautan di bawah ini:</p>
-                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6"><a href="{{route('front.setPassword', [$user->id,$code])}}">{{route('front.setPassword', [$user->id,$code])}}</a></p>
-                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6">Jika anda tidak melakukan permintaan ini, anda dapat mengabaikan pesan ini.</p>
+                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:0px 0px 13px;line-height:1.6">Hai <?php echo e($user->name); ?>, <br></p>
+                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6">Untuk aktivasi akun Hospex anda, tolong mengklik tautan di bawah ini:</p>
+                          <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6"><a href="<?php echo e(route('front.activation', [$user->id, $code])); ?>"><?php echo e(route('front.activation', [$user->id, $code])); ?></a></p>
                           <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px;line-height:1.6">Terimakasih.</p>
                           <p class="m_4178287543717492059m_8500764122952422996bard-text-block m_4178287543717492059m_8500764122952422996style-scope" style="color:rgb(52,52,52);font-family:Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:13px 0px 0px;line-height:1.6"><br></p>
                         </div>
@@ -78,4 +76,4 @@
       </table>
      </div>
   </body>
-</html>
+</html><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/hospex-server/resources/views/auth/emails/activate.blade.php ENDPATH**/ ?>

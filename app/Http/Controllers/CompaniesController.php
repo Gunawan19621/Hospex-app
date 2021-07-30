@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Company;
 use App\Category;
 use App\User;
+use App\Mail\activationEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -133,6 +135,13 @@ class CompaniesController extends Controller
                     'address'    => $request->exhibitor_address,
                     'type'       => 'exhibitor'
                 ]);
+
+                $api_token = $this->generateRandomString();
+                $user->api_token         = $api_token;
+                $user->email_verified_at = date('Y-m-d H:i:s');
+                $user->save();
+
+                // Mail::to($user->email)->send(new activationEmail($user, $api_token));
             });
             DB::commit();
             $response = '1-Company Saved';
@@ -258,5 +267,15 @@ class CompaniesController extends Controller
         $response = $delete ? '1-Company Deleted' : '0-Company Failed to Delete';
         return response()->json('1-Company Deleted', 200);
         //
+    }
+
+    public function generateRandomString($length = 32) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
