@@ -77,7 +77,7 @@ class AuthController extends Controller
             return response()->json([
                 'success'   => true,
                 'message'   => 'Register Success. Please check your email to activate your account.',
-                'data'      => $register,
+                'data'      => '',
                 'status'    => 201
             ], 201);
         }
