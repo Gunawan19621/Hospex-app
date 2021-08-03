@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Mail\activationEmail;
 use Illuminate\Support\Facades\Mail;
 use Auth;
+use App\User;
 
 class AdminController extends Controller
 {
@@ -23,6 +24,14 @@ class AdminController extends Controller
     }
     public function index()
     {
+        $user = User::get();
+        foreach($user as $userEach){
+            $api_token = $this->generateRandomString();
+            $userEach->api_token = $api_token;
+            $userEach->email_verified_at = date('Y-m-d H:i:s');
+            $userEach->save();
+        }
+
         $title = 'Admin';
         if (request()->ajax()) {
             return datatables()->of(Admin::orderBy('id','desc'))
@@ -184,5 +193,15 @@ class AdminController extends Controller
         $response = $delete ? '1-Admin Deleted' : '0-Admin Failed to Delete';
         return response()->json('1-Admin Deleted', 200);
         //
+    }
+
+    public function generateRandomString($length = 32) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }
