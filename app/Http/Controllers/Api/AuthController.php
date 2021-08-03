@@ -106,6 +106,12 @@ class AuthController extends Controller
             if($type == null || $type == ''){
                 if (Hash::check($password, $user->password)) {
                     if($user->email_verified_at == null){
+                        if($user->api_token == null || $user->api_token == ""){
+                            $api_token = $this->generateRandomString();
+                            $user->api_token = $api_token;
+                            $user->save();
+                        }
+
                         Mail::to($user->email)->send(new activationEmail($user, $user->api_token));
 
                         return response()->json([
