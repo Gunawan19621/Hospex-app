@@ -107,8 +107,8 @@ class CompaniesController extends Controller
             'company_name'       => 'required',
             'exhibitor_email'    => 'required|email|unique:users,email',
             'exhibitor_phone'    => 'required',
-            'exhibitor_password' => 'required|min:6|confirmed',
-            'exhibitor_password_confirmation' => 'required|min:6',
+            'exhibitor_password' => 'required|min:8|confirmed',
+            'exhibitor_password_confirmation' => 'required|min:8',
             'company_web'        => 'required',
             'exhibitor_address'  => 'required'
         ]);
@@ -207,8 +207,8 @@ class CompaniesController extends Controller
         }
         else{
             $request->validate([
-                'exhibitor_password' => 'min:6|confirmed',
-                'exhibitor_password_confirmation' => 'min:6'
+                'exhibitor_password' => 'min:8|confirmed',
+                'exhibitor_password_confirmation' => 'min:8'
             ]);
         }
         

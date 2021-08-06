@@ -76,8 +76,8 @@ class AdminController extends Controller
         $request->validate([
             'name'                  => 'required',
             'email'                 => 'required|email|unique:admins,email',
-            'password'              => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6',
+            'password'              => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8',
         ]);
 
         try{
@@ -142,8 +142,8 @@ class AdminController extends Controller
         }
         else{
             $request->validate([
-                'password'              => 'min:6|confirmed',
-                'password_confirmation' => 'min:6'
+                'password'              => 'min:8|confirmed',
+                'password_confirmation' => 'min:8'
             ]);
         }
         
