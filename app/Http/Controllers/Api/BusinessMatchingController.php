@@ -252,14 +252,14 @@ class BusinessMatchingController extends Controller
                 'reason' => $request->reason
             ]);
             $dateExh = MatchRequest::findorfail($match);
-            $data    = MatchRequest::where([
-                'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
-                'available_schedule_id' => $dateExh->available_schedule_id,
-                'status'                => '0'
-            ])->update([
-                'status' => '2',
-                'reason' => 'match request has been already set'
-            ]);
+            // $data    = MatchRequest::where([
+            //     'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
+            //     'available_schedule_id' => $dateExh->available_schedule_id,
+            //     'status'                => '0'
+            // ])->update([
+            //     'status' => '2',
+            //     'reason' => 'match request has been already set'
+            // ]);
 
             if($approve){
                 $eventVisitor = EventVisitor::where('id',$dateExh->event_visitor_id)->first();
@@ -342,14 +342,14 @@ class BusinessMatchingController extends Controller
                 'reason' => $request->reason
             ]);
             $dateExh = MatchRequest::findorfail($match);
-            $data    = MatchRequest::where([
-                'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
-                'available_schedule_id' => $dateExh->available_schedule_id,
-                'status'                => '0'
-            ])->update([
-                'status' => '2',
-                'reason' => $request->reason
-            ]);
+            // $data    = MatchRequest::where([
+            //     'event_exhibitor_id'    => $dateExh->event_exhibitor_id,
+            //     'available_schedule_id' => $dateExh->available_schedule_id,
+            //     'status'                => '0'
+            // ])->update([
+            //     'status' => '2',
+            //     'reason' => $request->reason
+            // ]);
 
             if($reject){
                 $eventVisitor = EventVisitor::where('id',$dateExh->event_visitor_id)->first();
