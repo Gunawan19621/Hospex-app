@@ -231,6 +231,7 @@ class CompaniesController extends Controller
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
+                        'email'     => $request->exhibitor_email,
                         'phone'     => $request->exhibitor_phone,
                         'address'   => $request->exhibitor_address
                     ]);
@@ -239,6 +240,7 @@ class CompaniesController extends Controller
                     $user = User::where('company_id',$company->id)->first();
                     $user->update([
                         'name'      => $request->company_name,
+                        'email'     => $request->exhibitor_email,
                         'phone'     => $request->exhibitor_phone,
                         'password'  => Hash::make($request->exhibitor_password),
                         'address'   => $request->exhibitor_address
