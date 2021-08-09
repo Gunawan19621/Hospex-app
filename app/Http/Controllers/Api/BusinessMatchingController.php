@@ -180,7 +180,7 @@ class BusinessMatchingController extends Controller
                         if($eventExhibitor->company->users[0]->device_token != null && $eventExhibitor->company->users[0]->device_token != ''){
                             $notification = [
                                 'title' => 'Business Matching Request',
-                                'body'  => $userVisitor->name.' request business matching ('.$checkAvailable->date.' '.$checkAvailable->time.')',
+                                'body'  => $userVisitor->name.' ('.$userVisitor->company->company_name.') request business matching ('.$checkAvailable->date.' '.$checkAvailable->time.')',
                             ];
                             $data = [
                                 'type'    => 'Business Matching Request',
