@@ -65,9 +65,13 @@ Route::group(['middleware' => ['auth']], function () {
     // Route::resource('events','EventController');
     Route::resource('eventschedules','EventSchedulesController');
     Route::get('/eventschedules/create/{event}','EventSchedulesController@create');
+    Route::get('/eventschedules/{event_schedule}/edit/{event}','EventSchedulesController@editEvent');
+    Route::post('/eventschedules/{event_schedule}/update/{event}','EventSchedulesController@updateEvent');
 
     Route::resource('eventrundown','EventRundownController');
     Route::get('/eventrundown/create/{schedule}','EventRundownController@create');
+    Route::get('/eventrundown/{event_rundown}/edit/{schedule}','EventRundownController@editEvent');
+    Route::post('/eventrundown/{event_rundown}/update/{schedule}','EventRundownController@updateEvent');
 
     // Categories
     Route::resource('information', 'InformationController');

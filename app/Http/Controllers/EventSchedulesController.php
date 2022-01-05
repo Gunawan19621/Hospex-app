@@ -79,7 +79,15 @@ class EventSchedulesController extends Controller
      */
     public function edit(EventSchedule $eventSchedule)
     {
-        
+
+    }
+
+    public function editEvent($event_schedule_id, $event_id)
+    {
+        $events = Event::findorfail($event_id);
+        $eventSchedule = EventSchedule::findorfail($event_schedule_id);
+
+        return view('event_schedule.edit', compact('events','eventSchedule'));
     }
 
     /**
@@ -96,7 +104,6 @@ class EventSchedulesController extends Controller
             'date'      => 'required|date_format:Y-m-d',
         ]);
         try{
-            
             EventSchedule::whereId($eventschedule->id)->update([
                 'date'       => Carbon::parse($request->date)->format('Y-m-d'),
             ]);
@@ -106,6 +113,25 @@ class EventSchedulesController extends Controller
         }
         
         return redirect()->back()->with('status', $response);
+    }
+
+    public function updateEvent($event_schedule_id, $event_id, Request $request)
+    {
+        $eventschedule = EventSchedule::where('id',$event_schedule_id)->first();
+        $request->validate([
+            'date'      => 'required|date_format:Y-m-d',
+        ]);
+        try{
+            EventSchedule::whereId($eventschedule->id)->update([
+                'date'       => Carbon::parse($request->date)->format('Y-m-d'),
+            ]);
+            $response = '1-Schedule Updated';
+        } catch (\Exception $e){
+            $response = '0-Schedule Failed to Update';
+        }
+        
+        $event = Event::find($request->event_id);
+        return redirect('/events/'.$event->id)->with('status', $response);
     }
 
     /**

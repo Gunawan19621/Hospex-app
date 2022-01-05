@@ -26,7 +26,7 @@
                         <td scope="row">{{ $loop->iteration }}</td>
                         <td>{{ $schedule->date }}</td>
                         <td>
-                            <a href=" {{ url('events').'/'.$schedule->id.'/'.edit }} " class="badge badge-success">Edit</a>
+                            <a href=" {{ url('events').'/'.$schedule->id.'/edit' }} " class="badge badge-success">Edit</a>
                             <form action=" {{ url('events').'/'.$schedule->id }} " method="post" class="d-inline">
                                 @method('delete')
                                 @csrf

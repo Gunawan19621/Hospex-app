@@ -35,7 +35,7 @@
                                     @endif
                                     <h3 class="m-widget1__title">{{ date('l', strtotime($schedule->date) )}}</h3>
                                     <span class="m-widget1__desc">{{ date('F jS, Y', strtotime($schedule->date) )}}</span>
-                                    <a href="javascript:void(0);" data-toggle="modal" data-id="{{ $schedule->id }}" data-target="#m_modal_1"><i class="fa fa-edit"></i></a>  
+                                    <a href="{{ url('eventschedules').'/'.$schedule->id.'/edit/'.$event->id }}"><i class="fa fa-edit"></i></a>  
                                     
                                 </div>
                                 <div class="col m--align-right collapsed" data-toggle="collapse" data-target="#collapse{{ $schedule->id }}8" aria-expanded="false" aria-controls="collapse{{ $schedule->id }}8">
@@ -76,6 +76,7 @@
 													<div class="m-timeline-1__item-content">
 														<div class="m-timeline-1__item-title">
 															{{ $task->task }}
+                                                            <a href="{{ url('eventrundown').'/'.$task->id.'/edit/'.$schedule->id }}"><i class="fa fa-edit"></i></a>  
 														</div>
 														<div class="m-timeline-1__item-body">
 															<div class="m-list-pics">
