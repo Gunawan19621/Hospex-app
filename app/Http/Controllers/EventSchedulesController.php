@@ -144,4 +144,20 @@ class EventSchedulesController extends Controller
     {
         //
     }
+
+    public function destroyEvent($event_schedule_id, $event_id)
+    {
+        try{
+            $eventschedule = EventSchedule::where('id',$event_schedule_id)->first();
+            $event = Event::find($request->event_id);
+
+            $eventschedule->delete();
+
+            $response = '1-Schedule Delete';
+        } catch (\Exception $e){
+            $response = '0-Schedule Failed to Delete';
+        }
+
+        return redirect('/events/'.$event->id)->with('status', $response);
+    }
 }

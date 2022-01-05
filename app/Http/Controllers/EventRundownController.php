@@ -218,4 +218,20 @@ class EventRundownController extends Controller
     {
         //
     }
+
+    public function destroyEvent($event_rundown_id, $event_schedule_id)
+    {
+        try{
+            $schedule = EventSchedule::find($event_schedule_id);
+            $rundown = EventRundown::find($event_rundown_id);
+
+            $rundown->delete();
+
+            $response = '1-Rundown Delete';
+        } catch (\Exception $e){
+            $response = '0-Rundown Failed to Delete';
+        }
+
+        return redirect('/events/'.$schedule->event_id)->with('status', $response);
+    }
 }
