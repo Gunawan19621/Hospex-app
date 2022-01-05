@@ -149,15 +149,15 @@ class EventSchedulesController extends Controller
     {
         try{
             $eventschedule = EventSchedule::where('id',$event_schedule_id)->first();
-            $event = Event::find($request->event_id);
+            $event = Event::find($event_id);
 
             $eventschedule->delete();
 
             $response = '1-Schedule Delete';
+            return response()->json($response, 200);
         } catch (\Exception $e){
             $response = '0-Schedule Failed to Delete';
+            return response()->json($response, 500);
         }
-
-        return redirect('/events/'.$event->id)->with('status', $response);
     }
 }

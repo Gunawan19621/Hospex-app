@@ -228,10 +228,10 @@ class EventRundownController extends Controller
             $rundown->delete();
 
             $response = '1-Rundown Delete';
+            return response()->json($response, 200);
         } catch (\Exception $e){
             $response = '0-Rundown Failed to Delete';
+            return response()->json($response, 500);
         }
-
-        return redirect('/events/'.$schedule->event_id)->with('status', $response);
     }
 }

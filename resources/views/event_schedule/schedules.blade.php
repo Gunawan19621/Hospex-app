@@ -35,8 +35,12 @@
                                     @endif
                                     <h3 class="m-widget1__title">{{ date('l', strtotime($schedule->date) )}}</h3>
                                     <span class="m-widget1__desc">{{ date('F jS, Y', strtotime($schedule->date) )}}</span>
-                                    <a href="{{ url('eventschedules').'/'.$schedule->id.'/edit/'.$event->id }}"><i class="fa fa-edit"></i></a>  
-                                    
+                                    <a href="{{ url('eventschedules').'/'.$schedule->id.'/edit/'.$event->id }}">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="delete_schedule" href="javascript:void(0);" data-id1="{{$schedule->id}}" data-id2="{{$event->id}}">
+                                        <i class="la la-trash"></i>
+                                    </a>
                                 </div>
                                 <div class="col m--align-right collapsed" data-toggle="collapse" data-target="#collapse{{ $schedule->id }}8" aria-expanded="false" aria-controls="collapse{{ $schedule->id }}8">
                                     <i class="fa fa-angle-double-right"><span class="m-widget1__number m--font-accent"></span></i>
@@ -76,7 +80,11 @@
 													<div class="m-timeline-1__item-content">
 														<div class="m-timeline-1__item-title">
 															{{ $task->task }}
-                                                            <a href="{{ url('eventrundown').'/'.$task->id.'/edit/'.$schedule->id }}"><i class="fa fa-edit"></i></a>  
+                                                            <a href="{{ url('eventrundown').'/'.$task->id.'/edit/'.$schedule->id }}">   <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a class="delete_rundown" href="javascript:void(0);" data-id1="{{$task->id}}" data-id2="{{$schedule->id}}">
+                                                                <i class="la la-trash"></i>
+                                                            </a>
 														</div>
 														<div class="m-timeline-1__item-body">
 															<div class="m-list-pics">
@@ -176,6 +184,52 @@
         }).on('changeDate', function(e){
             $(this).datepicker('hide');
         });
+
+        $('.delete_schedule').on('click', function () {
+          var id1 = $(this).data("id1");
+          var id2 = $(this).data("id2");
+          var link = 'eventschedules';
+          confirmDeleteEvent(link, id1, id2);
+        });
+
+        $('.delete_rundown').on('click', function () {
+          var id1 = $(this).data("id1");
+          var id2 = $(this).data("id2");
+          var link = 'eventrundown';
+          confirmDeleteEvent(link, id1, id2);
+        });
+
+        function confirmDeleteEvent(link, id1, id2){
+            Swal.fire({
+            title: 'Warning!',
+            text: "Are you sure want to Delete?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        dataType:'json',
+                        type: "DELETE",
+                        url: `{{ url('${link}')}}/${id1}/delete/${id2}`,
+                        success: function (data) { 
+                            location.reload();
+                            alertMessage(data);
+                        },
+                        error: function (data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
+            })
+        }
 
     </script>
 @endsection 
