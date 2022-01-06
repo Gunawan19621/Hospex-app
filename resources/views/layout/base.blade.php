@@ -452,7 +452,7 @@
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-topbar__userpic">
-													<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />
+													<i class="fa fa-bars" aria-hidden="true" style="color: white;"></i>
 												</span>
 												<span class="m-nav__link-icon m-topbar__usericon  m--hide">
 													<span class="m-nav__link-icon-wrapper"><i class="flaticon-user-ok"></i></span>
@@ -464,9 +464,6 @@
 												<div class="m-dropdown__inner">
 													<div class="m-dropdown__header m--align-center">
 														<div class="m-card-user m-card-user--skin-light">
-															<div class="m-card-user__pic">
-																<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless" alt="" />
-															</div>
 															<div class="m-card-user__details">
 																<span class="m-card-user__name m--font-weight-500">Mark Andre</span>
 																<a href="" class="m-card-user__email m--font-weight-300 m-link">mark.andre@gmail.com</a>
@@ -716,9 +713,6 @@
 							<div class="m-messenger__messages m-scrollable">
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
-										<div class="m-messenger__message-pic">
-											<img src="assets/app/media/img//users/user3.jpg" alt="" />
-										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
 											<div class="m-messenger__message-content">
@@ -746,9 +740,6 @@
 								</div>
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
-										<div class="m-messenger__message-pic">
-											<img src="assets/app/media/img//users/user3.jpg" alt="" />
-										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
 											<div class="m-messenger__message-content">
@@ -777,9 +768,6 @@
 								<div class="m-messenger__datetime">2:30PM</div>
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
-										<div class="m-messenger__message-pic">
-											<img src="assets/app/media/img//users/user3.jpg" alt="" />
-										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
 											<div class="m-messenger__message-content">
@@ -850,9 +838,6 @@
 								</div>
 								<div class="m-messenger__wrapper">
 									<div class="m-messenger__message m-messenger__message--in">
-										<div class="m-messenger__message-pic">
-											<img src="assets/app/media/img//users/user3.jpg" alt="" />
-										</div>
 										<div class="m-messenger__message-body">
 											<div class="m-messenger__message-arrow"></div>
 											<div class="m-messenger__message-content">
