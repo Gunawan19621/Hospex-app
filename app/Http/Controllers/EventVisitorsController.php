@@ -51,14 +51,25 @@ class EventVisitorsController extends Controller
             return datatables()->of($array)
                     ->addIndexColumn()
                     ->addColumn('action', function($data){
-                        $button = '
-                        <span class="dropdown">
-                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>  
-                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" > Verify</a>
-                            </div>
-                        </span>';
+                        if($data['email_verified_at'] == null || $data['email_verified_at'] == ''){
+                            $button = '
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>
+                                    <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" > Verify</a>
+                                </div>
+                            </span>';
+                        }
+                        else{
+                            $button = '
+                            <span class="dropdown">
+                                <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>
+                                </div>
+                            </span>';
+                        }
                         return $button;
                     })
                 ->rawColumns(['action'])
