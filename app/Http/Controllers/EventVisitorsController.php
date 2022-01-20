@@ -206,6 +206,7 @@ class EventVisitorsController extends Controller
 
     public function verification(User $visitor)
     {
+        dd($user);
         $visitor->email_verified_at = date('Y-m-d H:i:s');
         $visitor->save();
 
