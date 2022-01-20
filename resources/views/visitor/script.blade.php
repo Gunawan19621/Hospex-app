@@ -33,6 +33,9 @@
                     data : "email_verified_at", name : "email_verified_at",
                 },
                 {
+                    data : "created_at", name : "created_at",
+                },
+                {
                     data : "event", name : "event",
                 },
                 {

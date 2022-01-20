@@ -31,6 +31,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Phone</th>
                                 <th scope="col">Verified At</th>
+                                <th scope="col">Register At</th>
                                 <th scope="col">Event</th>
                                 <th scope="col">Action</th>
                             </tr>
