@@ -51,7 +51,14 @@ class EventVisitorsController extends Controller
             return datatables()->of($array)
                     ->addIndexColumn()
                     ->addColumn('action', function($data){
-                        $button = '<a href="'. url('visitors/'.$data['id']).' " class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" title="View">  <i class="la la-edit"></i></a>';
+                        $button = '
+                        <span class="dropdown">
+                            <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>  
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
+                            </div>
+                        </span>';
                         return $button;
                     })
                 ->rawColumns(['action'])
@@ -189,9 +196,21 @@ class EventVisitorsController extends Controller
      */
     public function destroy(User $visitor)
     {
-        $delete = Company::destroy($visitor->company->id);
+        $deleteCompany = Company::destroy($visitor->company->id);
+        $delete = User::destroy($visitor->id);
+
         $response = $delete ? '1-Visitor Deleted' : '0-Visitor Failed to Delete';
         return response()->json('1-Visitor Deleted', 200);
+        //
+    }
+
+    public function verification(User $visitor)
+    {
+        $visitor->email_verified_at = date('Y-m-d H:i:s');
+        $visitor->save();
+
+        $response = $visitor ? '1-Visitor Verified' : '0-Visitor Failed to Verify';
+        return response()->json('1-Visitor Verified', 200);
         //
     }
 }

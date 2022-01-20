@@ -48,4 +48,11 @@
        
     })
 
+    $('#m_table_1').on('click', '.delete', function () {
+  
+      var id = $(this).data("id");
+      var link = 'verification/visitors';
+      confirmVerify(link,id)
+    });
+
 </script>

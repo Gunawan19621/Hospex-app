@@ -112,6 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Visitors
     Route::resource('visitors', 'EventVisitorsController');
+    Route::post('verification/visitors/{user?}', 'EventVisitorsController@verification');
 
     // Matches
     Route::get('matches/pending', 'MatchRequestsController@pendingMatch')->name('matches.pending');

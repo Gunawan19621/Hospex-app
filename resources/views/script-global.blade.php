@@ -101,4 +101,40 @@ let flash = $('.flash').data('flash'),
     }
 
 
+    function confirmVerify(link, id){
+        Swal.fire({
+        title: 'Warning!',
+        text: "Are you sure want to verify?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.value) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    dataType:'json',
+                    type: "POST",
+                    url: `{{ url('${link}')}}/${id}`,
+                    success: function (data) { 
+                        $('#m_table_1').DataTable().ajax.reload();
+                        alertMessage(data);
+                    },
+                    error: function (data) {
+                        console.log('Error:', data);
+                    }
+                });
+                // Swal.fire(
+                // 'Deleted!',
+                // 'Your file has been deleted.',
+                // 'success'
+                // )
+            }
+        })
+    }
 </script>
