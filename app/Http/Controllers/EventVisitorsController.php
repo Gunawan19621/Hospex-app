@@ -44,7 +44,7 @@ class EventVisitorsController extends Controller
                     'email'         => $visitor->email,
                     'phone'         => $visitor->phone,
                     'email_verified_at' => $visitor->email_verified_at,
-                    'created_at'    => $visitor->created_at,
+                    'created_at'    => (string) $visitor->created_at,
                     'event'         => $event_all
                 ];
             }
@@ -56,7 +56,7 @@ class EventVisitorsController extends Controller
                             <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>  
-                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" ><i class="la la-trash"></i> Hapus</a>
+                                <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" > Verify</a>
                             </div>
                         </span>';
                         return $button;
