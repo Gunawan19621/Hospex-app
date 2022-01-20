@@ -218,11 +218,16 @@ class EventVisitorsController extends Controller
     public function verification($visitor_id)
     {
         $visitor = User::where('id',$visitor_id)->first();
-        $visitor->email_verified_at = date('Y-m-d H:i:s');
-        $visitor->save();
 
-        $response = $visitor ? '1-Visitor Verified' : '0-Visitor Failed to Verify';
-        return response()->json('1-Visitor Verified', 200);
-        //
+        if($visitor){
+            $visitor->email_verified_at = date('Y-m-d H:i:s');
+            $visitor->save();
+
+            $response = $visitor ? '1-Visitor Verified' : '0-Visitor Failed to Verify';
+            return response()->json('1-Visitor Verified', 200);
+        }
+        else{
+            return response()->json('0-Visitor Failed to Verify', 403);
+        }
     }
 }
