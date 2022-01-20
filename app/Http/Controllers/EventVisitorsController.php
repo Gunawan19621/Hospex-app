@@ -194,19 +194,19 @@ class EventVisitorsController extends Controller
      * @param  \App\User  $visitor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $visitor)
-    {
-        $deleteCompany = Company::destroy($visitor->company->id);
-        $delete = User::destroy($visitor->id);
+    // public function destroy(User $visitor)
+    // {
+    //     $delete = User::destroy($visitor->id);
+    //     $deleteCompany = Company::destroy($visitor->company->id);
 
-        $response = $delete ? '1-Visitor Deleted' : '0-Visitor Failed to Delete';
-        return response()->json('1-Visitor Deleted', 200);
-        //
-    }
+    //     $response = $delete ? '1-Visitor Deleted' : '0-Visitor Failed to Delete';
+    //     return response()->json('1-Visitor Deleted', 200);
+    //     //
+    // }
 
     public function verification(User $visitor)
     {
-        dd($user);
+        dd($visitor);
         $visitor->email_verified_at = date('Y-m-d H:i:s');
         $visitor->save();
 
