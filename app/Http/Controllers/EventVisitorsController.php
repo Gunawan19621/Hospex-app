@@ -43,6 +43,7 @@ class EventVisitorsController extends Controller
                     'name'          => $visitor->name,
                     'email'         => $visitor->email,
                     'phone'         => $visitor->phone,
+                    'email_verified_at' => $visitor->email_verified_at,
                     'event'         => $event_all
                 ];
             }

@@ -30,6 +30,9 @@
                     data : "phone", name : "phone",
                 },
                 {
+                    data : "email_verified_at", name : "email_verified_at",
+                },
+                {
                     data : "event", name : "event",
                 },
                 {
