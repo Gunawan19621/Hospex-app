@@ -68,6 +68,18 @@
                             </div>
                         </div>
                         <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Verified At</label>
+                            <div class="col-7">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->email_verified_at }}">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
+                            <label for="example-text-input" class="col-2 col-form-label">Register At</label>
+                            <div class="col-7">
+                                <input class="form-control m-input" disabled type="text" value="{{ $visitor->created_at }}">
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group row">
                             <label for="example-text-input" class="col-2 col-form-label">Address</label>
                             <div class="col-7">
                                 <input class="form-control m-input" disabled type="text" value="{{ $visitor->address }}">

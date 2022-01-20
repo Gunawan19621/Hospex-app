@@ -56,7 +56,7 @@ class EventVisitorsController extends Controller
                             <span class="dropdown">
                                 <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>
+                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> View</a>
                                     <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" > Verify</a>
                                 </div>
                             </span>';
@@ -66,7 +66,7 @@ class EventVisitorsController extends Controller
                             <span class="dropdown">
                                 <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> Edit</a>
+                                    <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> View</a>
                                 </div>
                             </span>';
                         }
