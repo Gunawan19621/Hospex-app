@@ -204,9 +204,10 @@ class EventVisitorsController extends Controller
     //     //
     // }
 
-    public function verification(User $visitor)
+    public function verification($visitor_id)
     {
-        dd($visitor);
+        dd($visitor_id);
+        $visitor = User::where('id',$visitor_id)->first();
         $visitor->email_verified_at = date('Y-m-d H:i:s');
         $visitor->save();
 

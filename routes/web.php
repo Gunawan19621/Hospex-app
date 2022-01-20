@@ -112,7 +112,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Visitors
     Route::resource('visitors', 'EventVisitorsController');
-    Route::delete('verification/visitors/{user?}', 'EventVisitorsController@verification');
+    Route::delete('verification/visitors/{visitor_id}', 'EventVisitorsController@verification');
 
     // Matches
     Route::get('matches/pending', 'MatchRequestsController@pendingMatch')->name('matches.pending');
