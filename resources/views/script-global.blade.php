@@ -119,7 +119,7 @@ let flash = $('.flash').data('flash'),
                 });
                 $.ajax({
                     dataType:'json',
-                    type: "POST",
+                    type: "DELETE",
                     url: `{{ url('${link}')}}/${id}`,
                     success: function (data) { 
                         $('#m_table_1').DataTable().ajax.reload();
