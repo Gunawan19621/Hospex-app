@@ -64,7 +64,8 @@ class AuthController extends Controller
             'password'   => Hash::make($password),
             'address'    => $address,
             'phone'      => $phone,
-            'type'       => 'visitor'
+            'type'       => 'visitor',
+            'email_verified_at' => date('Y-m-d H:i:s')
         ]);
 
         $api_token = $this->generateRandomString();
@@ -76,7 +77,8 @@ class AuthController extends Controller
         if ($register) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Register Success. Please check your email to activate your account.',
+                'message'   => 'Register Success',
+                // 'message'   => 'Register Success. Please check your email to activate your account.',
                 'data'      => '',
                 'status'    => 201
             ], 201);
