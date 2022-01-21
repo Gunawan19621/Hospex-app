@@ -6,6 +6,7 @@ use App\Company;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Hash;
 
 class EventVisitorsController extends Controller
 {
@@ -58,6 +59,7 @@ class EventVisitorsController extends Controller
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> View</a>
                                     <a class="dropdown-item delete" href="javascript:void(0);" data-id="'.$data['id'].'" > Verify</a>
+                                    <a class="dropdown-item resetpassword" href="javascript:void(0);" data-id="'.$data['id'].'" > Reset Password</a>
                                 </div>
                             </span>';
                         }
@@ -67,6 +69,7 @@ class EventVisitorsController extends Controller
                                 <a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true"><i class="la la-ellipsis-h"></i></a> 
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="'.url('visitors/'.$data['id']).'"><i class="la la-edit"></i> View</a>
+                                    <a class="dropdown-item resetpassword" href="javascript:void(0);" data-id="'.$data['id'].'" > Reset Password</a>
                                 </div>
                             </span>';
                         }
@@ -228,6 +231,22 @@ class EventVisitorsController extends Controller
         }
         else{
             return response()->json('0-Visitor Failed to Verify', 403);
+        }
+    }
+
+    public function resetPassword($visitor_id)
+    {
+        $visitor = User::where('id',$visitor_id)->first();
+
+        if($visitor){
+            $visitor->password = Hash::make('viphospex');
+            $visitor->save();
+
+            $response = $visitor ? '1-Visitor Reset Password Success' : '0-Visitor Failed to Reset Password';
+            return response()->json('1-Visitor Reset Password Success', 200);
+        }
+        else{
+            return response()->json('0-Visitor Failed to Reset Password', 403);
         }
     }
 }

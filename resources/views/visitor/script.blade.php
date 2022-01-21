@@ -55,4 +55,11 @@
       confirmVerify(link,id)
     });
 
+    $('#m_table_1').on('click', '.resetpassword', function () {
+  
+      var id = $(this).data("id");
+      var link = 'reset-password/visitors';
+      confirmResetPassword(link,id)
+    });
+
 </script>
