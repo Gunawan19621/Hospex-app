@@ -21,6 +21,12 @@ class EventVisitorsController extends Controller
     }
     public function index()
     {
+        // $userVerif = User::where('email_verified_at',null)->get();
+        // foreach($userVerif as $userVerifEach){
+        //     $userVerifEach->email_verified_at = date('Y-m-d H:i:s');
+        //     $userVerifEach->save();
+        // }
+
         $title = 'Visitors';
         if(request()->ajax()){
             $array = [];

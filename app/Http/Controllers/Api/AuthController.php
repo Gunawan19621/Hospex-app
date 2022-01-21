@@ -65,7 +65,7 @@ class AuthController extends Controller
             'address'    => $address,
             'phone'      => $phone,
             'type'       => 'visitor',
-            'email_verified_at' => date('Y-m-d H:i:s')
+            'email_verified_at' => null
         ]);
 
         $api_token = $this->generateRandomString();
