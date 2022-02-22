@@ -18,8 +18,7 @@
         "maatwebsite/excel": "^3.1",
         "phpoffice/phpspreadsheet": "^1.14.0",
         "pusher/pusher-php-server": "~4.0",
-        "yajra/laravel-datatables-oracle": "^9.9",
-        "rap2hpoutre/laravel-log-viewer": "^2.1"
+        "yajra/laravel-datatables-oracle": "^9.9"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

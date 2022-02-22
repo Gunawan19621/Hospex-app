@@ -222,9 +222,9 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         // so we need to encode them as they are not used for this purpose here
         // otherwise we would generate a URI that, when followed by a user agent (e.g. browser), does not match this route
         $url = strtr($url, ['/../' => '/%2E%2E/', '/./' => '/%2E/']);
-        if (str_ends_with($url, '/..')) {
+        if ('/..' === substr($url, -3)) {
             $url = substr($url, 0, -2).'%2E%2E';
-        } elseif (str_ends_with($url, '/.')) {
+        } elseif ('/.' === substr($url, -2)) {
             $url = substr($url, 0, -1).'%2E';
         }
 
@@ -295,17 +295,6 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
             return $a == $b ? 0 : 1;
         });
 
-        array_walk_recursive($extra, $caster = static function (&$v) use (&$caster) {
-            if (\is_object($v)) {
-                if ($vars = get_object_vars($v)) {
-                    array_walk_recursive($vars, $caster);
-                    $v = $vars;
-                } elseif (method_exists($v, '__toString')) {
-                    $v = (string) $v;
-                }
-            }
-        });
-
         // extract fragment
         $fragment = $defaults['_fragment'] ?? '';
 
@@ -343,7 +332,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
      * @param string $basePath   The base path
      * @param string $targetPath The target path
      *
-     * @return string
+     * @return string The relative target path
      */
     public static function getRelativePath(string $basePath, string $targetPath)
     {

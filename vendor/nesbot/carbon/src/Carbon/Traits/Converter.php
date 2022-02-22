@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Carbon\Traits;
 
 use Carbon\Carbon;
@@ -39,7 +38,7 @@ trait Converter
      *
      * @var string|Closure|null
      */
-    protected static $toStringFormat;
+    protected static $toStringFormat = null;
 
     /**
      * Reset the format used to the default when type juggling a Carbon instance to a string

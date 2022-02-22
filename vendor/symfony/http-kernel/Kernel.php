@@ -58,7 +58,7 @@ class_exists(ConfigCache::class);
 abstract class Kernel implements KernelInterface, RebootableInterface, TerminableInterface
 {
     /**
-     * @var array<string, BundleInterface>
+     * @var BundleInterface[]
      */
     protected $bundles = [];
 
@@ -73,20 +73,17 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     private $requestStackSize = 0;
     private $resetServices = false;
 
-    /**
-     * @var array<string, bool>
-     */
     private static $freshCache = [];
 
-    public const VERSION = '5.4.4';
-    public const VERSION_ID = 50404;
+    public const VERSION = '5.3.3';
+    public const VERSION_ID = 50303;
     public const MAJOR_VERSION = 5;
-    public const MINOR_VERSION = 4;
-    public const RELEASE_VERSION = 4;
+    public const MINOR_VERSION = 3;
+    public const RELEASE_VERSION = 3;
     public const EXTRA_VERSION = '';
 
-    public const END_OF_MAINTENANCE = '11/2024';
-    public const END_OF_LIFE = '11/2025';
+    public const END_OF_MAINTENANCE = '01/2022';
+    public const END_OF_LIFE = '01/2022';
 
     public function __construct(string $environment, bool $debug)
     {
@@ -244,13 +241,13 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
             throw new \InvalidArgumentException(sprintf('A resource name must start with @ ("%s" given).', $name));
         }
 
-        if (str_contains($name, '..')) {
+        if (false !== strpos($name, '..')) {
             throw new \RuntimeException(sprintf('File name "%s" contains invalid characters (..).', $name));
         }
 
         $bundleName = substr($name, 1);
         $path = '';
-        if (str_contains($bundleName, '/')) {
+        if (false !== strpos($bundleName, '/')) {
             [$bundleName, $path] = explode('/', $bundleName, 2);
         }
 
@@ -281,7 +278,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     /**
      * Gets the application root dir (path of the project's composer file).
      *
-     * @return string
+     * @return string The project root dir
      */
     public function getProjectDir()
     {
@@ -406,12 +403,12 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
      *
      * @throws \InvalidArgumentException If the generated classname is invalid
      *
-     * @return string
+     * @return string The container class
      */
     protected function getContainerClass()
     {
         $class = static::class;
-        $class = str_contains($class, "@anonymous\0") ? get_parent_class($class).str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
+        $class = false !== strpos($class, "@anonymous\0") ? get_parent_class($class).str_replace('.', '_', ContainerBuilder::hash($class)) : $class;
         $class = str_replace('\\', '_', $class).ucfirst($this->environment).($this->debug ? 'Debug' : '').'Container';
 
         if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $class)) {
@@ -595,7 +592,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     /**
      * Returns the kernel parameters.
      *
-     * @return array
+     * @return array An array of kernel parameters
      */
     protected function getKernelParameters()
     {
@@ -628,7 +625,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     /**
      * Builds the service container.
      *
-     * @return ContainerBuilder
+     * @return ContainerBuilder The compiled service container
      *
      * @throws \RuntimeException
      */
@@ -755,7 +752,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
     /**
      * Returns a loader for the container.
      *
-     * @return DelegatingLoader
+     * @return DelegatingLoader The loader
      */
     protected function getContainerLoader(ContainerInterface $container)
     {
@@ -807,7 +804,7 @@ abstract class Kernel implements KernelInterface, RebootableInterface, Terminabl
      * We don't use the PHP php_strip_whitespace() function
      * as we want the content to be readable and well-formatted.
      *
-     * @return string
+     * @return string The PHP string with the comments removed
      */
     public static function stripComments(string $source)
     {

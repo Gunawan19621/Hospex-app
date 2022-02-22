@@ -52,9 +52,6 @@ class Iterator extends \FilterIterator
         parent::__construct($iterator);
     }
 
-    /**
-     * @return bool
-     */
     #[\ReturnTypeWillChange]
     public function accept()
     {

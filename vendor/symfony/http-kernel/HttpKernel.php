@@ -33,6 +33,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 // Help opcache.preload discover always-needed symbols
+class_exists(LegacyEventDispatcherProxy::class);
 class_exists(ControllerArgumentsEvent::class);
 class_exists(ControllerEvent::class);
 class_exists(ExceptionEvent::class);
@@ -60,7 +61,11 @@ class HttpKernel implements HttpKernelInterface, TerminableInterface
         $this->dispatcher = $dispatcher;
         $this->resolver = $resolver;
         $this->requestStack = $requestStack ?? new RequestStack();
-        $this->argumentResolver = $argumentResolver ?? new ArgumentResolver();
+        $this->argumentResolver = $argumentResolver;
+
+        if (null === $this->argumentResolver) {
+            $this->argumentResolver = new ArgumentResolver();
+        }
     }
 
     /**

@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Carbon\Traits;
 
 use Carbon\CarbonConverterInterface;
@@ -202,6 +201,21 @@ trait Units
             $unit = CarbonInterval::make($unit);
         }
 
+        // Can be removed if https://bugs.php.net/bug.php?id=81106
+        // is fixed
+        // @codeCoverageIgnoreStart
+        if (
+            $unit instanceof DateInterval &&
+            version_compare(PHP_VERSION, '8.1.0-dev', '>=') &&
+            ($unit->f < 0 || $unit->f >= 1)
+        ) {
+            $unit = clone $unit;
+            $seconds = floor($unit->f);
+            $unit->f -= $seconds;
+            $unit->s += (int) $seconds;
+        }
+        // @codeCoverageIgnoreEnd
+
         if ($unit instanceof CarbonConverterInterface) {
             return $this->resolveCarbon($unit->convertDate($this, false));
         }
@@ -238,7 +252,6 @@ trait Units
             return $date->isMutable() ? $date : $date->avoidMutation();
         }
 
-        $unit = self::singularUnit($unit);
         $metaUnits = [
             'millennium' => [static::YEARS_PER_MILLENNIUM, 'year'],
             'century' => [static::YEARS_PER_CENTURY, 'year'],
@@ -307,13 +320,11 @@ trait Units
         $date = $date->modify("$value $unit");
 
         if (isset($timeString)) {
-            $date = $date->setTimeFromTimeString($timeString);
-        } elseif (isset($canOverflow, $day) && $canOverflow && $day !== $date->day) {
-            $date = $date->modify('last day of previous month');
+            return $date->setTimeFromTimeString($timeString);
         }
 
-        if (!$date) {
-            throw new UnitException('Unable to add unit '.var_export(\func_get_args(), true));
+        if (isset($canOverflow, $day) && $canOverflow && $day !== $date->day) {
+            $date = $date->modify('last day of previous month');
         }
 
         return $date;
