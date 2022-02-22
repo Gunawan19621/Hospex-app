@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Response;
 
 Auth::routes();
 
-
 Route::get('storage/{filename}', function ($filename)
 {
     $path = storage_path('app/event/' . $filename);
