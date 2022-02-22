@@ -121,6 +121,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('matches', 'MatchRequestsController');
     Route::get('matches/{match}/approve', 'MatchRequestsController@approve');
 
+    Route::get('log', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
     Route::get('home', function(){
         return redirect('/');
     });
