@@ -19,12 +19,12 @@ class WriterFactory
     use MapsCsvSettings;
 
     /**
-     * @param  string  $writerType
-     * @param  Spreadsheet  $spreadsheet
-     * @param  object  $export
-     * @return IWriter
+     * @param string      $writerType
+     * @param Spreadsheet $spreadsheet
+     * @param object      $export
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @return IWriter
      */
     public static function make(string $writerType, Spreadsheet $spreadsheet, $export): IWriter
     {
@@ -56,7 +56,6 @@ class WriterFactory
             $writer->setUseBOM(static::$useBom);
             $writer->setIncludeSeparatorLine(static::$includeSeparatorLine);
             $writer->setExcelCompatibility(static::$excelCompatibility);
-            $writer->setOutputEncoding(static::$outputEncoding);
         }
 
         // Calculation settings
@@ -71,6 +70,7 @@ class WriterFactory
 
     /**
      * @param $export
+     *
      * @return bool
      */
     private static function includesCharts($export): bool

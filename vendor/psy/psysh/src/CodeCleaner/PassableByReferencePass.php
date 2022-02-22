@@ -14,7 +14,6 @@ namespace Psy\CodeCleaner;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Expr\Array_;
-use PhpParser\Node\Expr\ArrayDimFetch;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\MethodCall;
@@ -68,7 +67,7 @@ class PassableByReferencePass extends CodeCleanerPass
         }
     }
 
-    private function isPassableByReference(Node $arg): bool
+    private function isPassableByReference(Node $arg)
     {
         // Unpacked arrays can be passed by reference
         if ($arg->value instanceof Array_) {
@@ -82,8 +81,7 @@ class PassableByReferencePass extends CodeCleanerPass
             $arg->value instanceof Variable ||
             $arg->value instanceof FuncCall ||
             $arg->value instanceof MethodCall ||
-            $arg->value instanceof StaticCall ||
-            $arg->value instanceof ArrayDimFetch;
+            $arg->value instanceof StaticCall;
     }
 
     /**

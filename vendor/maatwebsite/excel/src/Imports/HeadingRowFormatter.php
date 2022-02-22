@@ -37,7 +37,8 @@ class HeadingRowFormatter
     ];
 
     /**
-     * @param  array  $headings
+     * @param array $headings
+     *
      * @return array
      */
     public static function format(array $headings): array
@@ -48,7 +49,7 @@ class HeadingRowFormatter
     }
 
     /**
-     * @param  string  $name
+     * @param string $name
      */
     public static function default(string $name = null)
     {
@@ -60,8 +61,8 @@ class HeadingRowFormatter
     }
 
     /**
-     * @param  string  $name
-     * @param  callable  $formatter
+     * @param string   $name
+     * @param callable $formatter
      */
     public static function extend(string $name, callable $formatter)
     {
@@ -77,7 +78,8 @@ class HeadingRowFormatter
     }
 
     /**
-     * @param  mixed  $value
+     * @param mixed $value
+     *
      * @return mixed
      */
     protected static function callFormatter($value, $key=null)

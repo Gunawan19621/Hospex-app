@@ -8,7 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Carbon\Traits;
 
 use Carbon\CarbonInterface;
@@ -152,21 +151,21 @@ trait Options
      *
      * @var string|callable|null
      */
-    protected static $formatFunction;
+    protected static $formatFunction = null;
 
     /**
      * Function to call instead of createFromFormat.
      *
      * @var string|callable|null
      */
-    protected static $createFromFormatFunction;
+    protected static $createFromFormatFunction = null;
 
     /**
      * Function to call instead of parse.
      *
      * @var string|callable|null
      */
-    protected static $parseFunction;
+    protected static $parseFunction = null;
 
     /**
      * Indicates if months should be calculated with overflow.
@@ -174,7 +173,7 @@ trait Options
      *
      * @var bool|null
      */
-    protected $localMonthsOverflow;
+    protected $localMonthsOverflow = null;
 
     /**
      * Indicates if years should be calculated with overflow.
@@ -182,7 +181,7 @@ trait Options
      *
      * @var bool|null
      */
-    protected $localYearsOverflow;
+    protected $localYearsOverflow = null;
 
     /**
      * Indicates if the strict mode is in use.
@@ -190,49 +189,49 @@ trait Options
      *
      * @var bool|null
      */
-    protected $localStrictModeEnabled;
+    protected $localStrictModeEnabled = null;
 
     /**
      * Options for diffForHumans and forHumans methods.
      *
      * @var bool|null
      */
-    protected $localHumanDiffOptions;
+    protected $localHumanDiffOptions = null;
 
     /**
      * Format to use on string cast.
      *
      * @var string|null
      */
-    protected $localToStringFormat;
+    protected $localToStringFormat = null;
 
     /**
      * Format to use on JSON serialization.
      *
      * @var string|null
      */
-    protected $localSerializer;
+    protected $localSerializer = null;
 
     /**
      * Instance-specific macros.
      *
      * @var array|null
      */
-    protected $localMacros;
+    protected $localMacros = null;
 
     /**
      * Instance-specific generic macros.
      *
      * @var array|null
      */
-    protected $localGenericMacros;
+    protected $localGenericMacros = null;
 
     /**
      * Function to call instead of format.
      *
      * @var string|callable|null
      */
-    protected $localFormatFunction;
+    protected $localFormatFunction = null;
 
     /**
      * @deprecated To avoid conflict between different third-party libraries, static setters should not be used.
@@ -384,10 +383,6 @@ trait Options
             }
 
             $this->locale(...$locales);
-        }
-
-        if (isset($settings['innerTimezone'])) {
-            return $this->setTimezone($settings['innerTimezone']);
         }
 
         if (isset($settings['timezone'])) {
