@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '9d5d487d6ffd1fd9ba35bad81a682933b519db89',
+    'reference' => '399b4f58de2ef0d672a51fe68f31ef2f94acfa89',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -422,7 +422,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '9d5d487d6ffd1fd9ba35bad81a682933b519db89',
+      'reference' => '399b4f58de2ef0d672a51fe68f31ef2f94acfa89',
     ),
     'laravel/tinker' => 
     array (
@@ -861,6 +861,15 @@
       array (
       ),
       'reference' => 'fc9bb7fb5388691fd7373cd44dcb4d63bbcf24df',
+    ),
+    'rap2hpoutre/laravel-log-viewer' => 
+    array (
+      'pretty_version' => 'v2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '199b4f21004c8f0c00fbc9222e0cedf1341b5e81',
     ),
     'rhumsaa/uuid' => 
     array (
