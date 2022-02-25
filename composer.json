@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "ezyang/htmlpurifier": "4.13",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -16,10 +17,11 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "maatwebsite/excel": "^3.1",
+        "mews/purifier": "^3.3",
         "phpoffice/phpspreadsheet": "^1.14.0",
         "pusher/pusher-php-server": "~4.0",
-        "yajra/laravel-datatables-oracle": "^9.9",
-        "rap2hpoutre/laravel-log-viewer": "^2.1"
+        "rap2hpoutre/laravel-log-viewer": "^2.1",
+        "yajra/laravel-datatables-oracle": "^9.9"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '399b4f58de2ef0d672a51fe68f31ef2f94acfa89',
+    'reference' => '768d9c21f6f7b6ec05c86cc451ffd464c14420a0',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -114,12 +114,12 @@ private static $installed = array (
     ),
     'ezyang/htmlpurifier' => 
     array (
-      'pretty_version' => 'v4.14.0',
-      'version' => '4.14.0.0',
+      'pretty_version' => 'v4.13.0',
+      'version' => '4.13.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '12ab42bd6e742c70c0a52f7b82477fcd44e64b75',
+      'reference' => '08e27c97e4c6ed02f37c5b2b20488046c8d90d75',
     ),
     'facade/flare-client-php' => 
     array (
@@ -446,7 +446,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '399b4f58de2ef0d672a51fe68f31ef2f94acfa89',
+      'reference' => '768d9c21f6f7b6ec05c86cc451ffd464c14420a0',
     ),
     'laravel/tinker' => 
     array (
@@ -528,6 +528,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'c66aefcafb4f6c269510e9ac46b82619a904c576',
+    ),
+    'mews/purifier' => 
+    array (
+      'pretty_version' => '3.3.7',
+      'version' => '3.3.7.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9844bc82886e4291b3116afbd9ab5f532856662a',
     ),
     'mockery/mockery' => 
     array (
