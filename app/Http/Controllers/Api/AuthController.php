@@ -65,8 +65,9 @@ class AuthController extends Controller
             'address'    => $address,
             'phone'      => $phone,
             'type'       => 'visitor',
-            'email_verified_at' => date('Y-m-d H:i:s')
         ]);
+        //     'email_verified_at' => date('Y-m-d H:i:s')
+        // ]);
 
         $api_token = $this->generateRandomString();
         $register->api_token = $api_token;
@@ -77,8 +78,8 @@ class AuthController extends Controller
         if ($register) {
             return response()->json([
                 'success'   => true,
-                'message'   => 'Register Success',
-                // 'message'   => 'Register Success. Please check your email to activate your account.',
+                // 'message'   => 'Register Success',
+                'message'   => 'Register Success. Please check your email to activate your account.',
                 'data'      => '',
                 'status'    => 201
             ], 201);
